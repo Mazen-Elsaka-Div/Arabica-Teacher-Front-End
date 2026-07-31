@@ -304,10 +304,10 @@ export function HeroSection() {
 
           {/* ── Teacher image — very large ── */}
           <div
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-[520px] sm:w-[640px] lg:w-[760px] xl:w-[820px] h-full"
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-[600px] sm:w-[740px] lg:w-[900px] xl:w-[1000px] h-full"
             style={{
-              maskImage: 'linear-gradient(to top, black 92%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to top, black 92%, transparent 100%)',
+              maskImage: 'linear-gradient(to top, black 88%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to top, black 88%, transparent 100%)',
             }}
           >
             <Image
@@ -317,7 +317,7 @@ export function HeroSection() {
               className="object-contain object-bottom"
               style={{ filter: 'contrast(1.05) saturate(0.95) drop-shadow(0 20px 50px rgba(0,0,0,0.6))' }}
               priority
-              sizes="(max-width: 640px) 520px, (max-width: 1024px) 640px, 820px"
+              sizes="(max-width: 640px) 600px, (max-width: 1024px) 740px, 1000px"
             />
           </div>
 

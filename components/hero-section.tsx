@@ -322,7 +322,7 @@ export function HeroSection() {
         </div>
 
         {/* ── TEACHER SIDE ── */}
-        <div className="relative order-1 md:order-2 w-full md:w-[48%] h-[520px] sm:h-[640px] md:h-auto md:min-h-[calc(100vh-5rem)] overflow-hidden">
+        <div className="relative order-1 md:order-2 w-full md:w-[48%] h-screen md:h-auto md:min-h-screen overflow-hidden">
 
           {/* Floating letters from tablet */}
           {tabletLetters.map((item, i) => (
@@ -376,17 +376,10 @@ export function HeroSection() {
             <Image src="/حباره.png" alt="" width={160} height={283} className="w-full h-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]" />
           </div>
 
-          {/* Teacher image — full opacity, bottom-fade to blend white bg */}
+          {/* Teacher image — sized by height so the portrait fills the column */}
           <div
-            className="absolute bottom-0 z-[15] pointer-events-none"
-            style={{
-              left: '50%',
-              transform: 'translateX(-50%)',
-              height: '105%',
-              width: 'auto',
-              maskImage: 'linear-gradient(to top, transparent 0%, black 10%)',
-              WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 10%)',
-            }}
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 z-[15] pointer-events-none"
+            style={{ height: '100%', width: 'max-content' }}
           >
             <Image
               src="/teacher.png"
@@ -394,7 +387,7 @@ export function HeroSection() {
               width={2400}
               height={1282}
               className="h-full w-auto max-w-none"
-              style={{ filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.55))' }}
+              style={{ filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.40))' }}
               priority
             />
           </div>
@@ -439,9 +432,9 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Bottom arabesque — single, full width, centered */}
-      <div className="relative z-10 pb-6 px-8 w-full flex justify-center pointer-events-none" aria-hidden="true">
-        <div className="w-full max-w-5xl">
+      {/* Bottom arabesque — outside flex columns, spans full viewport width */}
+      <div className="relative z-20 w-full flex justify-center pb-6 px-6 pointer-events-none" aria-hidden="true">
+        <div className="w-full max-w-6xl">
           <ArabesqueLine />
         </div>
       </div>

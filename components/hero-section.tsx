@@ -204,21 +204,21 @@ export function HeroSection() {
               />
             </div>
 
-            {/* ── Right image: برديه (Parchment) — top right with tilt ── */}
+            {/* ── Left image: برديه (Parchment) — left side with tilt ── */}
             <div
               className="absolute z-[8] pointer-events-none"
               style={{
-                top: '10%',
-                right: '8%',
+                top: '20%',
+                left: '5%',
                 width: 280,
                 height: 350,
-                animation: 'floatRight 6s ease-in-out infinite',
+                animation: 'floatLeft 6s ease-in-out infinite',
                 filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3))',
               }}
             >
               <div
                 style={{
-                  transform: 'perspective(1000px) rotateY(-8deg) rotateX(2deg)',
+                  transform: 'perspective(1000px) rotateY(8deg) rotateX(2deg)',
                   transformStyle: 'preserve-3d',
                   width: '100%',
                   height: '100%',
@@ -238,21 +238,21 @@ export function HeroSection() {
               </div>
             </div>
 
-            {/* ── Left image: حباره (Inkwell) — bottom left with opposite tilt ── */}
+            {/* ── Right image: حباره (Inkwell) — bottom right with opposite tilt ── */}
             <div
               className="absolute z-[8] pointer-events-none"
               style={{
-                bottom: '12%',
-                left: '5%',
+                bottom: '15%',
+                right: '6%',
                 width: 260,
                 height: 320,
-                animation: 'floatLeft 6.5s ease-in-out infinite',
+                animation: 'floatRight 6.5s ease-in-out infinite',
                 filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3))',
               }}
             >
               <div
                 style={{
-                  transform: 'perspective(1000px) rotateY(8deg) rotateX(-2deg)',
+                  transform: 'perspective(1000px) rotateY(-8deg) rotateX(-2deg)',
                   transformStyle: 'preserve-3d',
                   width: '100%',
                   height: '100%',

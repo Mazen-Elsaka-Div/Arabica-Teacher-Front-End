@@ -5,22 +5,26 @@ import { useEffect, useRef, useState } from 'react'
 import { TopographicBackground } from '@/components/topo-background'
 
 /* ── Letters flying out of the tablet ── */
+/* Tablet is roughly at 45-68% from top, 32-60% from left of the teacher column */
 const tabletLetters = [
-  { letter: 'ا', top: '62%', left: '28%', size: 'text-xl',  opacity: 0.45, delay: '0s',   rotate: '-8deg' },
-  { letter: 'ب', top: '57%', left: '34%', size: 'text-2xl', opacity: 0.55, delay: '0.4s', rotate: '6deg' },
-  { letter: 'ت', top: '53%', left: '29%', size: 'text-xl',  opacity: 0.5,  delay: '0.8s', rotate: '-12deg' },
-  { letter: 'ث', top: '50%', left: '38%', size: 'text-2xl', opacity: 0.6,  delay: '1.2s', rotate: '10deg' },
-  { letter: 'ج', top: '44%', left: '35%', size: 'text-3xl', opacity: 0.65, delay: '0.2s', rotate: '-6deg' },
-  { letter: 'ح', top: '39%', left: '43%', size: 'text-3xl', opacity: 0.7,  delay: '0.6s', rotate: '14deg' },
-  { letter: 'خ', top: '34%', left: '37%', size: 'text-2xl', opacity: 0.6,  delay: '1s',   rotate: '-10deg' },
-  { letter: 'د', top: '30%', left: '48%', size: 'text-4xl', opacity: 0.75, delay: '1.4s', rotate: '8deg' },
-  { letter: 'ر', top: '25%', left: '42%', size: 'text-3xl', opacity: 0.7,  delay: '0.3s', rotate: '-14deg' },
-  { letter: 'س', top: '20%', left: '52%', size: 'text-4xl', opacity: 0.8,  delay: '0.7s', rotate: '12deg' },
-  { letter: 'ع', top: '15%', left: '46%', size: 'text-3xl', opacity: 0.65, delay: '1.1s', rotate: '-8deg' },
-  { letter: 'ق', top: '10%', left: '56%', size: 'text-4xl', opacity: 0.75, delay: '1.5s', rotate: '16deg' },
-  { letter: 'ل', top: '7%',  left: '49%', size: 'text-2xl', opacity: 0.55, delay: '0.5s', rotate: '-16deg' },
-  { letter: 'م', top: '16%', left: '62%', size: 'text-3xl', opacity: 0.7,  delay: '0.9s', rotate: '6deg' },
-  { letter: 'ن', top: '24%', left: '60%', size: 'text-2xl', opacity: 0.6,  delay: '1.3s', rotate: '-4deg' },
+  /* dense cluster near tablet surface */
+  { letter: 'ا', top: '64%', left: '38%', size: 'text-xl',  opacity: 0.50, delay: '0s',   rotate: '-8deg' },
+  { letter: 'ب', top: '60%', left: '46%', size: 'text-2xl', opacity: 0.55, delay: '0.4s', rotate: '6deg' },
+  { letter: 'ت', top: '58%', left: '34%', size: 'text-xl',  opacity: 0.50, delay: '0.8s', rotate: '-12deg' },
+  { letter: 'ث', top: '55%', left: '52%', size: 'text-2xl', opacity: 0.60, delay: '1.2s', rotate: '10deg' },
+  /* mid-arc — rising diagonally to upper-left */
+  { letter: 'ج', top: '50%', left: '30%', size: 'text-3xl', opacity: 0.65, delay: '0.2s', rotate: '-6deg' },
+  { letter: 'ح', top: '46%', left: '22%', size: 'text-3xl', opacity: 0.70, delay: '0.6s', rotate: '14deg' },
+  { letter: 'خ', top: '41%', left: '28%', size: 'text-2xl', opacity: 0.60, delay: '1s',   rotate: '-10deg' },
+  { letter: 'د', top: '36%', left: '16%', size: 'text-4xl', opacity: 0.75, delay: '1.4s', rotate: '8deg' },
+  /* spreading higher */
+  { letter: 'ر', top: '30%', left: '24%', size: 'text-3xl', opacity: 0.70, delay: '0.3s', rotate: '-14deg' },
+  { letter: 'س', top: '24%', left: '12%', size: 'text-4xl', opacity: 0.80, delay: '0.7s', rotate: '12deg' },
+  { letter: 'ع', top: '19%', left: '20%', size: 'text-3xl', opacity: 0.65, delay: '1.1s', rotate: '-8deg' },
+  { letter: 'ق', top: '14%', left: '8%',  size: 'text-4xl', opacity: 0.75, delay: '1.5s', rotate: '16deg' },
+  { letter: 'ل', top: '9%',  left: '16%', size: 'text-2xl', opacity: 0.55, delay: '0.5s', rotate: '-16deg' },
+  { letter: 'م', top: '20%', left: '32%', size: 'text-3xl', opacity: 0.70, delay: '0.9s', rotate: '6deg' },
+  { letter: 'ن', top: '32%', left: '38%', size: 'text-2xl', opacity: 0.60, delay: '1.3s', rotate: '-4deg' },
 ]
 
 /* ── Stats data ── */
@@ -174,7 +178,7 @@ function CircleBadge({
 /* ── Arabesque ornament line ── */
 function ArabesqueLine({ flip = false }: { flip?: boolean }) {
   return (
-    <div className={`flex items-center gap-3 w-full max-w-md ${flip ? 'scale-x-[-1]' : ''}`} aria-hidden="true">
+    <div className={`flex items-center gap-3 w-full ${flip ? 'scale-x-[-1]' : ''}`} aria-hidden="true">
       <div className="h-px flex-1" style={{ background: 'linear-gradient(to left, oklch(0.84 0.11 88 / 55%), transparent)' }} />
       <svg width="128" height="18" viewBox="0 0 128 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <polygon points="64,2 70,9 64,16 58,9" fill="oklch(0.84 0.11 88)" opacity="0.9"/>
@@ -376,10 +380,15 @@ export function HeroSection() {
             <Image src="/حباره.png" alt="" width={160} height={283} className="w-full h-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]" />
           </div>
 
-          {/* Teacher image — sized by height so the portrait fills the column */}
+          {/* Teacher image — shifted right so inkwell shows on his left, raised up */}
           <div
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 z-[15] pointer-events-none"
-            style={{ height: '100%', width: 'max-content' }}
+            className="absolute z-[15] pointer-events-none"
+            style={{
+              bottom: '-5%',
+              right: '-8%',
+              height: '108%',
+              width: 'max-content',
+            }}
           >
             <Image
               src="/teacher.png"
@@ -432,11 +441,9 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Bottom arabesque — outside flex columns, spans full viewport width */}
-      <div className="relative z-20 w-full flex justify-center pb-6 px-6 pointer-events-none" aria-hidden="true">
-        <div className="w-full max-w-6xl">
-          <ArabesqueLine />
-        </div>
+      {/* Bottom arabesque — single centered line spanning full viewport width */}
+      <div className="relative z-20 w-full flex justify-center items-center pb-6 px-10 pointer-events-none" aria-hidden="true">
+        <ArabesqueLine />
       </div>
     </section>
   )

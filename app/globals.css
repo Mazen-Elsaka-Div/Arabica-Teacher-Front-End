@@ -1,0 +1,209 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark, .dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand colors */
+  --color-green: var(--brand-green);
+  --color-gold: var(--brand-gold);
+  --color-brown: var(--brand-brown);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.4);
+  --radius-full: 9999px;
+
+  --font-sans: var(--font-cairo);
+  --font-heading: var(--font-noto-naskh);
+}
+
+/* ─── Light Mode — forest green topo theme (default) ─── */
+:root {
+  color-scheme: light;
+  /*
+   * Background: light/white         #f5f5f0 ≈ oklch(0.96 0.006 90)
+   * Text/primary: forest green      #1e4d3a ≈ oklch(0.30 0.072 158)
+   */
+  --background: oklch(0.96 0.006 90);
+  --foreground: oklch(0.30 0.072 158);
+
+  --card: oklch(0.94 0.008 90);
+  --card-foreground: oklch(0.30 0.072 158);
+
+  --popover: oklch(0.94 0.008 90);
+  --popover-foreground: oklch(0.30 0.072 158);
+
+  /* Forest green primary */
+  --primary: oklch(0.52 0.13 155);
+  --primary-foreground: oklch(0.96 0.006 90);
+
+  --secondary: oklch(0.58 0.12 155);
+  --secondary-foreground: oklch(0.96 0.006 90);
+
+  --muted: oklch(0.75 0.06 155);
+  --muted-foreground: oklch(0.45 0.08 155);
+
+  --accent: oklch(0.52 0.13 155);
+  --accent-foreground: oklch(0.96 0.006 90);
+
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(0.52 0.10 155 / 16%);
+  --input: oklch(0.52 0.10 155 / 10%);
+  --ring: oklch(0.52 0.13 155);
+
+  --radius: 0.75rem;
+
+  /* Brand palette */
+  --brand-green: oklch(0.52 0.13 155);
+  --brand-gold:  oklch(0.78 0.11 85);
+  --brand-brown: oklch(0.62 0.07 55);
+}
+
+/* ─── Dark Mode — brown/gold topo theme ─── */
+.dark {
+  color-scheme: dark;
+  /*
+   * Background: near-black warm brown  #1a150f ≈ oklch(0.14 0.025 55)
+   * Lines/accents: warm gold/beige     #c8a878 ≈ oklch(0.73 0.08 75)
+   */
+  --background: oklch(0.14 0.025 55);
+  --foreground: oklch(0.94 0.012 80);
+
+  --card: oklch(0.18 0.030 55);
+  --card-foreground: oklch(0.94 0.012 80);
+
+  --popover: oklch(0.18 0.030 55);
+  --popover-foreground: oklch(0.94 0.012 80);
+
+  /* Gold as primary accent */
+  --primary: oklch(0.73 0.10 75);
+  --primary-foreground: oklch(0.12 0.020 55);
+
+  --secondary: oklch(0.22 0.035 55);
+  --secondary-foreground: oklch(0.88 0.010 80);
+
+  --muted: oklch(0.22 0.030 55);
+  --muted-foreground: oklch(0.62 0.040 75);
+
+  --accent: oklch(0.26 0.038 55);
+  --accent-foreground: oklch(0.94 0.012 80);
+
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(0.73 0.08 75 / 18%);
+  --input: oklch(0.73 0.08 75 / 12%);
+  --ring: oklch(0.73 0.10 75);
+
+  --radius: 0.75rem;
+
+  /* Brand palette */
+  --brand-green: oklch(0.52 0.13 155);
+  --brand-gold:  oklch(0.73 0.10 75);
+  --brand-brown: oklch(0.45 0.06 55);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+    --background: oklch(0.14 0.025 55);
+    --foreground: oklch(0.94 0.012 80);
+    --card: oklch(0.18 0.030 55);
+    --card-foreground: oklch(0.94 0.012 80);
+    --popover: oklch(0.18 0.030 55);
+    --popover-foreground: oklch(0.94 0.012 80);
+    --primary: oklch(0.73 0.10 75);
+    --primary-foreground: oklch(0.12 0.020 55);
+    --secondary: oklch(0.22 0.035 55);
+    --secondary-foreground: oklch(0.88 0.010 80);
+    --muted: oklch(0.22 0.030 55);
+    --muted-foreground: oklch(0.62 0.040 75);
+    --accent: oklch(0.26 0.038 55);
+    --accent-foreground: oklch(0.94 0.012 80);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(0.73 0.08 75 / 18%);
+    --input: oklch(0.73 0.08 75 / 12%);
+    --ring: oklch(0.73 0.10 75);
+    --brand-green: oklch(0.52 0.13 155);
+    --brand-gold:  oklch(0.73 0.10 75);
+    --brand-brown: oklch(0.45 0.06 55);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans), 'Cairo', sans-serif;
+  }
+}
+
+/* Arabic calligraphy floating letters animation */
+@keyframes float-1 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+  50% { transform: translateY(-18px) rotate(5deg); opacity: 1; }
+}
+@keyframes float-2 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+  50% { transform: translateY(-12px) rotate(-4deg); opacity: 0.9; }
+}
+@keyframes float-3 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.5; }
+  50% { transform: translateY(-22px) rotate(6deg); opacity: 0.85; }
+}
+@keyframes float-4 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.65; }
+  50% { transform: translateY(-15px) rotate(-3deg); opacity: 1; }
+}
+@keyframes float-5 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.55; }
+  50% { transform: translateY(-10px) rotate(8deg); opacity: 0.9; }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+@keyframes shimmer-gold {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.float-letter-1 { animation: float-1 4s ease-in-out infinite; }
+.float-letter-2 { animation: float-2 5.5s ease-in-out infinite; }
+.float-letter-3 { animation: float-3 3.8s ease-in-out infinite; }
+.float-letter-4 { animation: float-4 4.8s ease-in-out infinite; }
+.float-letter-5 { animation: float-5 6s ease-in-out infinite; }
+.float-letter-6 { animation: float-1 5s ease-in-out infinite; animation-delay: 1s; }
+.float-letter-7 { animation: float-2 4.2s ease-in-out infinite; animation-delay: 0.5s; }
+.float-letter-8 { animation: float-3 5.8s ease-in-out infinite; animation-delay: 1.5s; }
+.spin-slow { animation: spin-slow 20s linear infinite; }
+.spin-reverse { animation: spin-reverse 15s linear infinite; }
+.shimmer-gold { animation: shimmer-gold 3s ease-in-out infinite; }

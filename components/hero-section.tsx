@@ -372,21 +372,22 @@ export function HeroSection() {
             <Image src="/book.png" alt="" width={200} height={133} className="w-full h-auto drop-shadow-[0_14px_35px_rgba(0,0,0,0.8)]" />
           </div>
 
-          {/* Inkwell & quill — larger */}
+          {/* Inkwell & quill — larger, on far left so it shows beside teacher */}
           <div
             className="absolute z-[9] pointer-events-none"
-            style={{ top: '32%', left: '6%', width: 160, animation: 'gentleFloat 6s ease-in-out infinite', animationDelay: '1s' }}
+            style={{ top: '28%', left: '2%', width: 170, animation: 'gentleFloat 6s ease-in-out infinite', animationDelay: '1s' }}
           >
             <Image src="/حباره.png" alt="" width={160} height={283} className="w-full h-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]" />
           </div>
 
-          {/* Teacher image — shifted right so inkwell shows on his left, raised up */}
+          {/* Teacher image — centered in column, slightly right, raised so trousers visible */}
           <div
             className="absolute z-[15] pointer-events-none"
             style={{
-              bottom: '-5%',
-              right: '-8%',
-              height: '108%',
+              bottom: '-2%',
+              left: '50%',
+              transform: 'translateX(-38%)',
+              height: '105%',
               width: 'max-content',
             }}
           >

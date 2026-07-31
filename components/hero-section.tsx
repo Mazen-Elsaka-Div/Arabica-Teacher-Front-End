@@ -181,7 +181,7 @@ export function HeroSection() {
         </div>
 
         {/* ── TEACHER SIDE (end = left in RTL) — extra large ── */}
-        <div className="relative order-1 lg:order-2 w-full lg:w-[58%] h-[540px] sm:h-[640px] lg:h-auto lg:min-h-[calc(100vh-5rem)]">
+        <div className="relative order-1 lg:order-2 w-full lg:w-[58%] h-[540px] sm:h-[640px] lg:h-auto lg:min-h-[calc(100vh-5rem)] overflow-visible">
 
           {/* Letters flying out of the tablet */}
           {tabletLetters.map((item, i) => (
@@ -241,32 +241,33 @@ export function HeroSection() {
             style={{ bottom: '2%', left: '38%' }}
           />
 
-          {/* ── Small book beside the teacher (not behind) ── */}
+          {/* ── Book tilted, split between hero and next section ── */}
           <div
             className="absolute z-[12] pointer-events-none"
             style={{
-              bottom: '2%',
-              right: '-1%',
-              width: 135,
+              bottom: '-65%',
+              right: '5%',
+              width: 200,
               animation: 'gentleFloat 5s ease-in-out infinite',
+              transform: 'rotate(-28deg)',
             }}
           >
             <Image
               src="/book.png"
               alt=""
-              width={135}
-              height={90}
-              className="w-full h-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)]"
+              width={200}
+              height={133}
+              className="w-full h-auto drop-shadow-[0_14px_35px_rgba(0,0,0,0.8)]"
             />
           </div>
 
-          {/* ── Inkwell & quill (حباره.png) — floating beside the teacher ── */}
+          {/* ── Inkwell & quill (حباره.png) — larger, floating beside the teacher ── */}
           <div
             className="absolute z-[9] pointer-events-none"
             style={{
-              top: '38%',
-              left: '7%',
-              width: 105,
+              top: '32%',
+              left: '6%',
+              width: 160,
               animation: 'gentleFloat 6s ease-in-out infinite',
               animationDelay: '1s',
             }}
@@ -274,29 +275,30 @@ export function HeroSection() {
             <Image
               src="/حباره.png"
               alt=""
-              width={105}
-              height={186}
+              width={160}
+              height={283}
               className="w-full h-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]"
             />
           </div>
 
-          {/* ── Papyrus scroll (برديه.png) — floating top area ── */}
+          {/* ── Papyrus scroll (برديه.png) — large, behind teacher, tilted left ── */}
           <div
-            className="absolute z-[9] pointer-events-none"
+            className="absolute z-[8] pointer-events-none"
             style={{
-              top: '4%',
-              left: '23%',
-              width: 115,
+              top: '15%',
+              left: '22%',
+              width: 280,
               animation: 'gentleFloat 7s ease-in-out infinite',
               animationDelay: '2s',
+              transform: 'rotate(-18deg)',
             }}
           >
             <Image
               src="/برديه.png"
               alt=""
-              width={115}
-              height={208}
-              className="w-full h-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]"
+              width={280}
+              height={507}
+              className="w-full h-auto drop-shadow-[0_12px_30px_rgba(0,0,0,0.7)]"
             />
           </div>
 

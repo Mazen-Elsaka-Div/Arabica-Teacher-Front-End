@@ -100,10 +100,10 @@ export function HeroSection() {
       />
 
       {/* Main hero content — full width, text pushed to the far edge */}
-      <div className="relative z-10 flex-1 flex flex-col lg:flex-row items-stretch pt-24 lg:pt-20 w-full">
+      <div className="relative z-10 flex-1 flex flex-col md:flex-row items-stretch pt-24 md:pt-20 w-full">
 
         {/* ── TEXT SIDE (start = right edge in RTL) ── */}
-        <div className="flex flex-col justify-center gap-6 order-2 lg:order-1 w-full lg:w-[42%] px-6 sm:px-10 lg:ps-14 lg:pe-6 pb-12 lg:pb-20">
+        <div className="flex flex-col justify-center gap-6 order-2 md:order-1 w-full md:w-[42%] px-6 sm:px-10 md:ps-14 md:pe-6 pb-12 md:pb-20">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 self-start px-4 py-1.5 rounded-full border bg-black/40 backdrop-blur-sm" style={{ borderColor: 'oklch(0.78 0.10 85 / 35%)' }}>
             <span className="size-2 rounded-full shrink-0" style={{ background: 'oklch(0.85 0.10 88)' }} />
@@ -181,7 +181,7 @@ export function HeroSection() {
         </div>
 
         {/* ── TEACHER SIDE (end = left in RTL) — extra large ── */}
-        <div className="relative order-1 lg:order-2 w-full lg:w-[58%] h-[540px] sm:h-[640px] lg:h-auto lg:min-h-[calc(100vh-5rem)] overflow-visible">
+        <div className="relative order-1 md:order-2 w-full md:w-[58%] h-[520px] sm:h-[620px] md:h-auto md:min-h-[calc(100vh-5rem)] overflow-hidden">
 
           {/* Letters flying out of the tablet */}
           {tabletLetters.map((item, i) => (
@@ -283,7 +283,7 @@ export function HeroSection() {
 
           {/* ── Papyrus scroll (برديه.png) — large, behind teacher, tilted left ── */}
           <div
-            className="absolute z-[8] pointer-events-none"
+            className="absolute z-[6] pointer-events-none"
             style={{
               top: '15%',
               left: '22%',
@@ -302,22 +302,26 @@ export function HeroSection() {
             />
           </div>
 
-          {/* ── Teacher image — very large ── */}
+          {/* ── Teacher image — landscape PNG, scaled up to fill height ── */}
           <div
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-[600px] sm:w-[740px] lg:w-[900px] xl:w-[1000px] h-full"
+            className="absolute bottom-0 z-[15] pointer-events-none"
             style={{
-              maskImage: 'linear-gradient(to top, black 88%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to top, black 88%, transparent 100%)',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              height: '105%',
+              width: 'auto',
+              maskImage: 'linear-gradient(to top, black 80%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to top, black 80%, transparent 100%)',
             }}
           >
             <Image
               src="/teacher.png"
               alt="المدرس - أكاديمية شفاء العليل في اللغة العربية"
-              fill
-              className="object-contain object-bottom"
-              style={{ filter: 'contrast(1.05) saturate(0.95) drop-shadow(0 20px 50px rgba(0,0,0,0.6))' }}
+              width={2400}
+              height={1282}
+              className="h-full w-auto max-w-none"
+              style={{ filter: 'drop-shadow(0 20px 50px rgba(0,0,0,0.5))' }}
               priority
-              sizes="(max-width: 640px) 600px, (max-width: 1024px) 740px, 1000px"
             />
           </div>
 

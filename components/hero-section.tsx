@@ -104,11 +104,11 @@ function StatsBar({ started }: { started: boolean }) {
     <div
       className="inline-flex items-stretch self-start rounded-2xl overflow-hidden"
       style={{
-        background: 'oklch(0.10 0.018 55 / 75%)',
-        border: '1px solid oklch(0.84 0.11 88 / 22%)',
-        boxShadow: '0 6px 32px rgba(0,0,0,0.35), inset 0 1px 0 oklch(0.98 0.005 85 / 8%)',
-        backdropFilter: 'blur(16px) saturate(1.4)',
-        WebkitBackdropFilter: 'blur(16px) saturate(1.4)',
+        background: 'rgba(255,255,255,0.06)',
+        border: '1px solid rgba(255,255,255,0.18)',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.18)',
+        backdropFilter: 'blur(20px) saturate(1.6)',
+        WebkitBackdropFilter: 'blur(20px) saturate(1.6)',
       }}
     >
       {statsData.map((s, i) => (
@@ -262,7 +262,7 @@ export function HeroSection() {
             >
               <span style={{ color: 'oklch(0.98 0.008 85)' }}>كلامك عربي</span>
               <br />
-              <span style={{ color: 'oklch(0.86 0.12 88)' }}>وجذوره أعمق</span>
+              <span style={{ color: 'oklch(0.86 0.12 88)' }}>{'وجذوره أعمق'}</span>
               <br />
               <span style={{ color: 'oklch(0.98 0.008 85)' }}>مما تتصوّر</span>
             </h1>
@@ -355,10 +355,10 @@ export function HeroSection() {
             }}
           />
 
-          {/* Circle badges */}
+          {/* Circle badges — positioned clear of the teacher's body */}
           <CircleBadge value="+٢٠"  label="سنة خبرة" size={130} className="hidden sm:flex" style={{ top: '9%',    left: '3%' }} />
-          <CircleBadge value="+٣٠٠" label="طالب"     size={120} className="hidden sm:flex" style={{ bottom: '12%', left: '3%' }} />
-          <CircleBadge value="٩٧٪"  label="نسبة رضا" size={105} className="hidden sm:flex" style={{ bottom: '2%',  left: '40%' }} />
+          <CircleBadge value="+٣٠٠" label="طالب"     size={120} className="hidden sm:flex" style={{ top: '38%',   left: '2%' }} />
+          <CircleBadge value="٩٧٪"  label="نسبة رضا" size={105} className="hidden sm:flex" style={{ bottom: '14%', right: '4%' }} />
 
           {/* Book — tilted divider between sections */}
           <div
@@ -399,10 +399,7 @@ export function HeroSection() {
             />
           </div>
 
-          {/* Arabesque line under teacher — sits at section bottom */}
-          <div className="absolute bottom-6 left-0 right-0 z-[16] flex justify-center px-8 pointer-events-none">
-            <ArabesqueLine />
-          </div>
+
 
           <style>{`
             @keyframes gentleFloat {
@@ -442,9 +439,11 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Bottom arabesque — full width */}
-      <div className="relative z-10 pb-6 px-8 max-w-7xl mx-auto w-full">
-        <ArabesqueLine />
+      {/* Bottom arabesque — single, full width, centered */}
+      <div className="relative z-10 pb-6 px-8 w-full flex justify-center pointer-events-none" aria-hidden="true">
+        <div className="w-full max-w-5xl">
+          <ArabesqueLine />
+        </div>
       </div>
     </section>
   )

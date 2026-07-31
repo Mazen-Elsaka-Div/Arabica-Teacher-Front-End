@@ -3,28 +3,83 @@
 import Image from 'next/image'
 import { TopographicBackground } from '@/components/topo-background'
 
-/* Arabic letters that scatter around as transparent background vectors */
-const floatingLetters = [
-  { letter: 'ص', className: 'float-letter-1 top-[5%] right-[8%] text-5xl', color: 'text-[oklch(0.85_0.09_88)]' },
-  { letter: 'ع', className: 'float-letter-2 top-[10%] left-[5%] text-4xl',  color: 'text-[oklch(0.82_0.11_150)]' },
-  { letter: 'ر', className: 'float-letter-3 top-[28%] right-[-2%] text-5xl', color: 'text-[oklch(0.85_0.09_88)]' },
-  { letter: 'ب', className: 'float-letter-4 bottom-[25%] left-[-5%] text-4xl', color: 'text-[oklch(0.82_0.11_150)]' },
-  { letter: 'ي', className: 'float-letter-5 top-[18%] right-[20%] text-4xl', color: 'text-[oklch(0.87_0.07_90)]' },
-  { letter: 'ة', className: 'float-letter-6 bottom-[35%] right-[2%] text-3xl', color: 'text-[oklch(0.85_0.09_88)]' },
-  { letter: 'ح', className: 'float-letter-7 top-[50%] left-[3%] text-4xl',  color: 'text-[oklch(0.82_0.11_150)]' },
-  { letter: 'ل', className: 'float-letter-8 top-[8%] left-[22%] text-5xl',  color: 'text-[oklch(0.87_0.07_90)]' },
-  { letter: 'غ', className: 'float-letter-9 top-[42%] left-[8%] text-3xl',  color: 'text-[oklch(0.85_0.09_88)]' },
-  { letter: 'م', className: 'float-letter-10 bottom-[20%] right-[15%] text-4xl', color: 'text-[oklch(0.82_0.11_150)]' },
-  { letter: 'ة', className: 'float-letter-11 top-[65%] right-[8%] text-3xl', color: 'text-[oklch(0.87_0.07_90)]' },
-  { letter: 'ق', className: 'float-letter-12 bottom-[15%] left-[25%] text-4xl', color: 'text-[oklch(0.85_0.09_88)]' },
+/* ── Letters flying out of the tablet — arc from tablet up toward the headline ── */
+const tabletLetters = [
+  // Close to the tablet: small, dense (tablet is around 60% top / 58% left)
+  { letter: 'ا', top: '58%', left: '60%', size: 'text-xl',  opacity: 0.45, delay: '0s',    rotate: '-8deg' },
+  { letter: 'ب', top: '54%', left: '64%', size: 'text-2xl', opacity: 0.55, delay: '0.4s',  rotate: '6deg' },
+  { letter: 'ت', top: '50%', left: '61%', size: 'text-xl',  opacity: 0.5,  delay: '0.8s',  rotate: '-12deg' },
+  { letter: 'ث', top: '48%', left: '68%', size: 'text-2xl', opacity: 0.6,  delay: '1.2s',  rotate: '10deg' },
+  // Middle of the arc — rising up and toward the headline
+  { letter: 'ج', top: '42%', left: '65%', size: 'text-3xl', opacity: 0.65, delay: '0.2s',  rotate: '-6deg' },
+  { letter: 'ح', top: '38%', left: '72%', size: 'text-3xl', opacity: 0.7,  delay: '0.6s',  rotate: '14deg' },
+  { letter: 'خ', top: '34%', left: '68%', size: 'text-2xl', opacity: 0.6,  delay: '1s',    rotate: '-10deg' },
+  { letter: 'د', top: '31%', left: '77%', size: 'text-4xl', opacity: 0.75, delay: '1.4s',  rotate: '8deg' },
+  // Spreading further up & out toward the text
+  { letter: 'ر', top: '26%', left: '72%', size: 'text-3xl', opacity: 0.7,  delay: '0.3s',  rotate: '-14deg' },
+  { letter: 'س', top: '22%', left: '81%', size: 'text-4xl', opacity: 0.8,  delay: '0.7s',  rotate: '12deg' },
+  { letter: 'ع', top: '17%', left: '76%', size: 'text-3xl', opacity: 0.65, delay: '1.1s',  rotate: '-8deg' },
+  { letter: 'ق', top: '13%', left: '85%', size: 'text-4xl', opacity: 0.75, delay: '1.5s',  rotate: '16deg' },
+  { letter: 'ل', top: '9%',  left: '79%', size: 'text-2xl', opacity: 0.55, delay: '0.5s',  rotate: '-16deg' },
+  { letter: 'م', top: '18%', left: '90%', size: 'text-3xl', opacity: 0.7,  delay: '0.9s',  rotate: '6deg' },
+  { letter: 'ن', top: '27%', left: '88%', size: 'text-2xl', opacity: 0.6,  delay: '1.3s',  rotate: '-4deg' },
 ]
 
 /* Stats */
 const stats = [
-  { value: '+٢٠', label: 'سنة خبرة' },
-  { value: '+٢٠٠', label: 'طالب' },
-  { value: '٩٧٪', label: 'نسبة رضا' },
+  { value: '+٢٠', label: 'سنة خبرة', color: 'oklch(0.85 0.10 88)' },
+  { value: '+٣٠٠', label: 'طالب', color: 'oklch(0.80 0.12 150)' },
+  { value: '٩٧٪', label: 'نسبة رضا', color: 'oklch(0.85 0.10 88)' },
 ]
+
+/* ── Gold circle badges around the teacher ── */
+function CircleBadge({
+  value,
+  label,
+  size,
+  className,
+  style,
+}: {
+  value: string
+  label?: string
+  size: number
+  className?: string
+  style?: React.CSSProperties
+}) {
+  return (
+    <div
+      className={`absolute z-[12] flex flex-col items-center justify-center rounded-full select-none pointer-events-none ${className ?? ''}`}
+      style={{
+        width: size,
+        height: size,
+        background: 'oklch(0.15 0.028 60 / 85%)',
+        border: '1.5px solid oklch(0.78 0.10 85 / 70%)',
+        boxShadow: '0 0 30px rgba(0,0,0,0.55), inset 0 0 20px oklch(0.78 0.10 85 / 8%)',
+        backdropFilter: 'blur(4px)',
+        ...style,
+      }}
+    >
+      <span
+        className="font-black leading-none"
+        style={{
+          fontFamily: 'var(--font-cairo)',
+          color: 'oklch(0.87 0.10 88)',
+          fontSize: size * 0.28,
+        }}
+      >
+        {value}
+      </span>
+      {label && (
+        <span
+          className="font-semibold mt-1"
+          style={{ color: 'oklch(0.75 0.06 85)', fontSize: Math.max(size * 0.09, 10) }}
+        >
+          {label}
+        </span>
+      )}
+    </div>
+  )
+}
 
 export function HeroSection() {
   return (
@@ -34,353 +89,247 @@ export function HeroSection() {
     >
       <TopographicBackground />
 
-      {/* Main hero content */}
-      <div className="relative z-10 flex-1 flex items-center pt-28 pb-16 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 items-end w-full">
+      {/* Dark shadow behind the text side (right in RTL) */}
+      <div
+        className="absolute inset-y-0 start-0 w-full lg:w-[55%] z-[1] pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background:
+            'radial-gradient(ellipse 85% 70% at 78% 45%, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 45%, transparent 75%)',
+        }}
+      />
 
-          {/* ── RIGHT SIDE: Text Content (RTL = appears on right) ── */}
-          <div className="flex flex-col gap-6 lg:pr-8 order-2 lg:order-1">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 self-start px-4 py-1.5 rounded-full border border-border bg-card/60 backdrop-blur-sm">
-              <span className="size-2 rounded-full bg-primary shrink-0" />
-              <span className="text-xs font-medium text-muted-foreground">
-                أكاديمية اللغة العربية الأولى
+      {/* Main hero content — full width, text pushed to the far edge */}
+      <div className="relative z-10 flex-1 flex flex-col lg:flex-row items-stretch pt-24 lg:pt-20 w-full">
+
+        {/* ── TEXT SIDE (start = right edge in RTL) ── */}
+        <div className="flex flex-col justify-center gap-6 order-2 lg:order-1 w-full lg:w-[42%] px-6 sm:px-10 lg:ps-14 lg:pe-6 pb-12 lg:pb-20">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 self-start px-4 py-1.5 rounded-full border bg-black/40 backdrop-blur-sm" style={{ borderColor: 'oklch(0.78 0.10 85 / 35%)' }}>
+            <span className="size-2 rounded-full shrink-0" style={{ background: 'oklch(0.85 0.10 88)' }} />
+            <span className="text-xs font-semibold" style={{ color: 'oklch(0.85 0.06 85)' }}>
+              أكاديمية اللغة العربية الأولى
+            </span>
+          </div>
+
+          {/* Main headline — brighter, clearer colors */}
+          <div className="space-y-0">
+            <h1
+              className="text-5xl sm:text-6xl xl:text-[4.2rem] font-black text-balance"
+              style={{ fontFamily: 'var(--font-cairo)', lineHeight: 1.3 }}
+            >
+              <span style={{ color: 'oklch(0.98 0.008 85)' }}>كلامك عربي</span>
+              <br />
+              <span style={{ color: 'oklch(0.86 0.12 88)' }}>وجذوره أعمق</span>
+              <br />
+              <span style={{ color: 'oklch(0.98 0.008 85)' }}>مما تتصوّر</span>
+            </h1>
+            <div className="pt-3">
+              <span
+                className="text-lg sm:text-xl font-bold"
+                style={{ color: 'oklch(0.84 0.11 150)' }}
+              >
+                تعلّمها صح — من البداية للاحتراف
               </span>
             </div>
+          </div>
 
-            {/* Main headline */}
-            <div className="space-y-1">
-              <h1
-                className="text-4xl sm:text-5xl xl:text-[3.6rem] font-black text-foreground leading-snug text-balance"
-                style={{ fontFamily: 'var(--font-cairo)', lineHeight: 1.25 }}
-              >
-                كلامك عربي
-              </h1>
-              <h1
-                className="text-4xl sm:text-5xl xl:text-[3.6rem] font-black leading-snug text-balance"
-                style={{ fontFamily: 'var(--font-cairo)', lineHeight: 1.25, color: 'oklch(0.85 0.09 88)' }}
-              >
-                وجذوره أعمق
-              </h1>
-              <h1
-                className="text-4xl sm:text-5xl xl:text-[3.6rem] font-black leading-snug text-balance"
-                style={{ fontFamily: 'var(--font-cairo)', lineHeight: 1.25 }}
-              >
-                <span className="text-foreground">مما تتصوّر</span>
-              </h1>
-              <div className="pt-1">
+          {/* Description — clearer contrast */}
+          <p
+            className="text-base sm:text-lg leading-relaxed max-w-md"
+            style={{ color: 'oklch(0.86 0.02 85)' }}
+          >
+            في أكاديمية شفاء العليل، مش هنحفّظك قواعد — هنخليك تحسّ بها. من النحو والصرف للبلاغة والإملاء، كل درس مبني على الفهم الحقيقي.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              className="flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-bold transition-all hover:scale-105 active:scale-95 shadow-lg"
+              style={{
+                background: 'oklch(0.84 0.11 88)',
+                color: 'oklch(0.16 0.04 60)',
+              }}
+            >
+              <span>←</span>
+              <span>اختار مرحلتك الدراسية</span>
+            </button>
+            <button
+              className="flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold border bg-black/30 backdrop-blur-sm hover:bg-black/50 transition-all"
+              style={{ borderColor: 'oklch(0.78 0.10 85 / 35%)', color: 'oklch(0.92 0.015 85)' }}
+            >
+              اعرف أكتر عن الأكاديمية
+            </button>
+          </div>
+
+          {/* Stats */}
+          <div className="flex items-center gap-10 pt-2">
+            {stats.map((stat, i) => (
+              <div key={i} className="flex flex-col items-center gap-0.5">
                 <span
-                  className="text-lg sm:text-xl font-semibold"
-                  style={{ color: 'oklch(0.80 0.09 150)' }}
+                  className="text-3xl sm:text-4xl font-black"
+                  style={{ color: stat.color, fontFamily: 'var(--font-cairo)' }}
                 >
-                  تعلّمها صح — من البداية للاحتراف
+                  {stat.value}
+                </span>
+                <span className="text-xs font-medium" style={{ color: 'oklch(0.72 0.03 85)' }}>
+                  {stat.label}
                 </span>
               </div>
-            </div>
-
-            {/* Description */}
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-md">
-              في أكاديمية شفاء العليل، مش هنحفّظك قواعد — هنخليك تحسّ بها. من النحو والصرف للبلاغة والإملاء، كل درس مبني على الفهم الحقيقي.
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-3">
-              <button
-                className="flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-bold transition-all hover:scale-105 active:scale-95 shadow-lg"
-                style={{
-                  background: 'oklch(0.82 0.10 88)',
-                  color: 'oklch(0.18 0.06 158)',
-                }}
-              >
-                <span>←</span>
-                <span>اختار مرحلتك الدراسية</span>
-              </button>
-              <button className="flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold border border-border bg-card/60 backdrop-blur-sm hover:bg-muted transition-all">
-                اعرف أكتر عن الأكاديمية
-              </button>
-            </div>
-
-            {/* Stats */}
-            <div className="flex items-center gap-8 pt-2">
-              {stats.map((stat, i) => (
-                <div key={i} className="flex flex-col items-center gap-0.5">
-                  <span
-                    className="text-3xl sm:text-4xl font-black"
-                    style={{
-                      color: i === 0
-                        ? 'oklch(0.85 0.09 88)'
-                        : i === 1
-                          ? 'oklch(0.82 0.11 150)'
-                          : 'oklch(0.85 0.09 88)',
-                      fontFamily: 'var(--font-cairo)',
-                    }}
-                  >
-                    {stat.value}
-                  </span>
-                  <span className="text-xs text-muted-foreground font-medium">{stat.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ── LEFT SIDE: Teacher Photo (LTR = appears on left) ── */}
-          <div className="relative flex items-end justify-center order-1 lg:order-2 h-[500px] sm:h-[600px] lg:h-[720px]">
-
-            {/* Outer decorative ring with Arabic letters */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="relative" style={{ width: 460, height: 460 }}>
-
-                {/* Outer dashed ring */}
-                <svg
-                  className="absolute inset-0 spin-slow opacity-25"
-                  viewBox="0 0 460 460"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle
-                    cx="230"
-                    cy="230"
-                    r="220"
-                    stroke="#c8b99a"
-                    strokeWidth="1"
-                    strokeDasharray="8 12"
-                  />
-                </svg>
-
-                {/* Inner ring */}
-                <svg
-                  className="absolute inset-0 spin-reverse opacity-15"
-                  viewBox="0 0 460 460"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style={{ inset: 30 }}
-                >
-                  <circle
-                    cx="200"
-                    cy="200"
-                    r="190"
-                    stroke="#a8c8a0"
-                    strokeWidth="1"
-                    strokeDasharray="4 8"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            {/* Floating Arabic letters — scattered as transparent background vectors */}
-            {floatingLetters.map((item, i) => (
-              <span
-                key={i}
-                className={`absolute font-black select-none pointer-events-none ${item.className}`}
-                style={{
-                  fontFamily: 'var(--font-cairo)',
-                  color: item.color.replace('text-[', '').replace(']', ''),
-                  opacity: 0.07,
-                }}
-                aria-hidden="true"
-              >
-                {item.letter}
-              </span>
             ))}
+          </div>
+        </div>
 
-            {/* ── Book image — same center as teacher, z behind him ── */}
-            <div
-              className="absolute z-[9] pointer-events-none"
+        {/* ── TEACHER SIDE (end = left in RTL) — extra large ── */}
+        <div className="relative order-1 lg:order-2 w-full lg:w-[58%] h-[540px] sm:h-[640px] lg:h-auto lg:min-h-[calc(100vh-5rem)]">
+
+          {/* Letters flying out of the tablet */}
+          {tabletLetters.map((item, i) => (
+            <span
+              key={i}
+              className={`absolute z-[13] font-black select-none pointer-events-none letter-rise ${item.size}`}
               style={{
-                bottom: '8%',
-                left: '50%',
-                width: 500,
-                transform: 'translateX(-50%)',
-                animation: 'bookFloat 5s ease-in-out infinite',
-              }}
-            >
-              <Image
-                src="/book.png"
-                alt=""
-                width={500}
-                height={333}
-                className="w-full h-auto"
-                style={{ opacity: 0.92 }}
-              />
-            </div>
-
-            <style>{`
-              @keyframes bookFloat {
-                0%   { transform: translateX(-50%) translateY(0px);    }
-                50%  { transform: translateX(-50%) translateY(-18px);   }
-                100% { transform: translateX(-50%) translateY(0px);    }
-              }
-            `}</style>
-
-            {/* ── BACKGROUND: Floating Arabic language vectors ── */}
-            {/* Feather / quill — top right */}
-            <div className="absolute top-[10%] right-[6%] z-[7] pointer-events-none opacity-40">
-              <svg width="60" height="120" viewBox="0 0 60 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M30 5 C50 20 58 50 45 80 C38 96 30 110 28 118" stroke="#c8b99a" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M30 5 C10 20 2 50 15 80 C22 96 28 110 28 118" stroke="#c8b99a" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M30 5 C40 30 38 60 32 90" stroke="#c8b99a" strokeWidth="0.8" opacity="0.6" />
-                <path d="M30 5 C22 25 20 50 24 80" stroke="#c8b99a" strokeWidth="0.8" opacity="0.5" />
-                {[20,32,42,52,62,72,82].map((y, i) => (
-                  <path key={i} d={`M${28 - i * 1.2} ${y} C ${30} ${y - 4} ${32 + i * 1.2} ${y}`} stroke="#c8b99a" strokeWidth="0.7" opacity="0.5" />
-                ))}
-                <path d="M28 118 L28 108 L26 115 Z" fill="#c8b99a" opacity="0.5" />
-              </svg>
-            </div>
-
-            {/* Inkwell / حبارة — bottom left */}
-            <div className="absolute bottom-[30%] left-[3%] z-[7] pointer-events-none opacity-40">
-              <svg width="55" height="65" viewBox="0 0 55 65" fill="none" xmlns="http://www.w3.org/2000/svg">
-                {/* Bottle body */}
-                <path d="M15 25 C10 30 8 45 8 52 C8 60 12 64 27 64 C42 64 47 60 47 52 C47 45 45 30 40 25 Z" stroke="#c8b99a" strokeWidth="1.5" fill="none" />
-                <path d="M15 25 C10 30 8 45 8 52 C8 60 12 64 27 64 C42 64 47 60 47 52 C47 45 45 30 40 25 Z" fill="#c8b99a" opacity="0.1" />
-                {/* Neck */}
-                <path d="M20 25 L20 12 L35 12 L35 25" stroke="#c8b99a" strokeWidth="1.5" fill="none" />
-                {/* Cap */}
-                <rect x="17" y="8" width="21" height="6" rx="2" stroke="#c8b99a" strokeWidth="1.2" fill="#c8b99a" opacity="0.2" />
-                {/* Ink level */}
-                <path d="M12 50 C12 50 27 46 42 50" stroke="#c8b99a" strokeWidth="1" opacity="0.6" />
-                {/* Calligraphy drip */}
-                <path d="M47 38 Q55 42 52 50" stroke="#c8b99a" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
-              </svg>
-            </div>
-
-            {/* Scroll / مخطوطة — top left */}
-            <div className="absolute top-[18%] left-[6%] z-[7] pointer-events-none opacity-40">
-              <svg width="65" height="80" viewBox="0 0 65 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                {/* Top rod */}
-                <ellipse cx="32" cy="10" rx="28" ry="7" fill="#c8b99a" opacity="0.2" stroke="#c8b99a" strokeWidth="1.2" />
-                {/* Scroll body */}
-                <rect x="4" y="10" width="57" height="58" fill="#c8b99a" opacity="0.08" />
-                <line x1="4" y1="10" x2="4" y2="68" stroke="#c8b99a" strokeWidth="1.2" />
-                <line x1="61" y1="10" x2="61" y2="68" stroke="#c8b99a" strokeWidth="1.2" />
-                {/* Bottom rod */}
-                <ellipse cx="32" cy="68" rx="28" ry="7" fill="#c8b99a" opacity="0.2" stroke="#c8b99a" strokeWidth="1.2" />
-                {/* Text lines */}
-                <line x1="14" y1="28" x2="51" y2="28" stroke="#c8b99a" strokeWidth="0.8" opacity="0.5" />
-                <line x1="14" y1="38" x2="51" y2="38" stroke="#c8b99a" strokeWidth="0.8" opacity="0.5" />
-                <line x1="14" y1="48" x2="51" y2="48" stroke="#c8b99a" strokeWidth="0.8" opacity="0.5" />
-                <text x="32" y="34" textAnchor="middle" fontSize="8" fill="#c8b99a" opacity="0.7" fontFamily="var(--font-cairo)">علم</text>
-              </svg>
-            </div>
-
-            {/* ── Large Arabic base character — teacher stands on this ── */}
-            <div
-              className="absolute bottom-0 left-1/2 -translate-x-1/2 z-[5] pointer-events-none"
-              style={{
-                fontSize: '520px',
+                top: item.top,
+                left: item.left,
                 fontFamily: 'var(--font-cairo)',
-                fontWeight: 'bold',
-                color: '#c8b99a',
-                opacity: 0.08,
-                lineHeight: 1,
-                textAlign: 'center',
+                color: 'oklch(0.85 0.10 88)',
+                opacity: item.opacity,
+                animationDelay: item.delay,
+                transform: `rotate(${item.rotate})`,
+                textShadow: '0 0 14px oklch(0.85 0.10 88 / 45%)',
               }}
-            >
-              ع
-            </div>
-
-            {/* ── Gold base platform — teacher stands on this ── */}
-            <div className="absolute left-1/2 -translate-x-1/2 z-[11] pointer-events-none" style={{ width: 520, bottom: '-18px' }}>
-              <svg viewBox="0 0 520 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-                <defs>
-                  <linearGradient id="baseGold" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%"   stopColor="#1e4d3a" stopOpacity="0" />
-                    <stop offset="15%"  stopColor="#a8882a" stopOpacity="0.9" />
-                    <stop offset="35%"  stopColor="#d4aa3a" stopOpacity="1" />
-                    <stop offset="50%"  stopColor="#f0cc60" stopOpacity="1" />
-                    <stop offset="65%"  stopColor="#d4aa3a" stopOpacity="1" />
-                    <stop offset="85%"  stopColor="#a8882a" stopOpacity="0.9" />
-                    <stop offset="100%" stopColor="#1e4d3a" stopOpacity="0" />
-                  </linearGradient>
-                  <linearGradient id="baseGoldShine" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%"   stopColor="#fff" stopOpacity="0" />
-                    <stop offset="45%"  stopColor="#fff" stopOpacity="0" />
-                    <stop offset="50%"  stopColor="#fff" stopOpacity="0.35" />
-                    <stop offset="55%"  stopColor="#fff" stopOpacity="0" />
-                    <stop offset="100%" stopColor="#fff" stopOpacity="0" />
-                  </linearGradient>
-                  <linearGradient id="engraveFade" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%"   stopColor="#1e4d3a" stopOpacity="0" />
-                    <stop offset="20%"  stopColor="#1e4d3a" stopOpacity="0.75" />
-                    <stop offset="50%"  stopColor="#1a4535" stopOpacity="0.85" />
-                    <stop offset="80%"  stopColor="#1e4d3a" stopOpacity="0.75" />
-                    <stop offset="100%" stopColor="#1e4d3a" stopOpacity="0" />
-                  </linearGradient>
-                  <filter id="baseGlow" x="-10%" y="-80%" width="120%" height="260%">
-                    <feGaussianBlur stdDeviation="4" result="blur" />
-                    <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-                  </filter>
-                  <clipPath id="barClip">
-                    <rect x="0" y="0" width="520" height="10" rx="5" />
-                  </clipPath>
-                </defs>
-
-                {/* Soft glow halo */}
-                <ellipse cx="260" cy="17" rx="200" ry="6" fill="#c8a020" opacity="0.3" filter="url(#baseGlow)" />
-
-                {/* Main gold bar */}
-                <rect x="0" y="0" width="520" height="10" rx="5" fill="url(#baseGold)" />
-
-                {/* Green engraved arabesque pattern — clipped inside bar */}
-                <g clipPath="url(#barClip)" stroke="#1e4d3a" strokeWidth="1" fill="none">
-                  {/* Wavy vine line running across the full bar */}
-                  <path
-                    d="M 50 5 Q 70 1 90 5 Q 110 9 130 5 Q 150 1 170 5 Q 190 9 210 5 Q 230 1 250 5 Q 270 9 290 5 Q 310 1 330 5 Q 350 9 370 5 Q 390 1 410 5 Q 430 9 450 5 Q 470 1 490 5"
-                    stroke="#1a4535"
-                    strokeWidth="1.2"
-                    opacity="0.7"
-                  />
-                  {/* Small leaf/petal bursts at each wave crest */}
-                  {[90, 130, 170, 210, 250, 290, 330, 370, 410, 450].map((x, i) => (
-                    <g key={i} opacity="0.65">
-                      <ellipse cx={x} cy="5" rx="3.5" ry="2" stroke="#1a4535" strokeWidth="0.8" />
-                    </g>
-                  ))}
-                  {/* Tiny dot accents at wave troughs */}
-                  {[70, 110, 150, 190, 230, 270, 310, 350, 390, 430, 470].map((x, i) => (
-                    <circle key={i} cx={x} cy="5" r="1" fill="#1a4535" opacity="0.5" />
-                  ))}
-                </g>
-
-                {/* Shine highlight on top edge */}
-                <rect x="0" y="0" width="520" height="3" rx="1.5" fill="url(#baseGoldShine)" />
-                {/* Shadow line underneath */}
-                <rect x="30" y="10" width="460" height="2" rx="1" fill="#6b5010" opacity="0.4" />
-              </svg>
-            </div>
-
-            {/* ── Teacher image ── */}
-            <div
-              className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10"
-              style={{
-                width: 600,
-                height: 750,
-                maskImage: 'radial-gradient(ellipse 88% 92% at 50% 58%, black 45%, transparent 100%)',
-                WebkitMaskImage: 'radial-gradient(ellipse 88% 92% at 50% 58%, black 45%, transparent 100%)',
-              }}
-            >
-              <Image
-                src="/teacher.png"
-                alt="المدرس - أكاديمية شفاء العليل في اللغة العربية"
-                fill
-                className="object-contain object-bottom"
-                style={{ filter: 'contrast(1.05) brightness(1.0) saturate(0.95)' }}
-                priority
-                sizes="600px"
-              />
-            </div>
-
-
-
-            {/* Decorative Arabic calligraphy background text */}
-            <div
-              className="absolute bottom-14 left-1/2 -translate-x-1/2 text-6xl font-black opacity-[0.06] select-none pointer-events-none whitespace-nowrap"
-              style={{ fontFamily: 'var(--font-cairo)', color: 'oklch(0.72 0.13 78)' }}
               aria-hidden="true"
             >
-              اللغة العربية
-            </div>
+              {item.letter}
+            </span>
+          ))}
+
+          {/* Glow above the tablet — light source for the letters */}
+          <div
+            className="absolute z-[11] pointer-events-none"
+            aria-hidden="true"
+            style={{
+              top: '48%',
+              left: '48%',
+              width: 240,
+              height: 240,
+              background: 'radial-gradient(circle, oklch(0.88 0.09 88 / 25%) 0%, transparent 65%)',
+              filter: 'blur(8px)',
+            }}
+          />
+
+          {/* ── Circle badges around the teacher (left side, like reference) ── */}
+          <CircleBadge
+            value="+٢٠"
+            label="سنة خبرة"
+            size={140}
+            className="hidden sm:flex"
+            style={{ top: '8%', left: '2%' }}
+          />
+          <CircleBadge
+            value="+٣٠٠"
+            label="طالب"
+            size={125}
+            className="hidden sm:flex"
+            style={{ bottom: '10%', left: '3%' }}
+          />
+          <CircleBadge
+            value="٩٧٪"
+            label="نسبة رضا"
+            size={105}
+            className="hidden sm:flex"
+            style={{ bottom: '2%', left: '38%' }}
+          />
+
+          {/* ── Small book beside the teacher (not behind) ── */}
+          <div
+            className="absolute z-[12] pointer-events-none"
+            style={{
+              bottom: '2%',
+              right: '-1%',
+              width: 135,
+              animation: 'gentleFloat 5s ease-in-out infinite',
+            }}
+          >
+            <Image
+              src="/book.png"
+              alt=""
+              width={135}
+              height={90}
+              className="w-full h-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)]"
+            />
           </div>
+
+          {/* ── Inkwell & quill (حباره.png) — floating beside the teacher ── */}
+          <div
+            className="absolute z-[9] pointer-events-none"
+            style={{
+              top: '38%',
+              left: '7%',
+              width: 105,
+              animation: 'gentleFloat 6s ease-in-out infinite',
+              animationDelay: '1s',
+            }}
+          >
+            <Image
+              src="/حباره.png"
+              alt=""
+              width={105}
+              height={186}
+              className="w-full h-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]"
+            />
+          </div>
+
+          {/* ── Papyrus scroll (برديه.png) — floating top area ── */}
+          <div
+            className="absolute z-[9] pointer-events-none"
+            style={{
+              top: '4%',
+              left: '23%',
+              width: 115,
+              animation: 'gentleFloat 7s ease-in-out infinite',
+              animationDelay: '2s',
+            }}
+          >
+            <Image
+              src="/برديه.png"
+              alt=""
+              width={115}
+              height={208}
+              className="w-full h-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]"
+            />
+          </div>
+
+          {/* ── Teacher image — very large ── */}
+          <div
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-[520px] sm:w-[640px] lg:w-[760px] xl:w-[820px] h-full"
+            style={{
+              maskImage: 'linear-gradient(to top, black 92%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to top, black 92%, transparent 100%)',
+            }}
+          >
+            <Image
+              src="/teacher.png"
+              alt="المدرس - أكاديمية شفاء العليل في اللغة العربية"
+              fill
+              className="object-contain object-bottom"
+              style={{ filter: 'contrast(1.05) saturate(0.95) drop-shadow(0 20px 50px rgba(0,0,0,0.6))' }}
+              priority
+              sizes="(max-width: 640px) 520px, (max-width: 1024px) 640px, 820px"
+            />
+          </div>
+
+          <style>{`
+            @keyframes gentleFloat {
+              0%, 100% { transform: translateY(0px); }
+              50%      { transform: translateY(-14px); }
+            }
+            @keyframes letterRise {
+              0%, 100% { translate: 0 0; }
+              50%      { translate: 0 -12px; }
+            }
+            .letter-rise { animation: letterRise 4.5s ease-in-out infinite; }
+          `}</style>
         </div>
       </div>
 

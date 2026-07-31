@@ -90,14 +90,14 @@
    * Background: near-black warm brown  #1a150f ≈ oklch(0.14 0.025 55)
    * Lines/accents: warm gold/beige     #c8a878 ≈ oklch(0.73 0.08 75)
    */
-  --background: oklch(0.14 0.025 55);
-  --foreground: oklch(0.94 0.012 80);
+  --background: oklch(0.12 0.020 55);
+  --foreground: oklch(0.96 0.010 85);
 
-  --card: oklch(0.18 0.030 55);
-  --card-foreground: oklch(0.94 0.012 80);
+  --card: oklch(0.17 0.028 55);
+  --card-foreground: oklch(0.96 0.010 85);
 
-  --popover: oklch(0.18 0.030 55);
-  --popover-foreground: oklch(0.94 0.012 80);
+  --popover: oklch(0.17 0.028 55);
+  --popover-foreground: oklch(0.96 0.010 85);
 
   /* Gold as primary accent */
   --primary: oklch(0.73 0.10 75);
@@ -128,12 +128,12 @@
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
     color-scheme: dark;
-    --background: oklch(0.14 0.025 55);
-    --foreground: oklch(0.94 0.012 80);
-    --card: oklch(0.18 0.030 55);
-    --card-foreground: oklch(0.94 0.012 80);
-    --popover: oklch(0.18 0.030 55);
-    --popover-foreground: oklch(0.94 0.012 80);
+    --background: oklch(0.12 0.020 55);
+    --foreground: oklch(0.96 0.010 85);
+    --card: oklch(0.17 0.028 55);
+    --card-foreground: oklch(0.96 0.010 85);
+    --popover: oklch(0.17 0.028 55);
+    --popover-foreground: oklch(0.96 0.010 85);
     --primary: oklch(0.73 0.10 75);
     --primary-foreground: oklch(0.12 0.020 55);
     --secondary: oklch(0.22 0.035 55);

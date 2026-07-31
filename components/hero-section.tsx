@@ -204,89 +204,11 @@ export function HeroSection() {
               />
             </div>
 
-            {/* ── Left image: برديه (Parchment) — left side with tilt ── */}
-            <div
-              className="absolute z-[8] pointer-events-none"
-              style={{
-                top: '20%',
-                left: '5%',
-                width: 280,
-                height: 350,
-                animation: 'floatLeft 6s ease-in-out infinite',
-                filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3))',
-              }}
-            >
-              <div
-                style={{
-                  transform: 'perspective(1000px) rotateY(8deg) rotateX(2deg)',
-                  transformStyle: 'preserve-3d',
-                  width: '100%',
-                  height: '100%',
-                }}
-              >
-                <Image
-                  src="/برديه.png"
-                  alt="برديه - ورقة البردي"
-                  width={280}
-                  height={350}
-                  className="w-full h-full object-cover rounded-lg"
-                  style={{ 
-                    opacity: 0.95,
-                    boxShadow: '0 15px 35px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* ── Right image: حباره (Inkwell) — bottom right with opposite tilt ── */}
-            <div
-              className="absolute z-[8] pointer-events-none"
-              style={{
-                bottom: '15%',
-                right: '6%',
-                width: 260,
-                height: 320,
-                animation: 'floatRight 6.5s ease-in-out infinite',
-                filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3))',
-              }}
-            >
-              <div
-                style={{
-                  transform: 'perspective(1000px) rotateY(-8deg) rotateX(-2deg)',
-                  transformStyle: 'preserve-3d',
-                  width: '100%',
-                  height: '100%',
-                }}
-              >
-                <Image
-                  src="/حباره.png"
-                  alt="حباره - دواة الحبر"
-                  width={260}
-                  height={320}
-                  className="w-full h-full object-cover rounded-lg"
-                  style={{ 
-                    opacity: 0.95,
-                    boxShadow: '0 15px 35px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-                  }}
-                />
-              </div>
-            </div>
-
             <style>{`
               @keyframes bookFloat {
                 0%   { transform: translateX(-50%) translateY(0px);    }
                 50%  { transform: translateX(-50%) translateY(-18px);   }
                 100% { transform: translateX(-50%) translateY(0px);    }
-              }
-              @keyframes floatRight {
-                0%   { transform: translateY(0px) rotate(0deg); }
-                50%  { transform: translateY(-12px) rotate(-1deg); }
-                100% { transform: translateY(0px) rotate(0deg); }
-              }
-              @keyframes floatLeft {
-                0%   { transform: translateY(0px) rotate(0deg); }
-                50%  { transform: translateY(-15px) rotate(1deg); }
-                100% { transform: translateY(0px) rotate(0deg); }
               }
             `}</style>
 

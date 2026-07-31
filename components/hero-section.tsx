@@ -37,10 +37,10 @@ export function HeroSection() {
 
       {/* Main hero content */}
       <div className="relative z-10 flex-1 flex items-center pt-28 pb-16 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 items-end w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-8 lg:gap-2 items-end w-full">
 
           {/* ── RIGHT SIDE: Text Content (RTL = appears on right) ── */}
-          <div className="flex flex-col gap-6 lg:pr-8 order-2 lg:order-1">
+          <div className="flex flex-col gap-6 order-2 lg:order-1">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 self-start px-4 py-1.5 rounded-full border border-border bg-card/60 backdrop-blur-sm">
               <span className="size-2 rounded-full bg-primary shrink-0" />
@@ -80,14 +80,14 @@ export function HeroSection() {
             </div>
 
             {/* Description */}
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-md">
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl">
               في أكاديمية شفاء العليل، مش هنحفّظك قواعد — هنخليك تحسّ بها. من النحو والصرف للبلاغة والإملاء، كل درس مبني على الفهم الحقيقي.
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap items-center gap-3">
               <button
-                className="flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 rounded-full text-base font-bold transition-all hover:scale-105 active:scale-95 shadow-lg"
+                className="btn-shine flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 rounded-full text-base font-bold transition-all hover:scale-105 active:scale-95 shadow-lg"
                 style={{
                   background: 'oklch(0.82 0.10 88)',
                   color: 'oklch(0.18 0.06 158)',
@@ -96,7 +96,7 @@ export function HeroSection() {
                 <span>←</span>
                 <span>اختار مرحلتك الدراسية</span>
               </button>
-              <button className="flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 rounded-full text-base font-semibold border border-border bg-card/60 backdrop-blur-sm hover:bg-muted transition-all text-foreground">
+              <button className="btn-shine flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 rounded-full text-base font-semibold border border-border bg-card/60 backdrop-blur-sm hover:bg-muted transition-all text-foreground">
                 اعرف أكتر عن الأكاديمية
               </button>
             </div>
@@ -109,7 +109,7 @@ export function HeroSection() {
                     end={stat.end}
                     prefix={stat.prefix}
                     suffix={stat.suffix}
-                    duration={2200}
+                    duration={1000}
                     className="text-3xl sm:text-4xl font-black"
                     style={{
                       color: i === 1 ? 'var(--hero-green)' : 'var(--hero-gold)',

@@ -13,8 +13,13 @@ export function TopographicBackground() {
   React.useEffect(() => {
     // Check both the media query and the document class
     const updateDarkMode = () => {
-      const isDarkMode = document.documentElement.classList.contains('dark') ||
-        window.matchMedia('(prefers-color-scheme: dark)').matches
+      const classList = document.documentElement.classList
+      /* Explicit class choice wins; fall back to system preference */
+      const isDarkMode = classList.contains('dark')
+        ? true
+        : classList.contains('light')
+          ? false
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
       setIsDark(isDarkMode)
     }
 

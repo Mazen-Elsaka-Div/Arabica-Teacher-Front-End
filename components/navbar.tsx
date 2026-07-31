@@ -25,7 +25,7 @@ export function Navbar() {
   }, [])
 
   return (
-    <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-6">
+    <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-3 sm:px-6">
       {/* Decorative frame wrapper */}
       <div className="relative w-full max-w-[1200px]">
 
@@ -79,7 +79,7 @@ export function Navbar() {
         />
       <nav
         className={cn(
-          'flex items-center justify-between gap-8 px-6 py-3 rounded-full border transition-all duration-300',
+          'flex items-center justify-between gap-3 sm:gap-8 px-3 sm:px-6 py-2.5 sm:py-3 rounded-full border transition-all duration-300',
           'bg-card/80 backdrop-blur-md shadow-lg',
           scrolled && 'shadow-xl',
           'w-full'
@@ -88,7 +88,7 @@ export function Navbar() {
       >
         {/* Left: CTA Buttons */}
         <div className="flex items-center gap-2">
-          <button className="px-5 py-2 rounded-full text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity">
+          <button className="px-4 sm:px-5 py-2 rounded-full text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity whitespace-nowrap">
             ابدأ الآن
           </button>
           <button className="px-4 py-2 rounded-full text-sm font-medium text-foreground hover:bg-muted transition-colors hidden sm:block">

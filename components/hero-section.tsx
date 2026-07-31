@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { TopographicBackground } from '@/components/topo-background'
+import { CountUp } from '@/components/count-up'
 
 /* Arabic letters that scatter around as transparent background vectors */
 const floatingLetters = [
@@ -21,9 +22,9 @@ const floatingLetters = [
 
 /* Stats */
 const stats = [
-  { value: '+٢٠', label: 'سنة خبرة' },
-  { value: '+٢٠٠', label: 'طالب' },
-  { value: '٩٧٪', label: 'نسبة رضا' },
+  { end: 20, prefix: '+', suffix: '', label: 'سنة خبرة' },
+  { end: 200, prefix: '+', suffix: '', label: 'طالب' },
+  { end: 97, prefix: '', suffix: '٪', label: 'نسبة رضا' },
 ]
 
 export function HeroSection() {
@@ -58,7 +59,7 @@ export function HeroSection() {
               </h1>
               <h1
                 className="text-4xl sm:text-5xl xl:text-[3.6rem] font-black leading-snug text-balance"
-                style={{ fontFamily: 'var(--font-cairo)', lineHeight: 1.25, color: 'oklch(0.85 0.09 88)' }}
+                style={{ fontFamily: 'var(--font-cairo)', lineHeight: 1.25, color: 'var(--hero-gold)' }}
               >
                 وجذوره أعمق
               </h1>
@@ -70,8 +71,8 @@ export function HeroSection() {
               </h1>
               <div className="pt-1">
                 <span
-                  className="text-lg sm:text-xl font-semibold"
-                  style={{ color: 'oklch(0.80 0.09 150)' }}
+                  className="text-lg sm:text-xl font-bold"
+                  style={{ color: 'var(--hero-green)' }}
                 >
                   تعلّمها صح — من البداية للاحتراف
                 </span>
@@ -86,7 +87,7 @@ export function HeroSection() {
             {/* CTA Buttons */}
             <div className="flex flex-wrap items-center gap-3">
               <button
-                className="flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-bold transition-all hover:scale-105 active:scale-95 shadow-lg"
+                className="flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 rounded-full text-base font-bold transition-all hover:scale-105 active:scale-95 shadow-lg"
                 style={{
                   background: 'oklch(0.82 0.10 88)',
                   color: 'oklch(0.18 0.06 158)',
@@ -95,40 +96,38 @@ export function HeroSection() {
                 <span>←</span>
                 <span>اختار مرحلتك الدراسية</span>
               </button>
-              <button className="flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold border border-border bg-card/60 backdrop-blur-sm hover:bg-muted transition-all">
+              <button className="flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 rounded-full text-base font-semibold border border-border bg-card/60 backdrop-blur-sm hover:bg-muted transition-all text-foreground">
                 اعرف أكتر عن الأكاديمية
               </button>
             </div>
 
             {/* Stats */}
-            <div className="flex items-center gap-8 pt-2">
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-6 sm:gap-8 pt-2">
               {stats.map((stat, i) => (
                 <div key={i} className="flex flex-col items-center gap-0.5">
-                  <span
+                  <CountUp
+                    end={stat.end}
+                    prefix={stat.prefix}
+                    suffix={stat.suffix}
+                    duration={2200}
                     className="text-3xl sm:text-4xl font-black"
                     style={{
-                      color: i === 0
-                        ? 'oklch(0.85 0.09 88)'
-                        : i === 1
-                          ? 'oklch(0.82 0.11 150)'
-                          : 'oklch(0.85 0.09 88)',
+                      color: i === 1 ? 'var(--hero-green)' : 'var(--hero-gold)',
                       fontFamily: 'var(--font-cairo)',
                     }}
-                  >
-                    {stat.value}
-                  </span>
-                  <span className="text-xs text-muted-foreground font-medium">{stat.label}</span>
+                  />
+                  <span className="text-sm text-muted-foreground font-semibold">{stat.label}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* ── LEFT SIDE: Teacher Photo (LTR = appears on left) ── */}
-          <div className="relative flex items-end justify-center order-1 lg:order-2 h-[500px] sm:h-[600px] lg:h-[720px]">
+          <div className="relative flex items-end justify-center order-1 lg:order-2 h-[440px] sm:h-[600px] lg:h-[720px] max-w-full overflow-hidden lg:overflow-visible">
 
             {/* Outer decorative ring with Arabic letters */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="relative" style={{ width: 460, height: 460 }}>
+              <div className="relative w-[300px] h-[300px] sm:w-[460px] sm:h-[460px]">
 
                 {/* Outer dashed ring */}
                 <svg
@@ -185,11 +184,10 @@ export function HeroSection() {
 
             {/* ── Book image — same center as teacher, z behind him ── */}
             <div
-              className="absolute z-[9] pointer-events-none"
+              className="absolute z-[9] pointer-events-none w-[300px] sm:w-[420px] lg:w-[500px]"
               style={{
                 bottom: '8%',
                 left: '50%',
-                width: 500,
                 transform: 'translateX(-50%)',
                 animation: 'bookFloat 5s ease-in-out infinite',
               }}
@@ -267,7 +265,7 @@ export function HeroSection() {
             <div
               className="absolute bottom-0 left-1/2 -translate-x-1/2 z-[5] pointer-events-none"
               style={{
-                fontSize: '520px',
+                fontSize: 'clamp(280px, 55vw, 520px)',
                 fontFamily: 'var(--font-cairo)',
                 fontWeight: 'bold',
                 color: '#c8b99a',
@@ -280,7 +278,7 @@ export function HeroSection() {
             </div>
 
             {/* ── Gold base platform — teacher stands on this ── */}
-            <div className="absolute left-1/2 -translate-x-1/2 z-[11] pointer-events-none" style={{ width: 520, bottom: '-18px' }}>
+            <div className="absolute left-1/2 -translate-x-1/2 z-[11] pointer-events-none w-[340px] sm:w-[460px] lg:w-[520px]" style={{ bottom: '-18px' }}>
               <svg viewBox="0 0 520 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
                 <defs>
                   <linearGradient id="baseGold" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -351,10 +349,8 @@ export function HeroSection() {
 
             {/* ── Teacher image ── */}
             <div
-              className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10"
+              className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-[380px] h-[475px] sm:w-[500px] sm:h-[625px] lg:w-[600px] lg:h-[750px]"
               style={{
-                width: 600,
-                height: 750,
                 maskImage: 'radial-gradient(ellipse 88% 92% at 50% 58%, black 45%, transparent 100%)',
                 WebkitMaskImage: 'radial-gradient(ellipse 88% 92% at 50% 58%, black 45%, transparent 100%)',
               }}
@@ -366,7 +362,7 @@ export function HeroSection() {
                 className="object-contain object-bottom"
                 style={{ filter: 'contrast(1.05) brightness(1.0) saturate(0.95)' }}
                 priority
-                sizes="600px"
+                sizes="(max-width: 640px) 380px, (max-width: 1024px) 500px, 600px"
               />
             </div>
 

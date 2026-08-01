@@ -391,8 +391,8 @@ export function HeroSection() {
             style={{
               bottom: '0%',
               left: '50%',
-              transform: 'translateX(-48%)',
-              height: '88%',
+              transform: 'translateX(-52%)',
+              height: '94%',
               width: 'max-content',
             }}
           >

@@ -2,22 +2,25 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { BookOpen, GraduationCap, Award } from 'lucide-react'
+import { useIsDark } from '@/components/use-is-dark'
 
 /* ─────────────────────────────────────────────────────────────
- * StagesTimeline — Scroll-driven wavy golden thread
+ * StagesTimeline — Scroll-driven wavy thread
  *
  * • The thread draws itself as the user scrolls (stroke-dash technique)
- * • Its tip always sits near the bottom of the viewport, so every
- *   pixel of scrolling extends the line a little more
  * • Stop-point dots light up the moment the thread reaches them
- * • Stage labels slide in from left / right with a soft warm-brown
- *   glow behind them
+ * • Title words sit split around the thread: one word right, one left
+ * • The thread's final stretch straightens and pours vertically
+ *   into the middle of the open book at the bottom
+ * • Fully adaptive: light mode (gold canvas / brown ink) and
+ *   dark mode (dark canvas / gold ink)
  * ───────────────────────────────────────────────────────────── */
 
 const VIEW_W = 120
 const VIEW_H = 1000
 
-/* Wavy S-curve path down the center — same spirit as the topo lines */
+/* Wavy S-curve path down the center — the final stretch straightens
+   out so the thread pours vertically into the book's spine center */
 const PATH_D = [
   'M 60 2',
   'C 98 44, 22 86, 60 125',
@@ -27,25 +30,10 @@ const PATH_D = [
   'C 98 542, 22 584, 60 625',
   'C 98 667, 22 709, 60 750',
   'C 98 792, 22 834, 60 875',
-  /* Final stretch curves gently and dives into the book's mouth */
-  'C 82 902, 74 920, 60 945',
+  /* Ease out of the last wave, then drop dead-straight into the book */
+  'C 74 890, 60 900, 60 915',
+  'L 60 960',
 ].join(' ')
-
-/* ── Inverted palette: warm gold canvas, deep brown ink ── */
-const BG_GOLD     = 'oklch(0.855 0.085 84)'          // section background
-const BG_GOLD_DEEP = 'oklch(0.795 0.088 78)'         // vignette / edges
-const CARD_BG     = 'oklch(0.945 0.045 88 / 92%)'    // cream card surface
-
-const INK         = 'oklch(0.335 0.055 50)'          // primary brown — thread, accents
-const INK_DIM     = 'oklch(0.335 0.055 50 / 20%)'    // ghost track
-const INK_STRONG  = 'oklch(0.235 0.045 48)'          // headings
-const INK_SOFT    = 'oklch(0.435 0.048 52)'          // body copy
-
-/* Stop-dot accent — deep espresso brown with a cream ring */
-const DOT_COLOR  = INK_STRONG
-const DOT_RING   = 'oklch(0.965 0.030 88)'
-const DOT_GLOW   = 'oklch(0.335 0.055 50 / 40%)'
-const DOT_PULSE  = 'oklch(0.335 0.055 50)'
 
 const stages = [
   {
@@ -88,6 +76,102 @@ export function StagesTimeline() {
   const [pathLen, setPathLen] = useState(0)
   const [progress, setProgress] = useState(0)
   const [tip, setTip] = useState({ x: 60, y: 0 })
+  const isDark = useIsDark()
+
+  /* ── Adaptive palette ── */
+  const P = isDark
+    ? {
+        bg: 'oklch(0.11 0.018 55)',
+        vignette: 'rgba(0,0,0,0.5)',
+        threadA: 'oklch(0.84 0.11 88)',
+        threadB: 'oklch(0.76 0.10 80)',
+        threadC: 'oklch(0.66 0.09 70)',
+        threadDim: 'oklch(0.78 0.10 80 / 15%)',
+        threadShadow: 'drop-shadow(0 0 6px oklch(0.78 0.10 80 / 50%))',
+        tipBg: 'oklch(0.90 0.10 88)',
+        tipShadow: '0 0 14px 4px oklch(0.82 0.11 85 / 70%)',
+        dotOn: 'oklch(0.84 0.11 88)',
+        dotOnRing: 'oklch(0.94 0.06 88)',
+        dotOff: 'oklch(0.24 0.03 55)',
+        dotOffRing: 'oklch(0.40 0.04 60)',
+        dotGlow: 'oklch(0.80 0.10 82 / 45%)',
+        dotPulse: 'oklch(0.84 0.11 88)',
+        kicker: 'oklch(0.80 0.09 82)',
+        titleMain: 'oklch(0.95 0.020 85)',
+        titleAccent: 'oklch(0.84 0.11 88)',
+        bookHalo: 'oklch(0.60 0.10 75 / 30%)',
+        bookShadow: 'drop-shadow(0 10px 30px rgba(0,0,0,0.6))',
+        cardBg: 'oklch(0.15 0.024 55 / 88%)',
+        cardBorder: 'oklch(0.78 0.10 80 / 26%)',
+        cardShadow: '0 12px 44px rgba(0,0,0,0.55), inset 0 1px 0 oklch(0.78 0.10 80 / 12%)',
+        cardGlow: 'oklch(0.50 0.075 60 / 30%)',
+        iconBg: 'oklch(0.78 0.10 80 / 14%)',
+        iconBorder: 'oklch(0.78 0.10 80 / 35%)',
+        iconColor: 'oklch(0.84 0.11 88)',
+        stageLabel: 'oklch(0.80 0.10 82)',
+        heading: 'oklch(0.96 0.010 85)',
+        body: 'oklch(0.74 0.03 80)',
+        chipBg: 'oklch(0.78 0.10 80 / 6%)',
+        chipBorder: 'oklch(0.78 0.10 80 / 16%)',
+        chipNumBg: 'oklch(0.78 0.10 80 / 14%)',
+        chipNumBorder: 'oklch(0.78 0.10 80 / 32%)',
+        chipNumColor: 'oklch(0.84 0.11 88)',
+        chipName: 'oklch(0.82 0.03 80)',
+        connector: 'oklch(0.78 0.10 80)',
+        hoverChipBg: 'oklch(0.78 0.10 80 / 16%)',
+        hoverChipBorder: 'oklch(0.80 0.10 82 / 55%)',
+        hoverChipShadow: '0 0 22px 2px oklch(0.78 0.10 80 / 30%), inset 0 0 12px oklch(0.78 0.10 80 / 10%)',
+        hoverNumBg: 'oklch(0.80 0.11 82)',
+        hoverNumColor: 'oklch(0.16 0.02 55)',
+        hoverNumShadow: '0 0 14px 3px oklch(0.80 0.11 82 / 55%)',
+        hoverName: 'oklch(0.95 0.03 85)',
+      }
+    : {
+        bg: 'oklch(0.855 0.085 84)',
+        vignette: 'oklch(0.795 0.088 78)',
+        threadA: 'oklch(0.44 0.050 52)',
+        threadB: 'oklch(0.335 0.055 50)',
+        threadC: 'oklch(0.235 0.045 48)',
+        threadDim: 'oklch(0.335 0.055 50 / 20%)',
+        threadShadow: 'drop-shadow(0 1px 3px oklch(0.30 0.05 50 / 35%))',
+        tipBg: 'oklch(0.235 0.045 48)',
+        tipShadow: '0 0 0 3px oklch(0.965 0.030 88 / 85%), 0 0 14px 4px oklch(0.335 0.055 50 / 35%)',
+        dotOn: 'oklch(0.235 0.045 48)',
+        dotOnRing: 'oklch(0.965 0.030 88)',
+        dotOff: 'oklch(0.76 0.070 78)',
+        dotOffRing: 'oklch(0.60 0.060 60)',
+        dotGlow: 'oklch(0.335 0.055 50 / 40%)',
+        dotPulse: 'oklch(0.335 0.055 50)',
+        kicker: 'oklch(0.42 0.055 56)',
+        titleMain: 'oklch(0.235 0.045 48)',
+        titleAccent: 'oklch(0.48 0.075 65)',
+        bookHalo: 'oklch(0.96 0.035 88 / 55%)',
+        bookShadow: 'drop-shadow(0 10px 26px oklch(0.30 0.05 50 / 45%))',
+        cardBg: 'oklch(0.945 0.045 88 / 92%)',
+        cardBorder: 'oklch(0.335 0.055 50 / 22%)',
+        cardShadow: '0 12px 40px oklch(0.30 0.05 50 / 22%), inset 0 1px 0 oklch(1 0 0 / 45%)',
+        cardGlow: 'oklch(0.96 0.035 88 / 45%)',
+        iconBg: 'oklch(0.855 0.085 84)',
+        iconBorder: 'oklch(0.335 0.055 50 / 28%)',
+        iconColor: 'oklch(0.235 0.045 48)',
+        stageLabel: 'oklch(0.335 0.055 50)',
+        heading: 'oklch(0.235 0.045 48)',
+        body: 'oklch(0.435 0.048 52)',
+        chipBg: 'oklch(0.855 0.085 84 / 40%)',
+        chipBorder: 'oklch(0.335 0.055 50 / 16%)',
+        chipNumBg: 'oklch(0.855 0.085 84)',
+        chipNumBorder: 'oklch(0.335 0.055 50 / 30%)',
+        chipNumColor: 'oklch(0.235 0.045 48)',
+        chipName: 'oklch(0.315 0.048 50)',
+        connector: 'oklch(0.335 0.055 50)',
+        hoverChipBg: 'oklch(0.855 0.085 84 / 85%)',
+        hoverChipBorder: 'oklch(0.335 0.055 50 / 45%)',
+        hoverChipShadow: '0 6px 18px oklch(0.30 0.05 50 / 18%), inset 0 1px 0 oklch(1 0 0 / 40%)',
+        hoverNumBg: 'oklch(0.235 0.045 48)',
+        hoverNumColor: 'oklch(0.94 0.045 88)',
+        hoverNumShadow: '0 2px 10px oklch(0.30 0.05 50 / 35%)',
+        hoverName: 'oklch(0.215 0.042 46)',
+      }
 
   /* Measure the wavy path once */
   useEffect(() => {
@@ -113,9 +197,6 @@ export function StagesTimeline() {
       if (!section || !path) return
       const rect = section.getBoundingClientRect()
       const vh = window.innerHeight
-      /* p = 0 when the section just peeks in at the bottom,
-         p = 1 slightly before the section bottom reaches the viewport bottom,
-         so the final stop dot lights up even when this is the last section */
       const start = vh * 0.9
       const p = clamp((start - rect.top) / (rect.height - vh * 0.12), 0, 1)
       setProgress(p)
@@ -144,9 +225,9 @@ export function StagesTimeline() {
       ref={sectionRef}
       aria-label="المراحل الدراسية"
       className="relative h-[300vh] overflow-hidden"
-      style={{ background: BG_GOLD }}
+      style={{ background: P.bg }}
     >
-      {/* Faint topo texture — multiplied so the contours read as brown on gold */}
+      {/* Faint topo texture */}
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
@@ -154,16 +235,16 @@ export function StagesTimeline() {
           backgroundImage: 'url(/topo-dark.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          mixBlendMode: 'multiply',
-          opacity: 0.1,
+          mixBlendMode: isDark ? 'normal' : 'multiply',
+          opacity: isDark ? 0.14 : 0.1,
         }}
       />
-      {/* Vignette — deeper gold at the edges instead of black */}
+      {/* Vignette */}
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          background: `radial-gradient(ellipse 110% 55% at 50% 0%, ${BG_GOLD_DEEP} 0%, transparent 58%), radial-gradient(ellipse 110% 55% at 50% 100%, ${BG_GOLD_DEEP} 0%, transparent 58%)`,
+          background: `radial-gradient(ellipse 110% 55% at 50% 0%, ${P.vignette} 0%, transparent 58%), radial-gradient(ellipse 110% 55% at 50% 100%, ${P.vignette} 0%, transparent 58%)`,
         }}
       />
 
@@ -177,13 +258,13 @@ export function StagesTimeline() {
         >
           <defs>
             <linearGradient id="threadGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="oklch(0.44 0.050 52)" />
-              <stop offset="55%" stopColor={INK} />
-              <stop offset="100%" stopColor={INK_STRONG} />
+              <stop offset="0%" stopColor={P.threadA} />
+              <stop offset="55%" stopColor={P.threadB} />
+              <stop offset="100%" stopColor={P.threadC} />
             </linearGradient>
           </defs>
           {/* Ghost track — barely visible full path */}
-          <path d={PATH_D} stroke={INK_DIM} strokeWidth="1.5" fill="none" />
+          <path d={PATH_D} stroke={P.threadDim} strokeWidth="1.5" fill="none" />
           {/* The growing thread */}
           <path
             ref={pathRef}
@@ -195,7 +276,7 @@ export function StagesTimeline() {
             style={{
               strokeDasharray: pathLen || 1,
               strokeDashoffset: pathLen ? pathLen * (1 - progress) : pathLen || 1,
-              filter: 'drop-shadow(0 1px 3px oklch(0.30 0.05 50 / 35%))',
+              filter: P.threadShadow,
             }}
           />
         </svg>
@@ -207,8 +288,8 @@ export function StagesTimeline() {
             style={{
               left: `${(tip.x / VIEW_W) * 100}%`,
               top: `${(tip.y / VIEW_H) * 100}%`,
-              background: INK_STRONG,
-              boxShadow: '0 0 0 3px oklch(0.965 0.030 88 / 85%), 0 0 14px 4px oklch(0.335 0.055 50 / 35%)',
+              background: P.tipBg,
+              boxShadow: P.tipShadow,
             }}
             aria-hidden="true"
           />
@@ -224,13 +305,13 @@ export function StagesTimeline() {
               style={{ left: '50%', top: `${(stage.y / VIEW_H) * 100}%` }}
               aria-hidden="true"
             >
-              {/* Outer pulse ring — teal accent */}
+              {/* Outer pulse ring */}
               <span
                 className="absolute rounded-full"
                 style={{
                   width: 42,
                   height: 42,
-                  border: `1.5px solid ${DOT_PULSE}`,
+                  border: `1.5px solid ${P.dotPulse}`,
                   opacity: active ? 0.55 : 0,
                   animation: active ? 'stopPulse 2.4s ease-out infinite' : 'none',
                   transition: 'opacity 0.4s ease',
@@ -242,9 +323,9 @@ export function StagesTimeline() {
                 style={{
                   width: 18,
                   height: 18,
-                  background: active ? DOT_COLOR : 'oklch(0.76 0.070 78)',
-                  border: `2.5px solid ${active ? DOT_RING : 'oklch(0.60 0.060 60)'}`,
-                  boxShadow: active ? `0 0 20px 6px ${DOT_GLOW}` : 'none',
+                  background: active ? P.dotOn : P.dotOff,
+                  border: `2.5px solid ${active ? P.dotOnRing : P.dotOffRing}`,
+                  boxShadow: active ? `0 0 20px 6px ${P.dotGlow}` : 'none',
                   transform: active ? 'scale(1)' : 'scale(0.55)',
                   transition: 'all 0.45s cubic-bezier(0.34,1.56,0.64,1)',
                 }}
@@ -255,7 +336,7 @@ export function StagesTimeline() {
 
       </div>
 
-      {/* ── The book — the estuary where the golden thread pours in ── */}
+      {/* ── The book — the estuary where the thread pours in ── */}
       <div
         className="absolute z-10 bottom-0 left-[82%] sm:left-1/2 pointer-events-none"
         style={{
@@ -264,213 +345,87 @@ export function StagesTimeline() {
           transition: 'opacity 0.9s ease, transform 1s cubic-bezier(0.34,1.4,0.64,1)',
         }}
       >
-        {/* Soft cream halo behind the book */}
+        {/* Soft halo behind the book */}
         <div
           className="absolute inset-[-25%] rounded-full blur-3xl"
           aria-hidden="true"
-          style={{ background: 'oklch(0.96 0.035 88 / 55%)' }}
+          style={{ background: P.bookHalo }}
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/book.png"
           alt="كتاب اللغة العربية — نهاية الرحلة التعليمية"
           className="relative w-56 sm:w-80 h-auto"
-          style={{ filter: 'drop-shadow(0 10px 26px oklch(0.30 0.05 50 / 45%))' }}
+          style={{ filter: P.bookShadow }}
         />
       </div>
 
-      {/* ── Section title — split around the thread ── */}
+      {/* ── Section title — words split around the thread ──
+          Right of the thread: رحلتك / المراحل
+          Left of the thread:  التعليمية / الدراسية        */}
       <div
         className="absolute z-10 inset-x-0 hidden sm:block"
         style={{ top: `${(TITLE_Y / VIEW_H) * 100}%`, transform: 'translateY(-50%)' }}
       >
-        {/* ── Right kicker «رحلتك» — sits above «المراحل» on the right ── */}
-        <span
-          className="kicker-naskh absolute whitespace-nowrap"
-          style={{
-            left: 'calc(50% + 16px)',
-            top: '-4rem',
-            opacity: titleActive ? 1 : 0,
-            translate: titleActive ? '0 0' : '40px -10px',
-            transition: 'opacity 0.9s ease 0.1s, translate 1s cubic-bezier(0.22,1,0.36,1) 0.1s',
-          }}
-        >
-          رحلتك
-        </span>
-
-        {/* ── Left kicker «التعليمية» — sits above «الدراسية» on the left ── */}
-        <span
-          className="kicker-naskh absolute whitespace-nowrap"
-          style={{
-            right: 'calc(50% + 16px)',
-            top: '-4rem',
-            textAlign: 'right',
-            opacity: titleActive ? 1 : 0,
-            translate: titleActive ? '0 0' : '-40px -10px',
-            transition: 'opacity 0.9s ease 0.2s, translate 1s cubic-bezier(0.22,1,0.36,1) 0.2s',
-          }}
-        >
-          التعليمية
-        </span>
-
-        {/* ── Main title «المراحل | الدراسية» — SVG text with draw-in stroke ── */}
-        {/* Right side: «المراحل» */}
+        {/* Right column — hugs the thread with a small gap */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 whitespace-nowrap"
+          className="absolute top-1/2 -translate-y-1/2 flex flex-col items-start gap-1"
           style={{
-            left: 'calc(50% + 16px)',
+            left: 'calc(50% + 22px)',
             opacity: titleActive ? 1 : 0,
-            translate: titleActive ? '0 0' : '80px 0',
-            transition: 'opacity 0.7s ease 0.05s, translate 1s cubic-bezier(0.22,1,0.36,1) 0.05s',
+            translate: titleActive ? '0 0' : '60px 0',
+            transition: 'opacity 0.8s ease 0.05s, translate 0.95s cubic-bezier(0.22,1,0.36,1) 0.05s',
           }}
-          aria-hidden="true"
         >
-          <svg
-            className="relative calligraphy-svg"
-            viewBox="0 0 280 80"
-            style={{ overflow: 'visible', width: 'clamp(180px, 22vw, 290px)', height: 'auto' }}
-          >
-            <defs>
-              <linearGradient id="calliGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%"   stopColor="oklch(0.335 0.055 50)" />
-                <stop offset="45%"  stopColor="oklch(0.255 0.048 48)" />
-                <stop offset="100%" stopColor="oklch(0.175 0.036 44)" />
-              </linearGradient>
-              <filter id="calliGlow" x="-30%" y="-80%" width="160%" height="260%">
-                <feGaussianBlur stdDeviation="2.5" result="blur" />
-                <feColorMatrix in="blur" type="saturate" values="1.4"/>
-                <feMerge>
-                  <feMergeNode in="blur"/>
-                  <feMergeNode in="blur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-            {/* Shadow / depth layer */}
-            <text
-              x="8" y="64"
-              fontFamily="var(--font-noto-naskh), serif"
-              fontSize="64"
-              fontWeight="700"
-              fill="oklch(0.98 0.028 88 / 60%)"
-              dx="1.5" dy="2"
-              style={{ userSelect: 'none' }}
-            >
-              المراحل
-            </text>
-            {/* Stroke draw-in layer */}
-            <text
-              x="8" y="64"
-              fontFamily="var(--font-noto-naskh), serif"
-              fontSize="64"
-              fontWeight="700"
-              fill="none"
-              stroke="url(#calliGrad1)"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              filter="url(#calliGlow)"
-              className={titleActive ? 'draw-in' : ''}
-              style={{ userSelect: 'none' }}
-            >
-              المراحل
-            </text>
-            {/* Fill layer fades in after stroke */}
-            <text
-              x="8" y="64"
-              fontFamily="var(--font-noto-naskh), serif"
-              fontSize="64"
-              fontWeight="700"
-              fill="url(#calliGrad1)"
-              className={titleActive ? 'fill-in' : ''}
-              style={{ userSelect: 'none' }}
-            >
-              المراحل
-            </text>
-          </svg>
+          <span className="title-kicker" style={{ color: P.kicker }}>
+            رحلتك
+          </span>
+          <span className="title-main" style={{ color: P.titleMain }}>
+            المراحل
+          </span>
+          <span
+            className="h-[4px] w-16 rounded-full mt-1"
+            style={{
+              background: P.titleAccent,
+              transformOrigin: 'right',
+              transform: titleActive ? 'scaleX(1)' : 'scaleX(0)',
+              transition: 'transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.5s',
+            }}
+            aria-hidden="true"
+          />
         </div>
 
-        {/* Left side: «الدراسية» */}
+        {/* Left column — hugs the thread with a small gap */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 whitespace-nowrap"
+          className="absolute top-1/2 -translate-y-1/2 flex flex-col items-end gap-1"
           style={{
-            right: 'calc(50% + 16px)',
+            right: 'calc(50% + 22px)',
             opacity: titleActive ? 1 : 0,
-            translate: titleActive ? '0 0' : '-80px 0',
-            transition: 'opacity 0.7s ease 0.2s, translate 1s cubic-bezier(0.22,1,0.36,1) 0.2s',
+            translate: titleActive ? '0 0' : '-60px 0',
+            transition: 'opacity 0.8s ease 0.15s, translate 0.95s cubic-bezier(0.22,1,0.36,1) 0.15s',
           }}
-          aria-hidden="true"
         >
-          <svg
-            className="relative calligraphy-svg"
-            viewBox="0 0 260 80"
-            style={{ overflow: 'visible', width: 'clamp(160px, 20vw, 270px)', height: 'auto' }}
-          >
-            <defs>
-              <linearGradient id="calliGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%"   stopColor="oklch(0.335 0.055 50)" />
-                <stop offset="45%"  stopColor="oklch(0.255 0.048 48)" />
-                <stop offset="100%" stopColor="oklch(0.175 0.036 44)" />
-              </linearGradient>
-              <filter id="calliGlow2" x="-30%" y="-80%" width="160%" height="260%">
-                <feGaussianBlur stdDeviation="2.5" result="blur" />
-                <feColorMatrix in="blur" type="saturate" values="1.4"/>
-                <feMerge>
-                  <feMergeNode in="blur"/>
-                  <feMergeNode in="blur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-            <text
-              x="8" y="64"
-              fontFamily="var(--font-noto-naskh), serif"
-              fontSize="64"
-              fontWeight="700"
-              fill="oklch(0.98 0.028 88 / 60%)"
-              dx="1.5" dy="2"
-              style={{ userSelect: 'none' }}
-            >
-              الدراسية
-            </text>
-            <text
-              x="8" y="64"
-              fontFamily="var(--font-noto-naskh), serif"
-              fontSize="64"
-              fontWeight="700"
-              fill="none"
-              stroke="url(#calliGrad2)"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              filter="url(#calliGlow2)"
-              className={titleActive ? 'draw-in' : ''}
-              style={{ userSelect: 'none' }}
-            >
-              الدراسية
-            </text>
-            <text
-              x="8" y="64"
-              fontFamily="var(--font-noto-naskh), serif"
-              fontSize="64"
-              fontWeight="700"
-              fill="url(#calliGrad2)"
-              className={titleActive ? 'fill-in' : ''}
-              style={{ userSelect: 'none' }}
-            >
-              الدراسية
-            </text>
-          </svg>
+          <span className="title-kicker" style={{ color: P.kicker }}>
+            التعليمية
+          </span>
+          <span className="title-main" style={{ color: P.titleMain }}>
+            الدراسية
+          </span>
+          <span
+            className="h-[4px] w-16 rounded-full mt-1"
+            style={{
+              background: P.titleAccent,
+              transformOrigin: 'left',
+              transform: titleActive ? 'scaleX(1)' : 'scaleX(0)',
+              transition: 'transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.6s',
+            }}
+            aria-hidden="true"
+          />
         </div>
       </div>
 
       {/* Accessible real text, screen-reader only */}
-      <h2
-        className="sr-only"
-        aria-label="المراحل الدراسية"
-      >
-        المراحل الدراسية
-      </h2>
+      <h2 className="sr-only">المراحل الدراسية — رحلتك التعليمية</h2>
 
       {/* Mobile title — the thread sits at 82%, so center the title normally */}
       <div
@@ -484,22 +439,20 @@ export function StagesTimeline() {
         }}
       >
         <div className="relative">
-          <div
-            className="absolute -inset-8 rounded-full blur-3xl pointer-events-none"
+          <span className="text-base font-bold tracking-wide" style={{ color: P.kicker, fontFamily: 'var(--font-noto-naskh), serif' }}>
+            رحلتك التعليمية
+          </span>
+          <h2
+            className="text-4xl font-black text-balance leading-tight mt-2"
+            style={{ color: P.titleMain, fontFamily: 'var(--font-cairo)' }}
+          >
+            المراحل الدراسية
+          </h2>
+          <span
+            className="block h-[4px] w-16 rounded-full mt-3"
+            style={{ background: P.titleAccent }}
             aria-hidden="true"
-            style={{ background: 'oklch(0.96 0.035 88 / 50%)' }}
           />
-          <div className="relative">
-            <span className="text-sm font-bold tracking-wide" style={{ color: INK, fontFamily: 'var(--font-cairo)' }}>
-              رحلتك التعليمية
-            </span>
-            <h2
-              className="text-4xl font-black text-balance leading-tight mt-2"
-              style={{ color: INK_STRONG, fontFamily: 'var(--font-cairo)' }}
-            >
-              المراحل الدراسية
-            </h2>
-          </div>
         </div>
       </div>
 
@@ -531,27 +484,27 @@ export function StagesTimeline() {
               aria-hidden="true"
               style={{
                 background: fromLeft
-                  ? `linear-gradient(to right, ${INK}, transparent)`
-                  : `linear-gradient(to left, ${INK}, transparent)`,
+                  ? `linear-gradient(to right, ${P.connector}, transparent)`
+                  : `linear-gradient(to left, ${P.connector}, transparent)`,
                 opacity: active ? 0.7 : 0,
                 transition: 'opacity 0.8s ease 0.3s',
               }}
             />
 
             <div className="relative">
-              {/* Soft cream glow behind the card */}
+              {/* Soft glow behind the card */}
               <div
                 className="absolute -inset-6 rounded-3xl blur-3xl pointer-events-none"
                 aria-hidden="true"
-                style={{ background: 'oklch(0.96 0.035 88 / 45%)' }}
+                style={{ background: P.cardGlow }}
               />
 
               <div
                 className="relative rounded-2xl p-6 sm:p-7"
                 style={{
-                  background: CARD_BG,
-                  border: '1px solid oklch(0.335 0.055 50 / 22%)',
-                  boxShadow: '0 12px 40px oklch(0.30 0.05 50 / 22%), inset 0 1px 0 oklch(1 0 0 / 45%)',
+                  background: P.cardBg,
+                  border: `1px solid ${P.cardBorder}`,
+                  boxShadow: P.cardShadow,
                   backdropFilter: 'blur(10px)',
                 }}
               >
@@ -559,9 +512,9 @@ export function StagesTimeline() {
                   <span
                     className="flex items-center justify-center size-11 rounded-xl shrink-0"
                     style={{
-                      background: 'oklch(0.855 0.085 84)',
-                      border: '1px solid oklch(0.335 0.055 50 / 28%)',
-                      color: INK_STRONG,
+                      background: P.iconBg,
+                      border: `1px solid ${P.iconBorder}`,
+                      color: P.iconColor,
                     }}
                   >
                     <Icon size={22} aria-hidden="true" />
@@ -569,13 +522,13 @@ export function StagesTimeline() {
                   <div className="flex flex-col">
                     <span
                       className="text-xs font-bold"
-                      style={{ color: INK, fontFamily: 'var(--font-cairo)' }}
+                      style={{ color: P.stageLabel, fontFamily: 'var(--font-cairo)' }}
                     >
                       المرحلة {stage.id === 1 ? 'الأولى' : stage.id === 2 ? 'الثانية' : 'الثالثة'}
                     </span>
                     <h3
                       className="text-xl sm:text-2xl font-black leading-tight"
-                      style={{ color: INK_STRONG, fontFamily: 'var(--font-cairo)' }}
+                      style={{ color: P.heading, fontFamily: 'var(--font-cairo)' }}
                     >
                       {stage.name}
                     </h3>
@@ -583,7 +536,7 @@ export function StagesTimeline() {
                 </div>
                 <p
                   className="text-sm leading-relaxed"
-                  style={{ color: INK_SOFT, fontFamily: 'var(--font-cairo)' }}
+                  style={{ color: P.body, fontFamily: 'var(--font-cairo)' }}
                 >
                   {stage.description}
                 </p>
@@ -595,8 +548,8 @@ export function StagesTimeline() {
                       key={unit}
                       className="unit-chip flex items-center gap-3 rounded-xl px-3 py-2 cursor-default"
                       style={{
-                        background: 'oklch(0.855 0.085 84 / 40%)',
-                        border: '1px solid oklch(0.335 0.055 50 / 16%)',
+                        background: P.chipBg,
+                        border: `1px solid ${P.chipBorder}`,
                         opacity: active ? 1 : 0,
                         translate: active ? '0 0' : '0 14px',
                         transition: `opacity 0.55s ease ${0.35 + i * 0.12}s, translate 0.6s cubic-bezier(0.22,1,0.36,1) ${0.35 + i * 0.12}s, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease`,
@@ -605,9 +558,9 @@ export function StagesTimeline() {
                       <span
                         className="unit-num flex items-center justify-center size-7 rounded-lg text-xs font-black shrink-0"
                         style={{
-                          background: 'oklch(0.855 0.085 84)',
-                          border: '1px solid oklch(0.335 0.055 50 / 30%)',
-                          color: INK_STRONG,
+                          background: P.chipNumBg,
+                          border: `1px solid ${P.chipNumBorder}`,
+                          color: P.chipNumColor,
                           fontFamily: 'var(--font-cairo)',
                           transition: 'background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease',
                         }}
@@ -617,7 +570,7 @@ export function StagesTimeline() {
                       <span
                         className="unit-name text-sm font-bold"
                         style={{
-                          color: 'oklch(0.315 0.048 50)',
+                          color: P.chipName,
                           fontFamily: 'var(--font-cairo)',
                           transition: 'color 0.3s ease',
                         }}
@@ -640,66 +593,34 @@ export function StagesTimeline() {
           100% { transform: scale(1.5);  opacity: 0; }
         }
 
-        /* ── Kicker «رحلتك التعليمية» — Naskh, large, deep brown with electric glow ── */
-        .kicker-naskh {
+        /* ── Title typography — clean and strong, no glow ── */
+        .title-kicker {
           font-family: var(--font-noto-naskh), serif;
-          font-size: clamp(1.75rem, 5vw, 2.5rem);
-          font-weight: 700;
-          color: oklch(0.275 0.050 48);
-          text-shadow:
-            0 0 8px oklch(0.98 0.028 88 / 80%),
-            0 0 24px oklch(0.98 0.028 88 / 60%),
-            0 0 48px oklch(0.98 0.028 88 / 35%);
-          letter-spacing: 0.02em;
+          font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+          font-weight: 600;
+          letter-spacing: 0.01em;
+          line-height: 1.2;
         }
-
-        /* ── SVG calligraphy: stroke draws in, then fill fades in ── */
-        /* The stroke path starts invisible (dashoffset = full length)
-           and animates to 0 — looks like the pen is writing.
-           We use a large dasharray since we don't know path length,
-           so 2000 covers every glyph we use. */
-
-        .draw-in {
-          stroke-dasharray: 2000;
-          stroke-dashoffset: 2000;
-          animation: drawStroke 2.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
-        }
-
-        .fill-in {
-          opacity: 0;
-          animation: fillReveal 0.9s ease 1.8s forwards;
-        }
-
-        @keyframes drawStroke {
-          to { stroke-dashoffset: 0; }
-        }
-
-        @keyframes fillReveal {
-          0%   { opacity: 0; }
-          100% { opacity: 1; }
-        }
-
-        /* Electric glow on the calligraphy SVGs — multiple layers for luminous effect */
-        .calligraphy-svg {
-          filter: 
-            drop-shadow(0 0 4px oklch(0.98 0.028 88 / 70%))
-            drop-shadow(0 0 12px oklch(0.98 0.028 88 / 50%))
-            drop-shadow(0 0 24px oklch(0.98 0.028 88 / 30%))
-            drop-shadow(0 2px 8px oklch(0.30 0.05 50 / 15%));
+        .title-main {
+          font-family: var(--font-cairo), sans-serif;
+          font-size: clamp(2.75rem, 5.5vw, 4.5rem);
+          font-weight: 900;
+          line-height: 1.05;
+          letter-spacing: -0.01em;
         }
 
         .unit-chip:hover {
-          background: oklch(0.855 0.085 84 / 85%) !important;
-          border-color: oklch(0.335 0.055 50 / 45%) !important;
-          box-shadow: 0 6px 18px oklch(0.30 0.05 50 / 18%), inset 0 1px 0 oklch(1 0 0 / 40%);
+          background: ${P.hoverChipBg} !important;
+          border-color: ${P.hoverChipBorder} !important;
+          box-shadow: ${P.hoverChipShadow};
         }
         .unit-chip:hover .unit-num {
-          background: oklch(0.235 0.045 48) !important;
-          color: oklch(0.94 0.045 88) !important;
-          box-shadow: 0 2px 10px oklch(0.30 0.05 50 / 35%);
+          background: ${P.hoverNumBg} !important;
+          color: ${P.hoverNumColor} !important;
+          box-shadow: ${P.hoverNumShadow};
         }
         .unit-chip:hover .unit-name {
-          color: oklch(0.215 0.042 46) !important;
+          color: ${P.hoverName} !important;
         }
       `}</style>
     </section>

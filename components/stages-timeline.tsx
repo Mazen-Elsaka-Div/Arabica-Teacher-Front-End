@@ -27,7 +27,8 @@ const PATH_D = [
   'C 98 542, 22 584, 60 625',
   'C 98 667, 22 709, 60 750',
   'C 98 792, 22 834, 60 875',
-  'C 98 917, 22 959, 60 992',
+  /* Final stretch curves gently and dives into the book's mouth */
+  'C 82 902, 74 920, 60 945',
 ].join(' ')
 
 /* Gold — matches the topographic background lines */
@@ -38,7 +39,7 @@ const stages = [
   {
     id: 1,
     y: 375, // viewBox units — must be a wave crossing point (x = 60)
-    side: 'left' as const,
+    side: 'right' as const,
     name: 'الصف الأول الثانوي',
     description: 'أساسيات اللغة العربية والقواعد الأساسية — القراءة الفاهمة، القواعد، الكتابة الإبداعية والمحادثة.',
     icon: BookOpen,
@@ -46,7 +47,7 @@ const stages = [
   {
     id: 2,
     y: 625,
-    side: 'right' as const,
+    side: 'left' as const,
     name: 'الصف الثاني الثانوي',
     description: 'تعمّق في النحو والبلاغة والأدب — النحو المتقدم، البلاغة والبيان، الأدب العربي والنصوص.',
     icon: GraduationCap,
@@ -54,7 +55,7 @@ const stages = [
   {
     id: 3,
     y: 875,
-    side: 'left' as const,
+    side: 'right' as const,
     name: 'الصف الثالث الثانوي',
     description: 'إتقان اللغة والتحضير للامتحانات — الإملاء والترقيم، الترجمة، المحادثة المتقدمة والكتابة.',
     icon: Award,
@@ -62,7 +63,7 @@ const stages = [
 ]
 
 const TITLE_Y = 80 // viewBox units where the section title reveals
-const END_Y = 985 // final stop dot
+const END_Y = 915 // final stop dot — right where the thread meets the book
 
 const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max)
 
@@ -267,9 +268,92 @@ export function StagesTimeline() {
         </div>
       </div>
 
-      {/* ── Section title — reveals from the left ── */}
+      {/* ── The book — the estuary where the golden thread pours in ── */}
       <div
-        className="absolute z-10 left-[4%] sm:left-[6%] w-[70vw] sm:w-[min(40vw,480px)]"
+        className="absolute z-10 bottom-2 left-[82%] sm:left-1/2 pointer-events-none"
+        style={{
+          transform: `translateX(-50%) scale(${endActive ? 1 : 0.6}) translateY(${endActive ? '0' : '30px'})`,
+          opacity: endActive ? 1 : 0,
+          transition: 'opacity 0.9s ease, transform 1s cubic-bezier(0.34,1.4,0.64,1)',
+        }}
+      >
+        {/* Warm golden glow behind the book */}
+        <div
+          className="absolute inset-[-30%] rounded-full blur-3xl"
+          aria-hidden="true"
+          style={{ background: 'oklch(0.60 0.10 75 / 35%)' }}
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/book.png"
+          alt="كتاب اللغة العربية — نهاية الرحلة التعليمية"
+          className="relative w-36 sm:w-52 h-auto"
+          style={{ filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.6))' }}
+        />
+      </div>
+
+      {/* ── Section title — split around the thread: «المراحل» on its right, «الدراسية» on its left ── */}
+      <div
+        className="absolute z-10 inset-x-0 hidden sm:block"
+        style={{ top: `${(TITLE_Y / VIEW_H) * 100}%`, transform: 'translateY(-50%)' }}
+      >
+        {/* Kicker — centered above the split title */}
+        <span
+          className="absolute left-1/2 -translate-x-1/2 -top-12 text-sm font-bold tracking-wide whitespace-nowrap"
+          style={{
+            color: GOLD,
+            fontFamily: 'var(--font-cairo)',
+            opacity: titleActive ? 1 : 0,
+            transition: 'opacity 0.8s ease 0.2s',
+          }}
+        >
+          رحلتك التعليمية
+        </span>
+
+        {/* «المراحل» — right of the thread, slides in from the right */}
+        <h2
+          className="absolute top-1/2 -translate-y-1/2 text-4xl md:text-5xl font-black leading-tight whitespace-nowrap"
+          style={{
+            left: 'calc(50% + 28px)',
+            color: 'oklch(0.96 0.010 85)',
+            fontFamily: 'var(--font-cairo)',
+            opacity: titleActive ? 1 : 0,
+            translate: titleActive ? '0 0' : '70px 0',
+            transition: 'opacity 0.8s ease, translate 0.9s cubic-bezier(0.22,1,0.36,1)',
+          }}
+        >
+          <span
+            className="absolute -inset-6 rounded-full blur-3xl pointer-events-none"
+            aria-hidden="true"
+            style={{ background: 'oklch(0.50 0.075 60 / 40%)' }}
+          />
+          <span className="relative">المراحل</span>
+        </h2>
+
+        {/* «الدراسية» — left of the thread, slides in from the left */}
+        <h2
+          className="absolute top-1/2 -translate-y-1/2 text-4xl md:text-5xl font-black leading-tight whitespace-nowrap"
+          style={{
+            right: 'calc(50% + 28px)',
+            color: 'oklch(0.96 0.010 85)',
+            fontFamily: 'var(--font-cairo)',
+            opacity: titleActive ? 1 : 0,
+            translate: titleActive ? '0 0' : '-70px 0',
+            transition: 'opacity 0.8s ease, translate 0.9s cubic-bezier(0.22,1,0.36,1)',
+          }}
+        >
+          <span
+            className="absolute -inset-6 rounded-full blur-3xl pointer-events-none"
+            aria-hidden="true"
+            style={{ background: 'oklch(0.50 0.075 60 / 40%)' }}
+          />
+          <span className="relative">الدراسية</span>
+        </h2>
+      </div>
+
+      {/* Mobile title — the thread sits at 82%, so center the title normally */}
+      <div
+        className="absolute z-10 sm:hidden left-[4%] w-[70vw]"
         style={{
           top: `${(TITLE_Y / VIEW_H) * 100}%`,
           transform: 'translateY(-50%)',
@@ -279,31 +363,21 @@ export function StagesTimeline() {
         }}
       >
         <div className="relative">
-          {/* Warm brown glow behind text */}
           <div
             className="absolute -inset-8 rounded-full blur-3xl pointer-events-none"
             aria-hidden="true"
             style={{ background: 'oklch(0.50 0.075 60 / 40%)' }}
           />
           <div className="relative">
-            <span
-              className="text-sm font-bold tracking-wide"
-              style={{ color: GOLD, fontFamily: 'var(--font-cairo)' }}
-            >
+            <span className="text-sm font-bold tracking-wide" style={{ color: GOLD, fontFamily: 'var(--font-cairo)' }}>
               رحلتك التعليمية
             </span>
             <h2
-              className="text-4xl sm:text-5xl font-black text-balance leading-tight mt-2"
+              className="text-4xl font-black text-balance leading-tight mt-2"
               style={{ color: 'oklch(0.96 0.010 85)', fontFamily: 'var(--font-cairo)' }}
             >
               المراحل الدراسية
             </h2>
-            <p
-              className="text-sm sm:text-base leading-relaxed mt-3"
-              style={{ color: 'oklch(0.72 0.03 80)', fontFamily: 'var(--font-cairo)' }}
-            >
-              اتبع الخيط الذهبي — ثلاث مراحل متكاملة تاخدك من الأساسيات للاحتراف.
-            </p>
           </div>
         </div>
       </div>

@@ -13,8 +13,8 @@ export default function Page() {
       <main>
         <Navbar />
         <HeroSection />
-        <FeaturesSection />
         <StagesTimeline />
+        <FeaturesSection />
         <StatsSection />
         <TestimonialsSection />
         <CtaSection />

@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import { ArrowLeft, CheckCircle2 } from 'lucide-react'
 import { useReveal } from '@/lib/use-reveal'
+import { SectionBackdrop } from '@/components/section-backdrop'
 
 // مشهد الفيزياء (matter-js) تقيل؛ نحمّله على العميل فقط حتى لا يعطّل أول رسم
 const GravityPills = dynamic(() => import('@/components/gravity-pills').then((m) => m.GravityPills), {
@@ -30,6 +31,7 @@ export function CtaSection() {
       // pb-0 حتى تتراص كومة الحبوب فوق سقف الفوتر مباشرة
       className="relative min-h-[860px] overflow-hidden bg-background pt-20 md:min-h-[820px]"
     >
+      <SectionBackdrop variant="cta" />
       {/* حبوب فروع اللغة تسقط وتتكوّم بالفيزياء */}
       <GravityPills />
 

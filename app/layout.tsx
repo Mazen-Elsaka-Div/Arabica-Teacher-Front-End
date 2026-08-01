@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Cairo, Noto_Naskh_Arabic } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
+import { SiteLoader } from '@/components/site-loader'
 import './globals.css'
 
 const cairo = Cairo({
@@ -40,7 +41,8 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" className={`${cairo.variable} ${notoNaskhArabic.variable} bg-background`} suppressHydrationWarning>
       <body className="antialiased font-sans">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <SiteLoader />
           {children}
           {process.env.NODE_ENV === 'production' && <Analytics />}
         </ThemeProvider>

@@ -83,8 +83,8 @@ export function StagesTimeline() {
      molten orange-red ink, distinct from the brown/gold hero */
   const P = isDark
     ? {
-        bg: 'oklch(0.155 0.055 27)',
-        vignette: 'oklch(0.09 0.030 27 / 85%)',
+        bg: 'oklch(0.11 0.018 55)',
+        vignette: 'oklch(0.07 0.015 55 / 85%)',
         threadA: 'oklch(0.74 0.18 45)',
         threadB: 'oklch(0.63 0.20 35)',
         threadC: 'oklch(0.52 0.19 29)',
@@ -129,8 +129,8 @@ export function StagesTimeline() {
         hoverName: 'oklch(0.95 0.030 48)',
       }
     : {
-        bg: 'oklch(0.855 0.085 84)',
-        vignette: 'oklch(0.795 0.088 78)',
+        bg: 'oklch(0.975 0.010 90)',
+        vignette: 'oklch(0.93 0.030 88)',
         threadA: 'oklch(0.44 0.050 52)',
         threadB: 'oklch(0.335 0.055 50)',
         threadC: 'oklch(0.235 0.045 48)',
@@ -235,11 +235,10 @@ export function StagesTimeline() {
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          backgroundImage: 'url(/topo-dark.png)',
+          backgroundImage: isDark ? 'url(/topo-dark.webp)' : 'url(/topo-light.webp)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          mixBlendMode: isDark ? 'normal' : 'multiply',
-          opacity: isDark ? 0.14 : 0.1,
+          opacity: isDark ? 0.35 : 0.7,
         }}
       />
       {/* Vignette */}
@@ -356,7 +355,7 @@ export function StagesTimeline() {
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/book.png"
+          src="/book.webp"
           alt="كتاب اللغة العربية — نهاية الرحلة التعليمية"
           className="relative w-56 sm:w-80 h-auto"
           style={{ filter: P.bookShadow }}

@@ -2,6 +2,7 @@
 
 import { Lightbulb, ClipboardCheck, Video, LineChart } from 'lucide-react'
 import { useReveal } from '@/lib/use-reveal'
+import { SectionBackdrop } from '@/components/section-backdrop'
 
 const features = [
   {
@@ -39,8 +40,9 @@ export function FeaturesSection() {
   const listRef = useReveal<HTMLDivElement>('.feature-row', { y: 40, duration: 0.6 })
 
   return (
-    <section id="features" className="relative bg-background py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
+    <section id="features" className="relative overflow-hidden bg-background py-20 md:py-28">
+      <SectionBackdrop variant="features" />
+      <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         <div ref={headRef} className="max-w-2xl">
           <span className="text-sm font-semibold text-green">إزاي بنذاكر مع بعض</span>
           <h2 className="mt-3 text-balance text-3xl font-black leading-tight text-foreground sm:text-4xl lg:text-5xl">

@@ -383,7 +383,7 @@ export function HeroSection() {
             className="absolute z-[12] pointer-events-none"
             style={{ bottom: '-65%', right: '5%', width: 200, animation: 'gentleFloat 5s ease-in-out infinite', transform: 'rotate(-28deg)' }}
           >
-            <Image src="/book.png" alt="" width={200} height={133} className="w-full h-auto drop-shadow-[0_14px_35px_rgba(0,0,0,0.8)]" />
+            <Image src="/book.webp" alt="" width={200} height={133} className="w-full h-auto drop-shadow-[0_14px_35px_rgba(0,0,0,0.8)]" />
           </div>
 
           {/* Inkwell & quill — larger, on far left so it shows beside teacher */}
@@ -391,7 +391,7 @@ export function HeroSection() {
             className="absolute z-[9] pointer-events-none"
             style={{ top: '28%', left: '2%', width: 170, animation: 'gentleFloat 6s ease-in-out infinite', animationDelay: '1s' }}
           >
-            <Image src="/حباره.png" alt="" width={160} height={283} className="w-full h-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]" />
+            <Image src="/inkwell.webp" alt="" width={160} height={283} className="w-full h-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]" />
           </div>
 
           {/* Teacher image — full body visible within viewport, shifted slightly left */}
@@ -406,7 +406,7 @@ export function HeroSection() {
             }}
           >
             <Image
-              src="/teacher.png"
+              src="/teacher.webp"
               alt="المدرس - أكاديمية شفاء العليل في اللغة العربية"
               width={2400}
               height={1282}

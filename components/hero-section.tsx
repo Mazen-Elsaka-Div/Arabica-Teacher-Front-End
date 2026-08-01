@@ -11,25 +11,32 @@ import { TopographicBackground } from '@/components/topo-background'
  *   left: 42-65% of the teacher column width
  * Letters burst upward and to the LEFT from that origin point.
  */
+/* ── Letters flying out of the tablet ──
+ * Teacher image height is now 98% of column.
+ * Tablet in the image is held ~56-73% from the top, ~50-68% from the left of the teacher column.
+ * We keep the first few letters RIGHT at/above the tablet, then arc upward-left.
+ * Nothing goes above ~22% (avoids overlapping the teacher's face/head area).
+ */
 const tabletLetters = [
-  /* tight cluster — just above the tablet (tablet ~50-68% top, 56-72% left) */
-  { letter: 'ا', top: '52%', left: '60%', size: 'text-xl',  opacity: 0.55, delay: '0s',   rotate: '-8deg'  },
-  { letter: 'ب', top: '49%', left: '68%', size: 'text-2xl', opacity: 0.60, delay: '0.4s', rotate: '8deg'   },
-  { letter: 'ت', top: '47%', left: '54%', size: 'text-xl',  opacity: 0.50, delay: '0.8s', rotate: '-12deg' },
-  { letter: 'ث', top: '44%', left: '66%', size: 'text-2xl', opacity: 0.65, delay: '1.2s', rotate: '10deg'  },
-  /* mid-arc — diagonal up-left */
-  { letter: 'ج', top: '40%', left: '50%', size: 'text-3xl', opacity: 0.68, delay: '0.2s', rotate: '-6deg'  },
-  { letter: 'ح', top: '36%', left: '40%', size: 'text-3xl', opacity: 0.72, delay: '0.6s', rotate: '14deg'  },
-  { letter: 'خ', top: '32%', left: '58%', size: 'text-2xl', opacity: 0.62, delay: '1s',   rotate: '-10deg' },
-  { letter: 'د', top: '28%', left: '32%', size: 'text-4xl', opacity: 0.78, delay: '1.4s', rotate: '8deg'   },
-  /* high arc */
-  { letter: 'ر', top: '24%', left: '44%', size: 'text-3xl', opacity: 0.72, delay: '0.3s', rotate: '-14deg' },
-  { letter: 'س', top: '19%', left: '24%', size: 'text-4xl', opacity: 0.82, delay: '0.7s', rotate: '12deg'  },
-  { letter: 'ع', top: '15%', left: '36%', size: 'text-3xl', opacity: 0.68, delay: '1.1s', rotate: '-8deg'  },
-  { letter: 'ق', top: '10%', left: '16%', size: 'text-4xl', opacity: 0.78, delay: '1.5s', rotate: '16deg'  },
-  { letter: 'ل', top: '7%',  left: '28%', size: 'text-2xl', opacity: 0.58, delay: '0.5s', rotate: '-16deg' },
-  { letter: 'م', top: '17%', left: '54%', size: 'text-3xl', opacity: 0.72, delay: '0.9s', rotate: '6deg'   },
-  { letter: 'ن', top: '29%', left: '62%', size: 'text-2xl', opacity: 0.62, delay: '1.3s', rotate: '-4deg'  },
+  /* touching / just above the tablet surface */
+  { letter: 'ا', top: '56%', left: '62%', size: 'text-xl',  opacity: 0.55, delay: '0s',   rotate: '-8deg'  },
+  { letter: 'ب', top: '54%', left: '70%', size: 'text-2xl', opacity: 0.60, delay: '0.4s', rotate: '8deg'   },
+  { letter: 'ت', top: '51%', left: '56%', size: 'text-xl',  opacity: 0.52, delay: '0.8s', rotate: '-12deg' },
+  /* rising above the tablet */
+  { letter: 'ث', top: '47%', left: '68%', size: 'text-2xl', opacity: 0.65, delay: '1.2s', rotate: '10deg'  },
+  { letter: 'ج', top: '44%', left: '52%', size: 'text-3xl', opacity: 0.68, delay: '0.2s', rotate: '-6deg'  },
+  { letter: 'ح', top: '41%', left: '74%', size: 'text-2xl', opacity: 0.65, delay: '0.6s', rotate: '14deg'  },
+  /* mid arc — spreading left */
+  { letter: 'خ', top: '38%', left: '44%', size: 'text-3xl', opacity: 0.70, delay: '1s',   rotate: '-10deg' },
+  { letter: 'د', top: '35%', left: '62%', size: 'text-2xl', opacity: 0.65, delay: '1.4s', rotate: '8deg'   },
+  { letter: 'ر', top: '32%', left: '36%', size: 'text-4xl', opacity: 0.75, delay: '0.3s', rotate: '-14deg' },
+  { letter: 'س', top: '29%', left: '54%', size: 'text-3xl', opacity: 0.70, delay: '0.7s', rotate: '12deg'  },
+  /* high — but stays below head (above 22%) */
+  { letter: 'ع', top: '26%', left: '42%', size: 'text-3xl', opacity: 0.65, delay: '1.1s', rotate: '-8deg'  },
+  { letter: 'ق', top: '24%', left: '66%', size: 'text-2xl', opacity: 0.60, delay: '1.5s', rotate: '16deg'  },
+  { letter: 'ل', top: '22%', left: '28%', size: 'text-3xl', opacity: 0.72, delay: '0.5s', rotate: '-16deg' },
+  { letter: 'م', top: '23%', left: '52%', size: 'text-2xl', opacity: 0.60, delay: '0.9s', rotate: '6deg'   },
+  { letter: 'ن', top: '27%', left: '76%', size: 'text-2xl', opacity: 0.58, delay: '1.3s', rotate: '-4deg'  },
 ]
 
 /* ── Stats data ── */
@@ -365,8 +372,8 @@ export function HeroSection() {
           />
 
           {/* Circle badges — positioned clear of the teacher's body */}
-          <CircleBadge value="+٢٠"  label="سنة خبرة" size={130} className="hidden sm:flex" style={{ top: '9%',    left: '3%' }} />
-          <CircleBadge value="+٣٠٠" label="طالب"     size={120} className="hidden sm:flex" style={{ top: '38%',   left: '2%' }} />
+          <CircleBadge value="+٢٠"  label="سنة خبرة" size={130} className="hidden sm:flex" style={{ top: '9%',    left: '3%'  }} />
+          <CircleBadge value="+٣٠٠" label="طالب"     size={120} className="hidden sm:flex" style={{ bottom: '10%', left: '2%'  }} />
           <CircleBadge value="٩٧٪"  label="نسبة رضا" size={105} className="hidden sm:flex" style={{ bottom: '14%', right: '4%' }} />
 
           {/* Book — tilted divider between sections */}
@@ -389,10 +396,10 @@ export function HeroSection() {
           <div
             className="absolute z-[15] pointer-events-none"
             style={{
-              bottom: '-8%',
+              bottom: '-4%',
               left: '50%',
               transform: 'translateX(-44%)',
-              height: '118%',
+              height: '98%',
               width: 'max-content',
             }}
           >

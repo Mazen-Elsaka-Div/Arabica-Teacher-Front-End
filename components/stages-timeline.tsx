@@ -83,8 +83,8 @@ export function StagesTimeline() {
      molten orange-red ink, distinct from the brown/gold hero */
   const P = isDark
     ? {
-        bg: 'oklch(0.105 0.022 30)',
-        vignette: 'rgba(0,0,0,0.55)',
+        bg: 'oklch(0.155 0.055 27)',
+        vignette: 'oklch(0.09 0.030 27 / 85%)',
         threadA: 'oklch(0.74 0.18 45)',
         threadB: 'oklch(0.63 0.20 35)',
         threadC: 'oklch(0.52 0.19 29)',
@@ -94,8 +94,8 @@ export function StagesTimeline() {
         tipShadow: '0 0 16px 5px oklch(0.68 0.19 40 / 70%)',
         dotOn: 'oklch(0.70 0.19 40)',
         dotOnRing: 'oklch(0.88 0.09 50)',
-        dotOff: 'oklch(0.22 0.030 30)',
-        dotOffRing: 'oklch(0.38 0.050 32)',
+        dotOff: 'oklch(0.26 0.055 28)',
+        dotOffRing: 'oklch(0.42 0.075 30)',
         dotGlow: 'oklch(0.66 0.19 37 / 45%)',
         dotPulse: 'oklch(0.70 0.19 40)',
         kicker: 'oklch(0.74 0.14 45)',
@@ -103,7 +103,7 @@ export function StagesTimeline() {
         titleAccent: 'oklch(0.70 0.19 40)',
         bookHalo: 'oklch(0.55 0.16 35 / 32%)',
         bookShadow: 'drop-shadow(0 10px 30px rgba(0,0,0,0.65))',
-        cardBg: 'oklch(0.145 0.026 30 / 88%)',
+        cardBg: 'oklch(0.185 0.050 28 / 90%)',
         cardBorder: 'oklch(0.66 0.17 38 / 26%)',
         cardShadow: '0 12px 44px rgba(0,0,0,0.6), inset 0 1px 0 oklch(0.66 0.17 38 / 12%)',
         cardGlow: 'oklch(0.44 0.13 33 / 28%)',
@@ -124,7 +124,7 @@ export function StagesTimeline() {
         hoverChipBorder: 'oklch(0.68 0.18 40 / 55%)',
         hoverChipShadow: '0 0 22px 2px oklch(0.66 0.17 38 / 32%), inset 0 0 12px oklch(0.66 0.17 38 / 10%)',
         hoverNumBg: 'oklch(0.68 0.19 40)',
-        hoverNumColor: 'oklch(0.14 0.022 30)',
+        hoverNumColor: 'oklch(0.17 0.045 28)',
         hoverNumShadow: '0 0 14px 3px oklch(0.68 0.19 40 / 55%)',
         hoverName: 'oklch(0.95 0.030 48)',
       }

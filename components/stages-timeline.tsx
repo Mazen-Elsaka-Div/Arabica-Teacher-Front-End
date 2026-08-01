@@ -284,19 +284,33 @@ export function StagesTimeline() {
         className="absolute z-10 inset-x-0 hidden sm:block"
         style={{ top: `${(TITLE_Y / VIEW_H) * 100}%`, transform: 'translateY(-50%)' }}
       >
-        {/* ── Kicker «رحلتك | التعليمية» — Naskh font, bigger, split ── */}
+        {/* ── Right kicker «رحلتك» — sits above «المراحل» on the right ── */}
         <span
           className="kicker-naskh absolute whitespace-nowrap"
           style={{
-            left: '50%',
-            transform: 'translateX(-50%)',
-            top: '-5.5rem',
+            left: 'calc(50% + 16px)',
+            top: '-4rem',
             opacity: titleActive ? 1 : 0,
-            translate: titleActive ? '0 0' : '0 -20px',
+            translate: titleActive ? '0 0' : '40px -10px',
             transition: 'opacity 0.9s ease 0.1s, translate 1s cubic-bezier(0.22,1,0.36,1) 0.1s',
           }}
         >
-          رحلتك التعليمية
+          رحلتك
+        </span>
+
+        {/* ── Left kicker «التعليمية» — sits above «الدراسية» on the left ── */}
+        <span
+          className="kicker-naskh absolute whitespace-nowrap"
+          style={{
+            right: 'calc(50% + 16px)',
+            top: '-4rem',
+            textAlign: 'right',
+            opacity: titleActive ? 1 : 0,
+            translate: titleActive ? '0 0' : '-40px -10px',
+            transition: 'opacity 0.9s ease 0.2s, translate 1s cubic-bezier(0.22,1,0.36,1) 0.2s',
+          }}
+        >
+          التعليمية
         </span>
 
         {/* ── Main title «المراحل | الدراسية» — SVG text with draw-in stroke ── */}
@@ -304,18 +318,13 @@ export function StagesTimeline() {
         <div
           className="absolute top-1/2 -translate-y-1/2 whitespace-nowrap"
           style={{
-            left: 'calc(50% + 28px)',
+            left: 'calc(50% + 16px)',
             opacity: titleActive ? 1 : 0,
             translate: titleActive ? '0 0' : '80px 0',
             transition: 'opacity 0.7s ease 0.05s, translate 1s cubic-bezier(0.22,1,0.36,1) 0.05s',
           }}
           aria-hidden="true"
         >
-          {/* Soft cream halo */}
-          <div
-            className="absolute -inset-10 rounded-full blur-3xl pointer-events-none"
-            style={{ background: 'oklch(0.96 0.035 88 / 45%)' }}
-          />
           <svg
             className="relative calligraphy-svg"
             viewBox="0 0 280 80"
@@ -385,18 +394,13 @@ export function StagesTimeline() {
         <div
           className="absolute top-1/2 -translate-y-1/2 whitespace-nowrap"
           style={{
-            right: 'calc(50% + 28px)',
+            right: 'calc(50% + 16px)',
             opacity: titleActive ? 1 : 0,
             translate: titleActive ? '0 0' : '-80px 0',
             transition: 'opacity 0.7s ease 0.2s, translate 1s cubic-bezier(0.22,1,0.36,1) 0.2s',
           }}
           aria-hidden="true"
         >
-          {/* Soft cream halo */}
-          <div
-            className="absolute -inset-10 rounded-full blur-3xl pointer-events-none"
-            style={{ background: 'oklch(0.96 0.035 88 / 45%)' }}
-          />
           <svg
             className="relative calligraphy-svg"
             viewBox="0 0 260 80"

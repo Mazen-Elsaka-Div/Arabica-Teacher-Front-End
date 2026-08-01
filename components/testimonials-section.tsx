@@ -14,7 +14,6 @@ import {
 import { ArrowRight, Quote, TrendingUp } from 'lucide-react'
 import { useReveal } from '@/lib/use-reveal'
 import { cn } from '@/lib/utils'
-import { SectionBackdrop } from '@/components/section-backdrop'
 
 type JourneyPoint = { month: string; score: number }
 
@@ -355,10 +354,9 @@ export function TestimonialsSection() {
   const root = useReveal<HTMLElement>('.reveal-item')
 
   return (
-    <section ref={root} id="testimonials" className="relative overflow-hidden bg-background">
-      <SectionBackdrop variant="testimonials" />
+    <section ref={root} id="testimonials" className="relative bg-background">
       {/* موبايل: كاروسيل بارتفاع طبيعي */}
-      <div className="relative mx-auto w-full max-w-2xl px-5 py-12 md:hidden">
+      <div className="mx-auto w-full max-w-2xl px-5 py-12 md:hidden">
         <Heading />
         <MobileCarousel items={TESTIMONIALS} />
       </div>

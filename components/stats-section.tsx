@@ -2,7 +2,6 @@
 
 import { AnimatedNumber } from '@/components/animated-number'
 import { useReveal } from '@/lib/use-reveal'
-import { SectionBackdrop } from '@/components/section-backdrop'
 
 const stats = [
   { value: 20, suffix: '+', label: 'سنة خبرة في تدريس اللغة العربية' },
@@ -16,9 +15,8 @@ export function StatsSection() {
   const gridRef = useReveal<HTMLDivElement>(undefined, { y: 40 })
 
   return (
-    <section id="stats" className="relative overflow-hidden bg-background py-20 md:py-28">
-      <SectionBackdrop variant="stats" />
-      <div className="relative mx-auto max-w-7xl px-5 md:px-8">
+    <section id="stats" className="bg-background py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div ref={headRef} className="mx-auto mb-12 max-w-2xl text-center">
           <span className="text-sm font-semibold text-gold">أرقام بتتكلم عننا</span>
           <h2 className="mt-3 text-balance text-3xl font-black leading-tight text-foreground sm:text-4xl lg:text-5xl">

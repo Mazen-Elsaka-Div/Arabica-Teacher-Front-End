@@ -83,15 +83,15 @@ export function Concept9ScrollTimeline() {
       })
     }
 
-    const scrollContainer = container.parentElement?.parentElement
-    if (scrollContainer) {
-      scrollContainer.addEventListener('scroll', handleScroll)
-      return () => scrollContainer.removeEventListener('scroll', handleScroll)
-    }
+    window.addEventListener('scroll', handleScroll)
+    // Initial call on mount
+    handleScroll()
+    
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black overflow-hidden">
+    <div className="relative bg-gradient-to-b from-gray-900 via-gray-800 to-black overflow-hidden" style={{ minHeight: 'auto' }}>
       {/* Background decorative elements with blur */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-amber-500 rounded-full blur-3xl" />
@@ -100,26 +100,10 @@ export function Concept9ScrollTimeline() {
       </div>
 
       {/* Main content */}
-      <div ref={containerRef} className="relative z-10 px-6 py-20">
-        <div className="max-w-6xl mx-auto">
-          {/* Section Header with Arabic ornament */}
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center justify-center gap-3 mb-8">
-              <Sparkles className="w-6 h-6 text-amber-400" />
-              <div className="text-4xl text-amber-400">✦ ✧ ✦</div>
-              <Sparkles className="w-6 h-6 text-amber-400" />
-            </div>
-            <h2 className="text-5xl font-bold text-white mb-4">المراحل الدراسية</h2>
-            <p className="text-lg text-gray-300 mb-4 leading-relaxed">
-              اختر مسارك التعليمي واستمتع برحلة تعلم اللغة العربية مع نظام تعليمي متكامل
-            </p>
-            <div className="inline-flex items-center gap-2 text-sm text-amber-400 font-semibold px-6 py-3 bg-amber-500/10 rounded-full border border-amber-500/30">
-              <CheckCircle2 size={18} />
-              <span>ثلاث مراحل متكاملة • تعليم شامل • نتائج مضمونة</span>
-            </div>
-          </div>
-          {/* Timeline with alternating cards */}
-          <div className="space-y-32">
+      <div ref={containerRef} className="relative z-10 px-6">
+        <div className="max-w-6xl mx-auto pt-32">
+          {/* Timeline with alternating cards - starts immediately */}
+          <div className="space-y-32 pb-20">
             {stages.map((stage, index) => {
               const isLeft = index % 2 === 0
               const isVisible = visibleCard === stage.id
@@ -128,7 +112,13 @@ export function Concept9ScrollTimeline() {
                 <div
                   key={stage.id}
                   data-stage-id={stage.id}
-                  className="relative min-h-72 flex items-center"
+                  className={`relative min-h-72 flex items-center transition-all duration-1000 ${
+                    isVisible
+                      ? 'opacity-100 translate-x-0'
+                      : isLeft
+                        ? 'opacity-0 -translate-x-20'
+                        : 'opacity-0 translate-x-20'
+                  }`}
                 >
                   {/* Timeline center line - wavy SVG */}
                   <svg

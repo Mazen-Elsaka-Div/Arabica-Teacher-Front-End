@@ -35,6 +35,12 @@ const PATH_D = [
 const GOLD = 'oklch(0.78 0.10 80)'
 const GOLD_DIM = 'oklch(0.78 0.10 80 / 15%)'
 
+/* Stop-dot accent — teal/cyan, distinct from the golden thread */
+const DOT_COLOR  = 'oklch(0.80 0.14 196)'   // lit fill
+const DOT_RING   = 'oklch(0.88 0.10 196)'   // border
+const DOT_GLOW   = 'oklch(0.78 0.14 196 / 60%)'
+const DOT_PULSE  = 'oklch(0.80 0.14 196)'
+
 const stages = [
   {
     id: 1,
@@ -211,27 +217,28 @@ export function StagesTimeline() {
               style={{ left: '50%', top: `${(stage.y / VIEW_H) * 100}%` }}
               aria-hidden="true"
             >
-              {/* Pulse ring */}
+              {/* Outer pulse ring — teal accent */}
               <span
                 className="absolute rounded-full"
                 style={{
-                  width: 40,
-                  height: 40,
-                  border: `1.5px solid ${GOLD}`,
-                  opacity: active ? 0.5 : 0,
+                  width: 42,
+                  height: 42,
+                  border: `1.5px solid ${DOT_PULSE}`,
+                  opacity: active ? 0.55 : 0,
                   animation: active ? 'stopPulse 2.4s ease-out infinite' : 'none',
                   transition: 'opacity 0.4s ease',
                 }}
               />
+              {/* Inner core dot */}
               <span
                 className="relative rounded-full"
                 style={{
                   width: 18,
                   height: 18,
-                  background: active ? 'oklch(0.85 0.11 88)' : 'oklch(0.30 0.03 60)',
-                  border: `2.5px solid ${active ? 'oklch(0.92 0.08 88)' : 'oklch(0.45 0.04 65)'}`,
-                  boxShadow: active ? '0 0 18px 5px oklch(0.80 0.11 85 / 55%)' : 'none',
-                  transform: active ? 'scale(1)' : 'scale(0.65)',
+                  background: active ? DOT_COLOR : 'oklch(0.20 0.02 55)',
+                  border: `2.5px solid ${active ? DOT_RING : 'oklch(0.35 0.03 60)'}`,
+                  boxShadow: active ? `0 0 20px 6px ${DOT_GLOW}` : 'none',
+                  transform: active ? 'scale(1)' : 'scale(0.55)',
                   transition: 'all 0.45s cubic-bezier(0.34,1.56,0.64,1)',
                 }}
               />
@@ -270,9 +277,9 @@ export function StagesTimeline() {
         className="absolute z-10 inset-x-0 hidden sm:block"
         style={{ top: `${(TITLE_Y / VIEW_H) * 100}%`, transform: 'translateY(-50%)' }}
       >
-        {/* Kicker — also split around the thread: «رحلتك» on its right, «التعليمية» on its left */}
+        {/* Kicker — bigger, split around the thread */}
         <span
-          className="absolute -top-12 text-sm font-bold tracking-wide whitespace-nowrap"
+          className="absolute -top-14 text-2xl font-black tracking-wide whitespace-nowrap"
           style={{
             left: 'calc(50% + 22px)',
             color: GOLD,
@@ -280,12 +287,13 @@ export function StagesTimeline() {
             opacity: titleActive ? 1 : 0,
             translate: titleActive ? '0 0' : '40px 0',
             transition: 'opacity 0.8s ease 0.15s, translate 0.9s cubic-bezier(0.22,1,0.36,1) 0.15s',
+            textShadow: `0 0 28px ${GOLD}99`,
           }}
         >
           رحلتك
         </span>
         <span
-          className="absolute -top-12 text-sm font-bold tracking-wide whitespace-nowrap"
+          className="absolute -top-14 text-2xl font-black tracking-wide whitespace-nowrap"
           style={{
             right: 'calc(50% + 22px)',
             color: GOLD,
@@ -293,17 +301,17 @@ export function StagesTimeline() {
             opacity: titleActive ? 1 : 0,
             translate: titleActive ? '0 0' : '-40px 0',
             transition: 'opacity 0.8s ease 0.15s, translate 0.9s cubic-bezier(0.22,1,0.36,1) 0.15s',
+            textShadow: `0 0 28px ${GOLD}99`,
           }}
         >
           التعليمية
         </span>
 
-        {/* «المراحل» — right of the thread, slides in from the right */}
+        {/* «المراحل» — outline/stroke style, right of thread */}
         <h2
-          className="absolute top-1/2 -translate-y-1/2 text-4xl md:text-5xl font-black leading-tight whitespace-nowrap"
+          className="title-stroke absolute top-1/2 -translate-y-1/2 text-5xl md:text-6xl font-black leading-tight whitespace-nowrap"
           style={{
             left: 'calc(50% + 28px)',
-            color: 'oklch(0.96 0.010 85)',
             fontFamily: 'var(--font-cairo)',
             opacity: titleActive ? 1 : 0,
             translate: titleActive ? '0 0' : '70px 0',
@@ -311,19 +319,18 @@ export function StagesTimeline() {
           }}
         >
           <span
-            className="absolute -inset-6 rounded-full blur-3xl pointer-events-none"
+            className="absolute -inset-8 rounded-full blur-3xl pointer-events-none"
             aria-hidden="true"
-            style={{ background: 'oklch(0.50 0.075 60 / 40%)' }}
+            style={{ background: 'oklch(0.50 0.075 60 / 35%)' }}
           />
           <span className="relative">المراحل</span>
         </h2>
 
-        {/* «الدراسية» — left of the thread, slides in from the left */}
+        {/* «الدراسية» — outline/stroke style, left of thread */}
         <h2
-          className="absolute top-1/2 -translate-y-1/2 text-4xl md:text-5xl font-black leading-tight whitespace-nowrap"
+          className="title-stroke absolute top-1/2 -translate-y-1/2 text-5xl md:text-6xl font-black leading-tight whitespace-nowrap"
           style={{
             right: 'calc(50% + 28px)',
-            color: 'oklch(0.96 0.010 85)',
             fontFamily: 'var(--font-cairo)',
             opacity: titleActive ? 1 : 0,
             translate: titleActive ? '0 0' : '-70px 0',
@@ -331,9 +338,9 @@ export function StagesTimeline() {
           }}
         >
           <span
-            className="absolute -inset-6 rounded-full blur-3xl pointer-events-none"
+            className="absolute -inset-8 rounded-full blur-3xl pointer-events-none"
             aria-hidden="true"
-            style={{ background: 'oklch(0.50 0.075 60 / 40%)' }}
+            style={{ background: 'oklch(0.50 0.075 60 / 35%)' }}
           />
           <span className="relative">الدراسية</span>
         </h2>
@@ -502,9 +509,18 @@ export function StagesTimeline() {
 
       <style>{`
         @keyframes stopPulse {
-          0%   { transform: scale(0.5); opacity: 0.55; }
-          70%  { transform: scale(1.25); opacity: 0; }
-          100% { transform: scale(1.25); opacity: 0; }
+          0%   { transform: scale(0.5); opacity: 0.6; }
+          70%  { transform: scale(1.5);  opacity: 0; }
+          100% { transform: scale(1.5);  opacity: 0; }
+        }
+
+        /* Stroke / outline title effect — transparent fill, coloured stroke */
+        .title-stroke {
+          color: transparent;
+          -webkit-text-stroke: 2px oklch(0.78 0.10 80);
+          text-stroke: 2px oklch(0.78 0.10 80);
+          /* Subtle glow on the stroke edges */
+          filter: drop-shadow(0 0 14px oklch(0.78 0.10 80 / 55%));
         }
         .unit-chip:hover {
           background: oklch(0.78 0.10 80 / 16%) !important;

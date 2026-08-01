@@ -1,10 +1,34 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+
 export function Concept9ScrollTimeline() {
+  const [scrollPercent, setScrollPercent] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowHeight = window.innerHeight
+      const documentHeight = document.documentElement.scrollHeight
+      const scrollTop = window.scrollY
+
+      // Calculate scroll percentage (0-100%)
+      const maxScroll = documentHeight - windowHeight
+      const percent = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0
+
+      setScrollPercent(percent)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <div className="relative bg-black overflow-visible">
       {/* Wavy timeline - continuous from hero to end of page */}
-      <div className="relative left-1/2 -translate-x-1/2 w-20 z-10" style={{ minHeight: '300vh' }}>
+      <div
+        className="relative left-1/2 -translate-x-1/2 w-20 z-10"
+        style={{ minHeight: '300vh' }}
+      >
         <svg
           className="absolute left-1/2 top-0 -translate-x-1/2"
           width="20"
@@ -26,21 +50,20 @@ export function Concept9ScrollTimeline() {
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
-            <style>{`
-              @keyframes timelineFlow {
-                0% { stroke-dashoffset: 0; }
-                100% { stroke-dashoffset: -20; }
-              }
-              .timeline-path {
-                animation: timelineFlow 3s linear infinite;
-                stroke-dasharray: 20;
-                filter: drop-shadow(0 0 4px rgba(196, 165, 80, 0.6));
-              }
-            `}</style>
           </defs>
-          {/* Wavy line path - continuous S-curves with animation */}
+
+          {/* Background wavy line */}
           <path
-            className="timeline-path"
+            d="M 10 0 Q 14 80, 10 150 Q 6 220, 10 290 Q 14 360, 10 430 Q 6 500, 10 570 Q 14 640, 10 710 Q 6 780, 10 900 L 10 1000"
+            stroke="rgba(196, 165, 80, 0.2)"
+            strokeWidth="4"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
+          {/* Animated wavy line - follows scroll */}
+          <path
             d="M 10 0 Q 14 80, 10 150 Q 6 220, 10 290 Q 14 360, 10 430 Q 6 500, 10 570 Q 14 640, 10 710 Q 6 780, 10 900 L 10 1000"
             stroke="url(#timelineGradient)"
             strokeWidth="4"
@@ -48,6 +71,11 @@ export function Concept9ScrollTimeline() {
             strokeLinecap="round"
             strokeLinejoin="round"
             filter="url(#timelineGlow)"
+            style={{
+              strokeDasharray: '1000',
+              strokeDashoffset: 1000 - (scrollPercent / 100) * 1000,
+              transition: 'stroke-dashoffset 0.1s ease-out',
+            }}
           />
         </svg>
       </div>

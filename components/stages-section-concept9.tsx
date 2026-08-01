@@ -91,9 +91,9 @@ export function Concept9ScrollTimeline() {
   }, [])
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-white to-gray-50 overflow-hidden">
+    <div className="relative min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black overflow-hidden">
       {/* Background decorative elements with blur */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none">
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-amber-500 rounded-full blur-3xl" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl" />
         <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-emerald-500 rounded-full blur-3xl" />
@@ -105,15 +105,15 @@ export function Concept9ScrollTimeline() {
           {/* Section Header with Arabic ornament */}
           <div className="text-center mb-20">
             <div className="inline-flex items-center justify-center gap-3 mb-8">
-              <Sparkles className="w-6 h-6 text-amber-500" />
-              <div className="text-4xl text-amber-600">✦ ✧ ✦</div>
-              <Sparkles className="w-6 h-6 text-amber-500" />
+              <Sparkles className="w-6 h-6 text-amber-400" />
+              <div className="text-4xl text-amber-400">✦ ✧ ✦</div>
+              <Sparkles className="w-6 h-6 text-amber-400" />
             </div>
-            <h2 className="text-5xl font-bold text-gray-900 mb-4">المراحل الدراسية</h2>
-            <p className="text-lg text-gray-600 mb-4 leading-relaxed">
+            <h2 className="text-5xl font-bold text-white mb-4">المراحل الدراسية</h2>
+            <p className="text-lg text-gray-300 mb-4 leading-relaxed">
               اختر مسارك التعليمي واستمتع برحلة تعلم اللغة العربية مع نظام تعليمي متكامل
             </p>
-            <div className="inline-flex items-center gap-2 text-sm text-amber-600 font-semibold px-6 py-3 bg-amber-50 rounded-full border border-amber-200">
+            <div className="inline-flex items-center gap-2 text-sm text-amber-400 font-semibold px-6 py-3 bg-amber-500/10 rounded-full border border-amber-500/30">
               <CheckCircle2 size={18} />
               <span>ثلاث مراحل متكاملة • تعليم شامل • نتائج مضمونة</span>
             </div>
@@ -130,8 +130,8 @@ export function Concept9ScrollTimeline() {
                   data-stage-id={stage.id}
                   className="relative min-h-72 flex items-center"
                 >
-                  {/* Timeline center line and dot */}
-                  <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-400 via-blue-400 to-emerald-400 -translate-x-1/2" />
+                  {/* Timeline center line - continuous gray */}
+                  <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gray-400 -translate-x-1/2" />
 
                   {/* Timeline dot with glow effect */}
                   <div
@@ -141,25 +141,26 @@ export function Concept9ScrollTimeline() {
                   >
                     {/* Glow ring */}
                     {isVisible && (
-                      <div className="absolute inset-0 w-12 h-12 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 rounded-full border-2 border-gray-900 opacity-30 animate-pulse" />
+                      <div className="absolute inset-0 w-12 h-12 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 rounded-full border-2 border-gray-400 opacity-40 animate-pulse" />
                     )}
-                    {/* Main dot with gradient */}
+                    {/* Main dot - dark gray */}
                     <div
-                      className={`w-6 h-6 rounded-full border-4 border-white bg-gradient-to-br ${stage.color} shadow-xl transition-all duration-300`}
+                      className={`w-6 h-6 rounded-full border-4 border-gray-900 ${isVisible ? 'bg-gray-300 shadow-xl scale-125' : 'bg-gray-500'} transition-all duration-300`}
                     />
                   </div>
 
                   {/* Stage number badge */}
                   <div className="absolute left-1/2 -translate-x-1/2 top-0 z-30">
                     <div
-                      className={`bg-white px-3 py-1 rounded-full font-bold text-sm shadow-md transition-transform duration-500 ${
-                        isVisible ? 'scale-110' : 'scale-100'
-                      }`}
-                      style={{
-                        background: `linear-gradient(135deg, var(--tw-gradient-stops))`,
-                      }}
+                      className={`bg-gray-700 px-3 py-1 rounded-full font-bold text-sm shadow-md transition-transform duration-500 border ${
+                        stage.id === 1 ? 'border-amber-500' :
+                        stage.id === 2 ? 'border-blue-500' : 'border-emerald-500'
+                      } ${isVisible ? 'scale-110' : 'scale-100'}`}
                     >
-                      <span className="text-gray-800">المرحلة {stage.id}</span>
+                      <span className={
+                        stage.id === 1 ? 'text-amber-400' :
+                        stage.id === 2 ? 'text-blue-400' : 'text-emerald-400'
+                      }>المرحلة {stage.id}</span>
                     </div>
                   </div>
 
@@ -174,7 +175,7 @@ export function Concept9ScrollTimeline() {
                     }`}
                   >
                     <div
-                      className={`bg-white rounded-2xl shadow-2xl overflow-hidden border-l-4 ${
+                      className={`bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border-l-4 ${
                         stage.id === 1
                           ? 'border-l-amber-500'
                           : stage.id === 2
@@ -200,15 +201,26 @@ export function Concept9ScrollTimeline() {
                         </div>
                       </div>
 
-                      {/* Card body */}
+                      {/* Card body - dark mode with skeleton for loading */}
                       <div className="p-6 space-y-4">
+                        {/* Skeleton dots (4 horizontal dots as placeholder) */}
+                        <div className="flex justify-center gap-2 py-2">
+                          <div className="w-2 h-2 rounded-full bg-gray-600 animate-pulse" />
+                          <div className="w-2 h-2 rounded-full bg-gray-600 animate-pulse delay-100" />
+                          <div className="w-2 h-2 rounded-full bg-gray-600 animate-pulse delay-200" />
+                          <div className="w-2 h-2 rounded-full bg-gray-600 animate-pulse delay-300" />
+                        </div>
+
                         {/* Header with icon */}
                         <div className="flex items-start justify-between gap-4">
                           <div>
-                            <h4 className="text-lg font-semibold text-gray-800 mb-1">
+                            <h4 className="text-lg font-semibold text-white mb-1">
                               {stage.nameEn}
                             </h4>
-                            <p className={`text-xs uppercase tracking-widest ${stage.textColor} font-bold`}>
+                            <p className={`text-xs uppercase tracking-widest font-bold ${
+                              stage.id === 1 ? 'text-amber-400' :
+                              stage.id === 2 ? 'text-blue-400' : 'text-emerald-400'
+                            }`}>
                               {stage.shortName} ثانوي
                             </p>
                           </div>
@@ -218,23 +230,32 @@ export function Concept9ScrollTimeline() {
                         </div>
 
                         {/* Description */}
-                        <p className="text-sm text-gray-700 leading-relaxed">
+                        <p className="text-sm text-gray-300 leading-relaxed">
                           {stage.description}
                         </p>
 
                         {/* Curriculum units as smart tags */}
-                        <div className="space-y-3 pt-2 border-t border-gray-200">
-                          <p className="text-xs font-bold text-gray-800 uppercase tracking-wider flex items-center gap-2">
-                            <CheckCircle2 size={14} className={stage.textColor} />
+                        <div className="space-y-3 pt-2 border-t border-gray-700">
+                          <p className="text-xs font-bold text-gray-200 uppercase tracking-wider flex items-center gap-2">
+                            <CheckCircle2 size={14} className={
+                              stage.id === 1 ? 'text-amber-400' :
+                              stage.id === 2 ? 'text-blue-400' : 'text-emerald-400'
+                            } />
                             محاور الدراسة:
                           </p>
                           <div className="grid grid-cols-2 gap-2">
                             {stage.units.map((unit, i) => (
                               <div
                                 key={i}
-                                className={`text-xs p-2.5 rounded-md ${stage.bgColor} border ${stage.borderColor} text-gray-700 font-medium hover:shadow-md transition-all`}
+                                className={`text-xs p-2.5 rounded-md bg-gray-700 border ${
+                                  stage.id === 1 ? 'border-amber-500/30' :
+                                  stage.id === 2 ? 'border-blue-500/30' : 'border-emerald-500/30'
+                                } text-gray-200 font-medium hover:shadow-md transition-all`}
                               >
-                                <span className={stage.textColor}>✓</span> {unit}
+                                <span className={
+                                  stage.id === 1 ? 'text-amber-400' :
+                                  stage.id === 2 ? 'text-blue-400' : 'text-emerald-400'
+                                }>✓</span> {unit}
                               </div>
                             ))}
                           </div>

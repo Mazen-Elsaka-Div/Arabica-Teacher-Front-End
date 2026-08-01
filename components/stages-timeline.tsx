@@ -31,15 +31,25 @@ const PATH_D = [
   'C 82 902, 74 920, 60 945',
 ].join(' ')
 
-/* Gold — matches the topographic background lines */
-const GOLD = 'oklch(0.78 0.10 80)'
-const GOLD_DIM = 'oklch(0.78 0.10 80 / 15%)'
+/* ── Gold background palette ──
+ * Background  : warm gold/amber       oklch(0.82 0.11 82)
+ * Thread/wire : deep dark brown       oklch(0.18 0.030 45)
+ * Text        : near-black brown      oklch(0.20 0.030 50)
+ * Cards       : warm cream/ivory      oklch(0.91 0.030 88 / 90%)
+ * Accent gold : slightly richer       oklch(0.68 0.12 72)
+ */
+const BG_GOLD     = 'oklch(0.82 0.11 82)'    // section background
+const THREAD      = 'oklch(0.22 0.030 45)'   // the wire itself — dark on gold
+const THREAD_DIM  = 'oklch(0.22 0.030 45 / 18%)' // ghost track
+const GOLD        = 'oklch(0.68 0.12 72)'    // rich amber accent (labels, icons)
+const TEXT_DARK   = 'oklch(0.20 0.030 50)'   // headings / strong text
+const TEXT_MID    = 'oklch(0.38 0.040 55)'   // body / description
 
-/* Stop-dot accent — teal/cyan, distinct from the golden thread */
-const DOT_COLOR  = 'oklch(0.80 0.14 196)'   // lit fill
-const DOT_RING   = 'oklch(0.88 0.10 196)'   // border
-const DOT_GLOW   = 'oklch(0.78 0.14 196 / 60%)'
-const DOT_PULSE  = 'oklch(0.80 0.14 196)'
+/* Stop-dot — deep burgundy/brown, pops on gold */
+const DOT_COLOR  = 'oklch(0.35 0.09 30)'    // lit fill (dark red-brown)
+const DOT_RING   = 'oklch(0.45 0.10 30)'    // border
+const DOT_GLOW   = 'oklch(0.40 0.09 30 / 55%)'
+const DOT_PULSE  = 'oklch(0.42 0.10 30)'
 
 const stages = [
   {
@@ -138,9 +148,9 @@ export function StagesTimeline() {
       ref={sectionRef}
       aria-label="المراحل الدراسية"
       className="relative h-[300vh] overflow-hidden"
-      style={{ background: 'oklch(0.10 0.016 55)' }}
+      style={{ background: BG_GOLD }}
     >
-      {/* Faint topo texture for continuity with the hero */}
+      {/* Topo texture — dark lines on gold, higher opacity for richness */}
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
@@ -148,15 +158,17 @@ export function StagesTimeline() {
           backgroundImage: 'url(/topo-dark.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          opacity: 0.14,
+          opacity: 0.10,
+          mixBlendMode: 'multiply',
         }}
       />
-      {/* Vignette to keep the mood dark */}
+      {/* Soft vignette — darkens top/bottom edges slightly */}
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse 110% 60% at 50% 0%, rgba(0,0,0,0.55) 0%, transparent 55%), radial-gradient(ellipse 110% 60% at 50% 100%, rgba(0,0,0,0.55) 0%, transparent 55%)',
+          background: `radial-gradient(ellipse 110% 50% at 50% 0%, oklch(0.60 0.09 70 / 35%) 0%, transparent 60%),
+                       radial-gradient(ellipse 110% 50% at 50% 100%, oklch(0.60 0.09 70 / 35%) 0%, transparent 60%)`,
         }}
       />
 
@@ -170,38 +182,38 @@ export function StagesTimeline() {
         >
           <defs>
             <linearGradient id="threadGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="oklch(0.82 0.11 85)" />
-              <stop offset="55%" stopColor={GOLD} />
-              <stop offset="100%" stopColor="oklch(0.66 0.09 70)" />
+              <stop offset="0%"   stopColor="oklch(0.30 0.040 45)" />
+              <stop offset="50%"  stopColor={THREAD} />
+              <stop offset="100%" stopColor="oklch(0.14 0.020 40)" />
             </linearGradient>
           </defs>
-          {/* Ghost track — barely visible full path */}
-          <path d={PATH_D} stroke={GOLD_DIM} strokeWidth="1.5" fill="none" />
+          {/* Ghost track — faint dark line on gold */}
+          <path d={PATH_D} stroke={THREAD_DIM} strokeWidth="1.5" fill="none" />
           {/* The growing thread */}
           <path
             ref={pathRef}
             d={PATH_D}
             stroke="url(#threadGradient)"
-            strokeWidth="2.5"
+            strokeWidth="3"
             fill="none"
             strokeLinecap="round"
             style={{
               strokeDasharray: pathLen || 1,
               strokeDashoffset: pathLen ? pathLen * (1 - progress) : pathLen || 1,
-              filter: 'drop-shadow(0 0 6px oklch(0.78 0.10 80 / 55%))',
+              filter: `drop-shadow(0 0 5px ${THREAD_DIM})`,
             }}
           />
         </svg>
 
-        {/* Glowing tip riding the thread */}
+        {/* Tip riding the thread — dark bead on gold */}
         {progress > 0.005 && progress < 0.995 && (
           <div
             className="absolute size-3 rounded-full -translate-x-1/2 -translate-y-1/2"
             style={{
               left: `${(tip.x / VIEW_W) * 100}%`,
               top: `${(tip.y / VIEW_H) * 100}%`,
-              background: 'oklch(0.90 0.10 88)',
-              boxShadow: '0 0 14px 4px oklch(0.82 0.11 85 / 70%)',
+              background: 'oklch(0.14 0.025 42)',
+              boxShadow: `0 0 12px 4px ${THREAD_DIM}`,
             }}
             aria-hidden="true"
           />
@@ -235,8 +247,8 @@ export function StagesTimeline() {
                 style={{
                   width: 18,
                   height: 18,
-                  background: active ? DOT_COLOR : 'oklch(0.20 0.02 55)',
-                  border: `2.5px solid ${active ? DOT_RING : 'oklch(0.35 0.03 60)'}`,
+                  background: active ? DOT_COLOR : 'oklch(0.60 0.08 72 / 40%)',
+                  border: `2.5px solid ${active ? DOT_RING : 'oklch(0.50 0.07 65 / 50%)'}`,
                   boxShadow: active ? `0 0 20px 6px ${DOT_GLOW}` : 'none',
                   transform: active ? 'scale(1)' : 'scale(0.55)',
                   transition: 'all 0.45s cubic-bezier(0.34,1.56,0.64,1)',
@@ -257,18 +269,18 @@ export function StagesTimeline() {
           transition: 'opacity 0.9s ease, transform 1s cubic-bezier(0.34,1.4,0.64,1)',
         }}
       >
-        {/* Warm golden glow behind the book */}
+        {/* Deep shadow halo — makes the book pop on gold */}
         <div
-          className="absolute inset-[-25%] rounded-full blur-3xl"
+          className="absolute inset-[-20%] rounded-full blur-3xl"
           aria-hidden="true"
-          style={{ background: 'oklch(0.60 0.10 75 / 35%)' }}
+          style={{ background: 'oklch(0.40 0.07 55 / 28%)' }}
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/book.png"
           alt="كتاب اللغة العربية — نهاية الرحلة التعليمية"
           className="relative w-56 sm:w-80 h-auto"
-          style={{ filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.6))' }}
+          style={{ filter: 'drop-shadow(0 8px 24px oklch(0.20 0.03 45 / 55%))' }}
         />
       </div>
 
@@ -282,12 +294,11 @@ export function StagesTimeline() {
           className="absolute -top-14 text-2xl font-black tracking-wide whitespace-nowrap"
           style={{
             left: 'calc(50% + 22px)',
-            color: GOLD,
+            color: TEXT_DARK,
             fontFamily: 'var(--font-cairo)',
             opacity: titleActive ? 1 : 0,
             translate: titleActive ? '0 0' : '40px 0',
             transition: 'opacity 0.8s ease 0.15s, translate 0.9s cubic-bezier(0.22,1,0.36,1) 0.15s',
-            textShadow: `0 0 28px ${GOLD}99`,
           }}
         >
           رحلتك
@@ -296,18 +307,17 @@ export function StagesTimeline() {
           className="absolute -top-14 text-2xl font-black tracking-wide whitespace-nowrap"
           style={{
             right: 'calc(50% + 22px)',
-            color: GOLD,
+            color: TEXT_DARK,
             fontFamily: 'var(--font-cairo)',
             opacity: titleActive ? 1 : 0,
             translate: titleActive ? '0 0' : '-40px 0',
             transition: 'opacity 0.8s ease 0.15s, translate 0.9s cubic-bezier(0.22,1,0.36,1) 0.15s',
-            textShadow: `0 0 28px ${GOLD}99`,
           }}
         >
           التعليمية
         </span>
 
-        {/* «المراحل» — outline/stroke style, right of thread */}
+        {/* «المراحل» — stroke title, dark on gold */}
         <h2
           className="title-stroke absolute top-1/2 -translate-y-1/2 text-5xl md:text-6xl font-black leading-tight whitespace-nowrap"
           style={{
@@ -321,12 +331,12 @@ export function StagesTimeline() {
           <span
             className="absolute -inset-8 rounded-full blur-3xl pointer-events-none"
             aria-hidden="true"
-            style={{ background: 'oklch(0.50 0.075 60 / 35%)' }}
+            style={{ background: 'oklch(0.70 0.09 72 / 30%)' }}
           />
           <span className="relative">المراحل</span>
         </h2>
 
-        {/* «الدراسية» — outline/stroke style, left of thread */}
+        {/* «الدراسية» — stroke title, dark on gold */}
         <h2
           className="title-stroke absolute top-1/2 -translate-y-1/2 text-5xl md:text-6xl font-black leading-tight whitespace-nowrap"
           style={{
@@ -340,7 +350,7 @@ export function StagesTimeline() {
           <span
             className="absolute -inset-8 rounded-full blur-3xl pointer-events-none"
             aria-hidden="true"
-            style={{ background: 'oklch(0.50 0.075 60 / 35%)' }}
+            style={{ background: 'oklch(0.70 0.09 72 / 30%)' }}
           />
           <span className="relative">الدراسية</span>
         </h2>
@@ -364,12 +374,12 @@ export function StagesTimeline() {
             style={{ background: 'oklch(0.50 0.075 60 / 40%)' }}
           />
           <div className="relative">
-            <span className="text-sm font-bold tracking-wide" style={{ color: GOLD, fontFamily: 'var(--font-cairo)' }}>
+            <span className="text-sm font-bold tracking-wide" style={{ color: TEXT_DARK, fontFamily: 'var(--font-cairo)' }}>
               رحلتك التعليمية
             </span>
             <h2
               className="text-4xl font-black text-balance leading-tight mt-2"
-              style={{ color: 'oklch(0.96 0.010 85)', fontFamily: 'var(--font-cairo)' }}
+              style={{ color: TEXT_DARK, fontFamily: 'var(--font-cairo)' }}
             >
               المراحل الدراسية
             </h2>
@@ -405,27 +415,27 @@ export function StagesTimeline() {
               aria-hidden="true"
               style={{
                 background: fromLeft
-                  ? `linear-gradient(to right, ${GOLD}, transparent)`
-                  : `linear-gradient(to left, ${GOLD}, transparent)`,
-                opacity: active ? 0.6 : 0,
+                  ? `linear-gradient(to right, ${THREAD}, transparent)`
+                  : `linear-gradient(to left, ${THREAD}, transparent)`,
+                opacity: active ? 0.45 : 0,
                 transition: 'opacity 0.8s ease 0.3s',
               }}
             />
 
             <div className="relative">
-              {/* Warm brown glow behind the card */}
+              {/* Subtle amber shadow behind card */}
               <div
-                className="absolute -inset-6 rounded-3xl blur-3xl pointer-events-none"
+                className="absolute -inset-5 rounded-3xl blur-2xl pointer-events-none"
                 aria-hidden="true"
-                style={{ background: 'oklch(0.50 0.075 60 / 42%)' }}
+                style={{ background: 'oklch(0.55 0.09 65 / 30%)' }}
               />
 
               <div
                 className="relative rounded-2xl p-6 sm:p-7"
                 style={{
-                  background: 'oklch(0.15 0.024 55 / 88%)',
-                  border: '1px solid oklch(0.78 0.10 80 / 26%)',
-                  boxShadow: '0 12px 44px rgba(0,0,0,0.55), inset 0 1px 0 oklch(0.78 0.10 80 / 12%)',
+                  background: 'oklch(0.93 0.028 88 / 92%)',
+                  border: `1px solid oklch(0.60 0.08 68 / 35%)`,
+                  boxShadow: '0 10px 40px oklch(0.40 0.07 55 / 30%), inset 0 1px 0 oklch(0.98 0.010 88 / 70%)',
                   backdropFilter: 'blur(10px)',
                 }}
               >
@@ -433,8 +443,8 @@ export function StagesTimeline() {
                   <span
                     className="flex items-center justify-center size-11 rounded-xl shrink-0"
                     style={{
-                      background: 'oklch(0.78 0.10 80 / 14%)',
-                      border: '1px solid oklch(0.78 0.10 80 / 35%)',
+                      background: 'oklch(0.68 0.12 72 / 16%)',
+                      border: `1px solid ${GOLD}55`,
                       color: GOLD,
                     }}
                   >
@@ -449,7 +459,7 @@ export function StagesTimeline() {
                     </span>
                     <h3
                       className="text-xl sm:text-2xl font-black leading-tight"
-                      style={{ color: 'oklch(0.96 0.010 85)', fontFamily: 'var(--font-cairo)' }}
+                      style={{ color: TEXT_DARK, fontFamily: 'var(--font-cairo)' }}
                     >
                       {stage.name}
                     </h3>
@@ -457,7 +467,7 @@ export function StagesTimeline() {
                 </div>
                 <p
                   className="text-sm leading-relaxed"
-                  style={{ color: 'oklch(0.74 0.03 80)', fontFamily: 'var(--font-cairo)' }}
+                  style={{ color: TEXT_MID, fontFamily: 'var(--font-cairo)' }}
                 >
                   {stage.description}
                 </p>
@@ -469,8 +479,8 @@ export function StagesTimeline() {
                       key={unit}
                       className="unit-chip flex items-center gap-3 rounded-xl px-3 py-2 cursor-default"
                       style={{
-                        background: 'oklch(0.78 0.10 80 / 6%)',
-                        border: '1px solid oklch(0.78 0.10 80 / 16%)',
+                        background: 'oklch(0.68 0.12 72 / 8%)',
+                        border: `1px solid oklch(0.68 0.12 72 / 22%)`,
                         opacity: active ? 1 : 0,
                         translate: active ? '0 0' : '0 14px',
                         transition: `opacity 0.55s ease ${0.35 + i * 0.12}s, translate 0.6s cubic-bezier(0.22,1,0.36,1) ${0.35 + i * 0.12}s, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease`,
@@ -479,8 +489,8 @@ export function StagesTimeline() {
                       <span
                         className="unit-num flex items-center justify-center size-7 rounded-lg text-xs font-black shrink-0"
                         style={{
-                          background: 'oklch(0.78 0.10 80 / 14%)',
-                          border: '1px solid oklch(0.78 0.10 80 / 32%)',
+                          background: 'oklch(0.68 0.12 72 / 18%)',
+                          border: `1px solid ${GOLD}44`,
                           color: GOLD,
                           fontFamily: 'var(--font-cairo)',
                           transition: 'background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease',
@@ -491,7 +501,7 @@ export function StagesTimeline() {
                       <span
                         className="unit-name text-sm font-bold"
                         style={{
-                          color: 'oklch(0.82 0.03 80)',
+                          color: TEXT_MID,
                           fontFamily: 'var(--font-cairo)',
                           transition: 'color 0.3s ease',
                         }}
@@ -514,26 +524,26 @@ export function StagesTimeline() {
           100% { transform: scale(1.5);  opacity: 0; }
         }
 
-        /* Stroke / outline title effect — transparent fill, coloured stroke */
+        /* Stroke title — dark outline on gold background */
         .title-stroke {
           color: transparent;
-          -webkit-text-stroke: 2px oklch(0.78 0.10 80);
-          text-stroke: 2px oklch(0.78 0.10 80);
-          /* Subtle glow on the stroke edges */
-          filter: drop-shadow(0 0 14px oklch(0.78 0.10 80 / 55%));
+          -webkit-text-stroke: 2.5px oklch(0.22 0.030 45);
+          text-stroke: 2.5px oklch(0.22 0.030 45);
+          filter: drop-shadow(0 2px 8px oklch(0.40 0.06 55 / 40%));
         }
+        /* Unit chip hover — darkens slightly on gold */
         .unit-chip:hover {
-          background: oklch(0.78 0.10 80 / 16%) !important;
-          border-color: oklch(0.80 0.10 82 / 55%) !important;
-          box-shadow: 0 0 22px 2px oklch(0.78 0.10 80 / 30%), inset 0 0 12px oklch(0.78 0.10 80 / 10%);
+          background: oklch(0.68 0.12 72 / 18%) !important;
+          border-color: oklch(0.68 0.12 72 / 55%) !important;
+          box-shadow: 0 0 18px 2px oklch(0.68 0.12 72 / 25%);
         }
         .unit-chip:hover .unit-num {
-          background: oklch(0.80 0.11 82) !important;
-          color: oklch(0.16 0.02 55) !important;
-          box-shadow: 0 0 14px 3px oklch(0.80 0.11 82 / 55%);
+          background: oklch(0.22 0.030 45) !important;
+          color: oklch(0.90 0.04 85) !important;
+          box-shadow: 0 0 10px 2px oklch(0.22 0.030 45 / 45%);
         }
         .unit-chip:hover .unit-name {
-          color: oklch(0.95 0.03 85) !important;
+          color: oklch(0.20 0.030 50) !important;
         }
       `}</style>
     </section>

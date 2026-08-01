@@ -20,7 +20,7 @@ const VIEW_W = 120
 const VIEW_H = 1000
 
 /* Wavy S-curve path down the center — the final stretch straightens
-   out so the thread pours vertically into the book's spine center */
+   out and pours vertically into the middle of the book's spine */
 const PATH_D = [
   'M 60 2',
   'C 98 44, 22 86, 60 125',
@@ -30,9 +30,9 @@ const PATH_D = [
   'C 98 542, 22 584, 60 625',
   'C 98 667, 22 709, 60 750',
   'C 98 792, 22 834, 60 875',
-  /* Ease out of the last wave, then drop dead-straight into the book */
-  'C 74 890, 60 900, 60 915',
-  'L 60 960',
+  /* Final straightening curve and vertical drop to book center */
+  'C 62 887, 60 895, 60 910',
+  'L 60 968',
 ].join(' ')
 
 const stages = [
@@ -369,7 +369,7 @@ export function StagesTimeline() {
       >
         {/* Right column — hugs the thread with a small gap */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 flex flex-col items-start gap-1"
+          className="absolute top-1/2 -translate-y-1/2 flex flex-col items-start gap-0.5"
           style={{
             left: 'calc(50% + 22px)',
             opacity: titleActive ? 1 : 0,
@@ -383,21 +383,11 @@ export function StagesTimeline() {
           <span className="title-main" style={{ color: P.titleMain }}>
             المراحل
           </span>
-          <span
-            className="h-[4px] w-16 rounded-full mt-1"
-            style={{
-              background: P.titleAccent,
-              transformOrigin: 'right',
-              transform: titleActive ? 'scaleX(1)' : 'scaleX(0)',
-              transition: 'transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.5s',
-            }}
-            aria-hidden="true"
-          />
         </div>
 
         {/* Left column — hugs the thread with a small gap */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 flex flex-col items-end gap-1"
+          className="absolute top-1/2 -translate-y-1/2 flex flex-col items-end gap-0.5"
           style={{
             right: 'calc(50% + 22px)',
             opacity: titleActive ? 1 : 0,
@@ -411,16 +401,6 @@ export function StagesTimeline() {
           <span className="title-main" style={{ color: P.titleMain }}>
             الدراسية
           </span>
-          <span
-            className="h-[4px] w-16 rounded-full mt-1"
-            style={{
-              background: P.titleAccent,
-              transformOrigin: 'left',
-              transform: titleActive ? 'scaleX(1)' : 'scaleX(0)',
-              transition: 'transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.6s',
-            }}
-            aria-hidden="true"
-          />
         </div>
       </div>
 
@@ -595,18 +575,20 @@ export function StagesTimeline() {
 
         /* ── Title typography — clean and strong, no glow ── */
         .title-kicker {
-          font-family: var(--font-noto-naskh), serif;
-          font-size: clamp(1.25rem, 2.2vw, 1.75rem);
-          font-weight: 600;
-          letter-spacing: 0.01em;
-          line-height: 1.2;
+          font-family: var(--font-cairo), sans-serif;
+          font-size: clamp(0.9rem, 1.4vw, 1.3rem);
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          line-height: 1.1;
+          text-transform: uppercase;
+          opacity: 0.85;
         }
         .title-main {
           font-family: var(--font-cairo), sans-serif;
-          font-size: clamp(2.75rem, 5.5vw, 4.5rem);
+          font-size: clamp(2.2rem, 4.8vw, 3.8rem);
           font-weight: 900;
-          line-height: 1.05;
-          letter-spacing: -0.01em;
+          line-height: 1;
+          letter-spacing: -0.02em;
         }
 
         .unit-chip:hover {

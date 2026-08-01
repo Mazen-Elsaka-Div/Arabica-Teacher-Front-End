@@ -2,34 +2,62 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
+import { BookOpen, GraduationCap, Award, Sparkles, CheckCircle2 } from 'lucide-react'
 
 const stages = [
   {
     id: 1,
     name: 'الصف الأول الثانوي',
     nameEn: 'First Secondary',
+    shortName: 'الأول',
     description: 'أساسيات اللغة العربية والقواعد الأساسية',
-    curriculum: 'الوحدات: الكتابة - القراءة - الاستماع - التحدث',
+    curriculum: 'الكتابة • القراءة • الاستماع • التحدث',
+    units: ['القراءة الفاهمة', 'القواعد الأساسية', 'الكتابة الإبداعية', 'المحادثة'],
     color: 'from-amber-500 to-amber-600',
+    bgColor: 'bg-amber-50',
+    borderColor: 'border-amber-300',
+    dotColor: 'bg-amber-500',
+    textColor: 'text-amber-600',
     image: '/stage1-illustration.png',
+    icon: BookOpen,
+    iconColor: 'text-amber-600',
+    iconBg: 'bg-amber-100',
   },
   {
     id: 2,
     name: 'الصف الثاني الثانوي',
     nameEn: 'Second Secondary',
+    shortName: 'الثاني',
     description: 'تعمق في النحو والبلاغة والأدب',
-    curriculum: 'الوحدات: البلاغة - النحو المتقدم - الأدب - التحليل',
+    curriculum: 'البلاغة • النحو المتقدم • الأدب • التحليل',
+    units: ['النحو المتقدم', 'البلاغة والبيان', 'الأدب العربي', 'النصوص الأدبية'],
     color: 'from-blue-500 to-blue-600',
+    bgColor: 'bg-blue-50',
+    borderColor: 'border-blue-300',
+    dotColor: 'bg-blue-500',
+    textColor: 'text-blue-600',
     image: '/stage2-illustration.png',
+    icon: GraduationCap,
+    iconColor: 'text-blue-600',
+    iconBg: 'bg-blue-100',
   },
   {
     id: 3,
     name: 'الصف الثالث الثانوي',
     nameEn: 'Third Secondary',
+    shortName: 'الثالث',
     description: 'إتقان اللغة العربية والتحضير للامتحانات',
-    curriculum: 'الوحدات: الإملاء - الترجمة - المحادثة - الكتابة الإبداعية',
+    curriculum: 'الإملاء • الترجمة • المحادثة • الكتابة الإبداعية',
+    units: ['الإملاء والترقيم', 'الترجمة من وإلى العربية', 'المحادثة المتقدمة', 'الكتابة الإبداعية'],
     color: 'from-emerald-500 to-emerald-600',
+    bgColor: 'bg-emerald-50',
+    borderColor: 'border-emerald-300',
+    dotColor: 'bg-emerald-500',
+    textColor: 'text-emerald-600',
     image: '/stage3-illustration.png',
+    icon: Award,
+    iconColor: 'text-emerald-600',
+    iconBg: 'bg-emerald-100',
   },
 ]
 
@@ -64,15 +92,32 @@ export function Concept9ScrollTimeline() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-white to-gray-50 overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 opacity-5">
+      {/* Background decorative elements with blur */}
+      <div className="absolute inset-0 opacity-5 pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-amber-500 rounded-full blur-3xl" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl" />
+        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-emerald-500 rounded-full blur-3xl" />
       </div>
 
       {/* Main content */}
       <div ref={containerRef} className="relative z-10 px-6 py-20">
         <div className="max-w-6xl mx-auto">
+          {/* Section Header with Arabic ornament */}
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center justify-center gap-3 mb-8">
+              <Sparkles className="w-6 h-6 text-amber-500" />
+              <div className="text-4xl text-amber-600">✦ ✧ ✦</div>
+              <Sparkles className="w-6 h-6 text-amber-500" />
+            </div>
+            <h2 className="text-5xl font-bold text-gray-900 mb-4">المراحل الدراسية</h2>
+            <p className="text-lg text-gray-600 mb-4 leading-relaxed">
+              اختر مسارك التعليمي واستمتع برحلة تعلم اللغة العربية مع نظام تعليمي متكامل
+            </p>
+            <div className="inline-flex items-center gap-2 text-sm text-amber-600 font-semibold px-6 py-3 bg-amber-50 rounded-full border border-amber-200">
+              <CheckCircle2 size={18} />
+              <span>ثلاث مراحل متكاملة • تعليم شامل • نتائج مضمونة</span>
+            </div>
+          </div>
           {/* Timeline with alternating cards */}
           <div className="space-y-32">
             {stages.map((stage, index) => {
@@ -88,14 +133,19 @@ export function Concept9ScrollTimeline() {
                   {/* Timeline center line and dot */}
                   <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-400 via-blue-400 to-emerald-400 -translate-x-1/2" />
 
-                  {/* Timeline dot */}
+                  {/* Timeline dot with glow effect */}
                   <div
                     className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-500 ${
                       isVisible ? 'scale-150' : 'scale-100'
                     }`}
                   >
+                    {/* Glow ring */}
+                    {isVisible && (
+                      <div className="absolute inset-0 w-12 h-12 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 rounded-full border-2 border-gray-900 opacity-30 animate-pulse" />
+                    )}
+                    {/* Main dot with gradient */}
                     <div
-                      className={`w-6 h-6 rounded-full border-4 border-white bg-gradient-to-br ${stage.color} shadow-lg`}
+                      className={`w-6 h-6 rounded-full border-4 border-white bg-gradient-to-br ${stage.color} shadow-xl transition-all duration-300`}
                     />
                   </div>
 
@@ -151,30 +201,49 @@ export function Concept9ScrollTimeline() {
                       </div>
 
                       {/* Card body */}
-                      <div className="p-6">
-                        <p className="text-gray-600 text-sm mb-4 font-medium">
-                          {stage.nameEn}
-                        </p>
+                      <div className="p-6 space-y-4">
+                        {/* Header with icon */}
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <h4 className="text-lg font-semibold text-gray-800 mb-1">
+                              {stage.nameEn}
+                            </h4>
+                            <p className={`text-xs uppercase tracking-widest ${stage.textColor} font-bold`}>
+                              {stage.shortName} ثانوي
+                            </p>
+                          </div>
+                          <div className={`${stage.iconBg} p-3 rounded-lg flex-shrink-0 shadow-sm`}>
+                            {stage.icon && <stage.icon size={24} className={stage.iconColor} />}
+                          </div>
+                        </div>
 
-                        <p className="text-gray-700 mb-6 leading-relaxed">
+                        {/* Description */}
+                        <p className="text-sm text-gray-700 leading-relaxed">
                           {stage.description}
                         </p>
 
-                        {/* Curriculum badge */}
-                        <div className="bg-gray-50 rounded-lg p-4 border-l-4 border-gray-300">
-                          <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
-                            المنهج
+                        {/* Curriculum units as smart tags */}
+                        <div className="space-y-3 pt-2 border-t border-gray-200">
+                          <p className="text-xs font-bold text-gray-800 uppercase tracking-wider flex items-center gap-2">
+                            <CheckCircle2 size={14} className={stage.textColor} />
+                            محاور الدراسة:
                           </p>
-                          <p className="text-sm text-gray-700 leading-relaxed">
-                            {stage.curriculum}
-                          </p>
+                          <div className="grid grid-cols-2 gap-2">
+                            {stage.units.map((unit, i) => (
+                              <div
+                                key={i}
+                                className={`text-xs p-2.5 rounded-md ${stage.bgColor} border ${stage.borderColor} text-gray-700 font-medium hover:shadow-md transition-all`}
+                              >
+                                <span className={stage.textColor}>✓</span> {unit}
+                              </div>
+                            ))}
+                          </div>
                         </div>
 
                         {/* CTA Button */}
-                        <button
-                          className={`w-full mt-6 px-4 py-3 rounded-lg font-semibold text-white transition-all duration-300 transform hover:scale-105 active:scale-95 bg-gradient-to-r ${stage.color}`}
-                        >
-                          استكشف المرحلة
+                        <button className={`w-full mt-4 py-3 px-4 rounded-lg font-semibold text-white bg-gradient-to-r ${stage.color} hover:shadow-lg transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2`}>
+                          <span>تعرف أكتر</span>
+                          <Sparkles size={16} />
                         </button>
                       </div>
                     </div>

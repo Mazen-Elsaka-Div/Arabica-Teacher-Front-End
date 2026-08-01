@@ -24,18 +24,18 @@ export function Concept9ScrollTimeline() {
 
   return (
     <div className="relative bg-black overflow-visible">
-      {/* Wavy timeline - continuous from hero to end of page */}
+      {/* Wavy timeline - starts from bottom of hero, extends into black section */}
       <div
         className="relative left-1/2 -translate-x-1/2 w-20 z-10"
-        style={{ minHeight: '300vh' }}
+        style={{ minHeight: '300vh', marginTop: '-100vh' }}
       >
         <svg
-          className="absolute left-1/2 top-0 -translate-x-1/2"
+          className="absolute left-1/2 -translate-x-1/2"
           width="20"
           height="100%"
           viewBox="0 0 20 1000"
           preserveAspectRatio="none"
-          style={{ overflow: 'visible', minHeight: '300vh' }}
+          style={{ overflow: 'visible', minHeight: '300vh', top: '100vh' }}
         >
           <defs>
             <linearGradient id="timelineGradient" x1="0%" y1="0%" x2="0%" y2="100%">

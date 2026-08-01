@@ -272,187 +272,79 @@ export function StagesTimeline() {
         />
       </div>
 
-      {/* ── Section title — split around the thread ── */}
+      {/* ── Section title — split around the thread: «المراحل» on its right, «الدراسية» on its left ── */}
       <div
         className="absolute z-10 inset-x-0 hidden sm:block"
         style={{ top: `${(TITLE_Y / VIEW_H) * 100}%`, transform: 'translateY(-50%)' }}
       >
-        {/* ── Kicker «رحلتك | التعليمية» — Naskh font, bigger, split ── */}
+        {/* Kicker — bigger, split around the thread */}
         <span
-          className="kicker-naskh absolute whitespace-nowrap"
+          className="absolute -top-14 text-2xl font-black tracking-wide whitespace-nowrap"
           style={{
-            left: 'calc(50% + 24px)',
-            top: '-4.5rem',
+            left: 'calc(50% + 22px)',
+            color: GOLD,
+            fontFamily: 'var(--font-cairo)',
             opacity: titleActive ? 1 : 0,
-            translate: titleActive ? '0 0' : '44px 0',
-            transition: 'opacity 0.9s ease 0.1s, translate 1s cubic-bezier(0.22,1,0.36,1) 0.1s',
+            translate: titleActive ? '0 0' : '40px 0',
+            transition: 'opacity 0.8s ease 0.15s, translate 0.9s cubic-bezier(0.22,1,0.36,1) 0.15s',
+            textShadow: `0 0 28px ${GOLD}99`,
           }}
         >
           رحلتك
         </span>
         <span
-          className="kicker-naskh absolute whitespace-nowrap"
+          className="absolute -top-14 text-2xl font-black tracking-wide whitespace-nowrap"
           style={{
-            right: 'calc(50% + 24px)',
-            top: '-4.5rem',
+            right: 'calc(50% + 22px)',
+            color: GOLD,
+            fontFamily: 'var(--font-cairo)',
             opacity: titleActive ? 1 : 0,
-            translate: titleActive ? '0 0' : '-44px 0',
-            transition: 'opacity 0.9s ease 0.1s, translate 1s cubic-bezier(0.22,1,0.36,1) 0.1s',
+            translate: titleActive ? '0 0' : '-40px 0',
+            transition: 'opacity 0.8s ease 0.15s, translate 0.9s cubic-bezier(0.22,1,0.36,1) 0.15s',
+            textShadow: `0 0 28px ${GOLD}99`,
           }}
         >
           التعليمية
         </span>
 
-        {/* ── Main title «المراحل | الدراسية» — SVG text with draw-in stroke ── */}
-        {/* Right side: «المراحل» */}
-        <div
-          className="absolute top-1/2 -translate-y-1/2 whitespace-nowrap"
+        {/* «المراحل» — outline/stroke style, right of thread */}
+        <h2
+          className="title-stroke absolute top-1/2 -translate-y-1/2 text-5xl md:text-6xl font-black leading-tight whitespace-nowrap"
           style={{
             left: 'calc(50% + 28px)',
+            fontFamily: 'var(--font-cairo)',
             opacity: titleActive ? 1 : 0,
-            translate: titleActive ? '0 0' : '80px 0',
-            transition: 'opacity 0.7s ease 0.05s, translate 1s cubic-bezier(0.22,1,0.36,1) 0.05s',
+            translate: titleActive ? '0 0' : '70px 0',
+            transition: 'opacity 0.8s ease, translate 0.9s cubic-bezier(0.22,1,0.36,1)',
           }}
-          aria-hidden="true"
         >
-          {/* Warm brown halo */}
-          <div
-            className="absolute -inset-10 rounded-full blur-3xl pointer-events-none"
-            style={{ background: 'oklch(0.50 0.075 60 / 38%)' }}
+          <span
+            className="absolute -inset-8 rounded-full blur-3xl pointer-events-none"
+            aria-hidden="true"
+            style={{ background: 'oklch(0.50 0.075 60 / 35%)' }}
           />
-          <svg
-            className="relative calligraphy-svg"
-            viewBox="0 0 280 80"
-            style={{ overflow: 'visible', width: 'clamp(180px, 22vw, 290px)', height: 'auto' }}
-          >
-            <defs>
-              <linearGradient id="calliGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%"   stopColor="oklch(0.92 0.10 90)" />
-                <stop offset="45%"  stopColor={GOLD} />
-                <stop offset="100%" stopColor="oklch(0.64 0.10 68)" />
-              </linearGradient>
-              <filter id="calliGlow" x="-20%" y="-60%" width="140%" height="220%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
-                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-            {/* Shadow / depth layer */}
-            <text
-              x="8" y="64"
-              fontFamily="var(--font-noto-naskh), serif"
-              fontSize="64"
-              fontWeight="700"
-              fill="oklch(0.10 0.02 55)"
-              dx="2" dy="3"
-              style={{ userSelect: 'none' }}
-            >
-              المراحل
-            </text>
-            {/* Stroke draw-in layer */}
-            <text
-              x="8" y="64"
-              fontFamily="var(--font-noto-naskh), serif"
-              fontSize="64"
-              fontWeight="700"
-              fill="none"
-              stroke="url(#calliGrad1)"
-              strokeWidth="1"
-              filter="url(#calliGlow)"
-              className={titleActive ? 'draw-in' : ''}
-              style={{ userSelect: 'none' }}
-            >
-              المراحل
-            </text>
-            {/* Fill layer fades in after stroke */}
-            <text
-              x="8" y="64"
-              fontFamily="var(--font-noto-naskh), serif"
-              fontSize="64"
-              fontWeight="700"
-              fill="url(#calliGrad1)"
-              className={titleActive ? 'fill-in' : ''}
-              style={{ userSelect: 'none' }}
-            >
-              المراحل
-            </text>
-          </svg>
-        </div>
+          <span className="relative">المراحل</span>
+        </h2>
 
-        {/* Left side: «الدراسية» */}
-        <div
-          className="absolute top-1/2 -translate-y-1/2 whitespace-nowrap"
+        {/* «الدراسية» — outline/stroke style, left of thread */}
+        <h2
+          className="title-stroke absolute top-1/2 -translate-y-1/2 text-5xl md:text-6xl font-black leading-tight whitespace-nowrap"
           style={{
             right: 'calc(50% + 28px)',
+            fontFamily: 'var(--font-cairo)',
             opacity: titleActive ? 1 : 0,
-            translate: titleActive ? '0 0' : '-80px 0',
-            transition: 'opacity 0.7s ease 0.2s, translate 1s cubic-bezier(0.22,1,0.36,1) 0.2s',
+            translate: titleActive ? '0 0' : '-70px 0',
+            transition: 'opacity 0.8s ease, translate 0.9s cubic-bezier(0.22,1,0.36,1)',
           }}
-          aria-hidden="true"
         >
-          {/* Warm brown halo */}
-          <div
-            className="absolute -inset-10 rounded-full blur-3xl pointer-events-none"
-            style={{ background: 'oklch(0.50 0.075 60 / 38%)' }}
+          <span
+            className="absolute -inset-8 rounded-full blur-3xl pointer-events-none"
+            aria-hidden="true"
+            style={{ background: 'oklch(0.50 0.075 60 / 35%)' }}
           />
-          <svg
-            className="relative calligraphy-svg"
-            viewBox="0 0 260 80"
-            style={{ overflow: 'visible', width: 'clamp(160px, 20vw, 270px)', height: 'auto' }}
-          >
-            <defs>
-              <linearGradient id="calliGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%"   stopColor="oklch(0.92 0.10 90)" />
-                <stop offset="45%"  stopColor={GOLD} />
-                <stop offset="100%" stopColor="oklch(0.64 0.10 68)" />
-              </linearGradient>
-            </defs>
-            <text
-              x="8" y="64"
-              fontFamily="var(--font-noto-naskh), serif"
-              fontSize="64"
-              fontWeight="700"
-              fill="oklch(0.10 0.02 55)"
-              dx="2" dy="3"
-              style={{ userSelect: 'none' }}
-            >
-              الدراسية
-            </text>
-            <text
-              x="8" y="64"
-              fontFamily="var(--font-noto-naskh), serif"
-              fontSize="64"
-              fontWeight="700"
-              fill="none"
-              stroke="url(#calliGrad2)"
-              strokeWidth="1"
-              filter="url(#calliGlow)"
-              className={titleActive ? 'draw-in' : ''}
-              style={{ userSelect: 'none' }}
-            >
-              الدراسية
-            </text>
-            <text
-              x="8" y="64"
-              fontFamily="var(--font-noto-naskh), serif"
-              fontSize="64"
-              fontWeight="700"
-              fill="url(#calliGrad2)"
-              className={titleActive ? 'fill-in' : ''}
-              style={{ userSelect: 'none' }}
-            >
-              الدراسية
-            </text>
-          </svg>
-        </div>
+          <span className="relative">الدراسية</span>
+        </h2>
       </div>
-
-      {/* Accessible real text, screen-reader only */}
-      <h2
-        className="sr-only"
-        aria-label="المراحل الدراسية"
-      >
-        المراحل الدراسية
-      </h2>
 
       {/* Mobile title — the thread sits at 82%, so center the title normally */}
       <div
@@ -622,49 +514,14 @@ export function StagesTimeline() {
           100% { transform: scale(1.5);  opacity: 0; }
         }
 
-        /* ── Kicker «رحلتك التعليمية» — Naskh, large, golden ── */
-        .kicker-naskh {
-          font-family: var(--font-noto-naskh), serif;
-          font-size: 1.75rem;
-          font-weight: 700;
-          color: oklch(0.82 0.11 85);
-          text-shadow:
-            0 0 24px oklch(0.78 0.10 80 / 70%),
-            0 0 60px oklch(0.78 0.10 80 / 30%);
-          letter-spacing: 0.02em;
+        /* Stroke / outline title effect — transparent fill, coloured stroke */
+        .title-stroke {
+          color: transparent;
+          -webkit-text-stroke: 2px oklch(0.78 0.10 80);
+          text-stroke: 2px oklch(0.78 0.10 80);
+          /* Subtle glow on the stroke edges */
+          filter: drop-shadow(0 0 14px oklch(0.78 0.10 80 / 55%));
         }
-
-        /* ── SVG calligraphy: stroke draws in, then fill fades in ── */
-        /* The stroke path starts invisible (dashoffset = full length)
-           and animates to 0 — looks like the pen is writing.
-           We use a large dasharray since we don't know path length,
-           so 2000 covers every glyph we use. */
-
-        .draw-in {
-          stroke-dasharray: 2000;
-          stroke-dashoffset: 2000;
-          animation: drawStroke 2.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
-        }
-
-        .fill-in {
-          opacity: 0;
-          animation: fillReveal 0.9s ease 1.8s forwards;
-        }
-
-        @keyframes drawStroke {
-          to { stroke-dashoffset: 0; }
-        }
-
-        @keyframes fillReveal {
-          0%   { opacity: 0; }
-          100% { opacity: 1; }
-        }
-
-        /* Soft shimmer sweep on the calligraphy SVGs after they appear */
-        .calligraphy-svg {
-          filter: drop-shadow(0 0 18px oklch(0.78 0.10 80 / 40%));
-        }
-
         .unit-chip:hover {
           background: oklch(0.78 0.10 80 / 16%) !important;
           border-color: oklch(0.80 0.10 82 / 55%) !important;

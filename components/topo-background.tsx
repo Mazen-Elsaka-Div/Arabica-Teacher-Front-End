@@ -38,11 +38,31 @@ export function TopographicBackground() {
       className="absolute inset-0 pointer-events-none"
       aria-hidden="true"
       style={{
-        backgroundImage: isDark ? 'url(/topo-dark.png)' : 'url(/topo-green.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
+        /* Darker base under the pattern (dark mode) */
+        backgroundColor: isDark ? 'oklch(0.11 0.018 55)' : undefined,
       }}
-    />
+    >
+      {/* Topo pattern — lines softened in dark mode */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: isDark ? 'url(/topo-dark.png)' : 'url(/topo-green.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          opacity: isDark ? 0.42 : 1,
+        }}
+      />
+      {/* Subtle darkening vignette to match the reference mood */}
+      {isDark && (
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(ellipse 120% 90% at 50% 40%, transparent 40%, rgba(0,0,0,0.45) 100%)',
+          }}
+        />
+      )}
+    </div>
   )
 }

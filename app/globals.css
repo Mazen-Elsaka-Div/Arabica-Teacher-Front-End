@@ -50,13 +50,13 @@
    * Text: deep warm brown           #4a3826 ≈ oklch(0.34 0.045 55)
    */
   --background: oklch(0.975 0.010 90);
-  --foreground: oklch(0.30 0.045 55);
+  --foreground: oklch(0.37 0.042 55);
 
   --card: oklch(0.955 0.015 88);
-  --card-foreground: oklch(0.30 0.045 55);
+  --card-foreground: oklch(0.37 0.042 55);
 
   --popover: oklch(0.955 0.015 88);
-  --popover-foreground: oklch(0.30 0.045 55);
+  --popover-foreground: oklch(0.37 0.042 55);
 
   /* Warm gold primary */
   --primary: oklch(0.68 0.10 82);
@@ -66,7 +66,7 @@
   --secondary-foreground: oklch(0.32 0.045 55);
 
   --muted: oklch(0.92 0.020 88);
-  --muted-foreground: oklch(0.48 0.045 58);
+  --muted-foreground: oklch(0.54 0.040 58);
 
   --accent: oklch(0.86 0.055 85);
   --accent-foreground: oklch(0.28 0.042 54);

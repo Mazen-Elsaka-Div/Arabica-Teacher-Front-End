@@ -1,59 +1,68 @@
 'use client'
 
 /**
- * WaveDivider — خط ذهبي على شكل موجة يفصل بين قسمين
- * يعكس اتجاه الموجة عند تمرير flip={true}
+ * WaveDivider — خط ذهبي على شكل موجة بين الهيرو وقسم المنهج
+ * المنطقة تحت الخط تأخذ لون خلفية قسم المنهج (--background) مباشرة
+ * فلا يوجد اختلاف لوني مرئي بين الفاصل وما تحته
  */
-export function WaveDivider({ flip = false }: { flip?: boolean }) {
+export function WaveDivider() {
   return (
     <div
       className="relative w-full overflow-hidden leading-[0]"
-      style={{ transform: flip ? 'scaleY(-1)' : undefined }}
+      style={{ marginBottom: -1 }}
       aria-hidden="true"
     >
-      {/* طبقة ظل خفيف تحت الموجة */}
       <svg
-        viewBox="0 0 1440 56"
+        viewBox="0 0 1440 72"
         preserveAspectRatio="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="block h-10 w-full sm:h-14"
+        className="block h-14 w-full sm:h-[4.5rem]"
       >
-        {/* ظل */}
+        <defs>
+          <linearGradient id="gold-grad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stopColor="oklch(0.78 0.12 80)"  stopOpacity="0.2" />
+            <stop offset="25%"  stopColor="oklch(0.82 0.15 85)"  stopOpacity="1"   />
+            <stop offset="50%"  stopColor="oklch(0.88 0.18 88)"  stopOpacity="1"   />
+            <stop offset="75%"  stopColor="oklch(0.82 0.15 85)"  stopOpacity="1"   />
+            <stop offset="100%" stopColor="oklch(0.78 0.12 80)"  stopOpacity="0.2" />
+          </linearGradient>
+          <linearGradient id="gold-glow" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stopColor="oklch(0.92 0.22 90)"  stopOpacity="0" />
+            <stop offset="50%"  stopColor="oklch(0.92 0.22 90)"  stopOpacity="0.5" />
+            <stop offset="100%" stopColor="oklch(0.92 0.22 90)"  stopOpacity="0" />
+          </linearGradient>
+        </defs>
+
+        {/* المنطقة تحت الموجة — نفس لون خلفية قسم المنهج */}
         <path
-          d="M0,28 C180,56 360,0 540,28 C720,56 900,0 1080,28 C1260,56 1380,14 1440,28 L1440,56 L0,56 Z"
-          fill="oklch(0.75 0.06 85 / 0.08)"
+          d="M0,36 C180,64 360,8 540,36 C720,64 900,8 1080,36 C1260,64 1380,22 1440,36 L1440,72 L0,72 Z"
+          className="fill-background"
         />
+
+        {/* ظل خفيف فوق منطقة الملء */}
+        <path
+          d="M0,36 C180,64 360,8 540,36 C720,64 900,8 1080,36 C1260,64 1380,22 1440,36 L1440,72 L0,72 Z"
+          fill="oklch(0.75 0.06 85 / 0.05)"
+        />
+
         {/* الخط الذهبي الرئيسي */}
         <path
-          d="M0,28 C180,56 360,0 540,28 C720,56 900,0 1080,28 C1260,56 1380,14 1440,28"
+          d="M0,36 C180,64 360,8 540,36 C720,64 900,8 1080,36 C1260,64 1380,22 1440,36"
           fill="none"
           stroke="url(#gold-grad)"
           strokeWidth="2.5"
           strokeLinecap="round"
         />
-        {/* تألق إضافي على الخط */}
+
+        {/* وهج الخط */}
         <path
-          d="M0,28 C180,56 360,0 540,28 C720,56 900,0 1080,28 C1260,56 1380,14 1440,28"
+          d="M0,36 C180,64 360,8 540,36 C720,64 900,8 1080,36 C1260,64 1380,22 1440,36"
           fill="none"
           stroke="url(#gold-glow)"
-          strokeWidth="6"
+          strokeWidth="8"
           strokeLinecap="round"
-          opacity="0.35"
+          opacity="0.4"
         />
-        <defs>
-          <linearGradient id="gold-grad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%"   stopColor="oklch(0.78 0.12 80)"  stopOpacity="0.3" />
-            <stop offset="25%"  stopColor="oklch(0.82 0.15 85)"  stopOpacity="1"   />
-            <stop offset="50%"  stopColor="oklch(0.88 0.18 88)"  stopOpacity="1"   />
-            <stop offset="75%"  stopColor="oklch(0.82 0.15 85)"  stopOpacity="1"   />
-            <stop offset="100%" stopColor="oklch(0.78 0.12 80)"  stopOpacity="0.3" />
-          </linearGradient>
-          <linearGradient id="gold-glow" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%"   stopColor="oklch(0.90 0.20 88)"  stopOpacity="0" />
-            <stop offset="50%"  stopColor="oklch(0.92 0.22 90)"  stopOpacity="1" />
-            <stop offset="100%" stopColor="oklch(0.90 0.20 88)"  stopOpacity="0" />
-          </linearGradient>
-        </defs>
       </svg>
     </div>
   )

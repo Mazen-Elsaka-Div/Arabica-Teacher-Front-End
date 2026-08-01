@@ -120,7 +120,7 @@ export function Concept9ScrollTimeline() {
                         : 'opacity-0 translate-x-20'
                   }`}
                 >
-                  {/* Timeline center line - wavy SVG */}
+                  {/* Timeline center line - wavy SVG with animations */}
                   <svg
                     className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 z-0"
                     width="20"
@@ -135,15 +135,35 @@ export function Concept9ScrollTimeline() {
                         <stop offset="50%" stopColor="#d4b868" stopOpacity="1" />
                         <stop offset="100%" stopColor="#a08040" stopOpacity="0.8" />
                       </linearGradient>
+                      <filter id="timelineGlow">
+                        <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+                        <feMerge>
+                          <feMergeNode in="coloredBlur" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                      <style>{`
+                        @keyframes timelineFlow {
+                          0% { stroke-dashoffset: 0; }
+                          100% { stroke-dashoffset: -20; }
+                        }
+                        .timeline-path {
+                          animation: timelineFlow 3s linear infinite;
+                          stroke-dasharray: 20;
+                          filter: drop-shadow(0 0 4px rgba(196, 165, 80, 0.6));
+                        }
+                      `}</style>
                     </defs>
-                    {/* Wavy line path - continuous S-curves */}
+                    {/* Wavy line path - continuous S-curves with animation */}
                     <path
+                      className="timeline-path"
                       d="M 10 0 Q 14 80, 10 150 Q 6 220, 10 290 Q 14 360, 10 430 Q 6 500, 10 570 Q 14 640, 10 710 Q 6 780, 10 900 L 10 1000"
                       stroke="url(#timelineGradient)"
                       strokeWidth="4"
                       fill="none"
                       strokeLinecap="round"
                       strokeLinejoin="round"
+                      filter="url(#timelineGlow)"
                     />
                   </svg>
 
@@ -153,13 +173,20 @@ export function Concept9ScrollTimeline() {
                       isVisible ? 'scale-150' : 'scale-100'
                     }`}
                   >
-                    {/* Glow ring */}
+                    {/* Outer glow rings - animating */}
                     {isVisible && (
-                      <div className="absolute inset-0 w-12 h-12 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 rounded-full border-2 border-gray-400 opacity-40 animate-pulse" />
+                      <>
+                        <div className="absolute inset-0 w-12 h-12 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 rounded-full border-2 border-amber-400 opacity-50 animate-pulse" />
+                        <div className="absolute inset-0 w-16 h-16 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 rounded-full border border-amber-400/30 animate-ping" />
+                      </>
                     )}
-                    {/* Main dot - dark gray */}
+                    {/* Main dot with golden glow */}
                     <div
-                      className={`w-6 h-6 rounded-full border-4 border-gray-900 ${isVisible ? 'bg-gray-300 shadow-xl scale-125' : 'bg-gray-500'} transition-all duration-300`}
+                      className={`w-6 h-6 rounded-full border-4 ${
+                        isVisible 
+                          ? 'border-amber-400 bg-amber-300 shadow-lg shadow-amber-400/50 scale-125' 
+                          : 'border-gray-600 bg-gray-500'
+                      } transition-all duration-500`}
                     />
                   </div>
 

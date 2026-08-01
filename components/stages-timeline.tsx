@@ -31,15 +31,21 @@ const PATH_D = [
   'C 82 902, 74 920, 60 945',
 ].join(' ')
 
-/* Gold — matches the topographic background lines */
-const GOLD = 'oklch(0.78 0.10 80)'
-const GOLD_DIM = 'oklch(0.78 0.10 80 / 15%)'
+/* ── Inverted palette: warm gold canvas, deep brown ink ── */
+const BG_GOLD     = 'oklch(0.855 0.085 84)'          // section background
+const BG_GOLD_DEEP = 'oklch(0.795 0.088 78)'         // vignette / edges
+const CARD_BG     = 'oklch(0.945 0.045 88 / 92%)'    // cream card surface
 
-/* Stop-dot accent — teal/cyan, distinct from the golden thread */
-const DOT_COLOR  = 'oklch(0.80 0.14 196)'   // lit fill
-const DOT_RING   = 'oklch(0.88 0.10 196)'   // border
-const DOT_GLOW   = 'oklch(0.78 0.14 196 / 60%)'
-const DOT_PULSE  = 'oklch(0.80 0.14 196)'
+const INK         = 'oklch(0.335 0.055 50)'          // primary brown — thread, accents
+const INK_DIM     = 'oklch(0.335 0.055 50 / 20%)'    // ghost track
+const INK_STRONG  = 'oklch(0.235 0.045 48)'          // headings
+const INK_SOFT    = 'oklch(0.435 0.048 52)'          // body copy
+
+/* Stop-dot accent — deep espresso brown with a cream ring */
+const DOT_COLOR  = INK_STRONG
+const DOT_RING   = 'oklch(0.965 0.030 88)'
+const DOT_GLOW   = 'oklch(0.335 0.055 50 / 40%)'
+const DOT_PULSE  = 'oklch(0.335 0.055 50)'
 
 const stages = [
   {
@@ -138,9 +144,9 @@ export function StagesTimeline() {
       ref={sectionRef}
       aria-label="المراحل الدراسية"
       className="relative h-[300vh] overflow-hidden"
-      style={{ background: 'oklch(0.10 0.016 55)' }}
+      style={{ background: BG_GOLD }}
     >
-      {/* Faint topo texture for continuity with the hero */}
+      {/* Faint topo texture — multiplied so the contours read as brown on gold */}
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
@@ -148,15 +154,16 @@ export function StagesTimeline() {
           backgroundImage: 'url(/topo-dark.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          opacity: 0.14,
+          mixBlendMode: 'multiply',
+          opacity: 0.1,
         }}
       />
-      {/* Vignette to keep the mood dark */}
+      {/* Vignette — deeper gold at the edges instead of black */}
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse 110% 60% at 50% 0%, rgba(0,0,0,0.55) 0%, transparent 55%), radial-gradient(ellipse 110% 60% at 50% 100%, rgba(0,0,0,0.55) 0%, transparent 55%)',
+          background: `radial-gradient(ellipse 110% 55% at 50% 0%, ${BG_GOLD_DEEP} 0%, transparent 58%), radial-gradient(ellipse 110% 55% at 50% 100%, ${BG_GOLD_DEEP} 0%, transparent 58%)`,
         }}
       />
 
@@ -170,13 +177,13 @@ export function StagesTimeline() {
         >
           <defs>
             <linearGradient id="threadGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="oklch(0.82 0.11 85)" />
-              <stop offset="55%" stopColor={GOLD} />
-              <stop offset="100%" stopColor="oklch(0.66 0.09 70)" />
+              <stop offset="0%" stopColor="oklch(0.44 0.050 52)" />
+              <stop offset="55%" stopColor={INK} />
+              <stop offset="100%" stopColor={INK_STRONG} />
             </linearGradient>
           </defs>
           {/* Ghost track — barely visible full path */}
-          <path d={PATH_D} stroke={GOLD_DIM} strokeWidth="1.5" fill="none" />
+          <path d={PATH_D} stroke={INK_DIM} strokeWidth="1.5" fill="none" />
           {/* The growing thread */}
           <path
             ref={pathRef}
@@ -188,7 +195,7 @@ export function StagesTimeline() {
             style={{
               strokeDasharray: pathLen || 1,
               strokeDashoffset: pathLen ? pathLen * (1 - progress) : pathLen || 1,
-              filter: 'drop-shadow(0 0 6px oklch(0.78 0.10 80 / 55%))',
+              filter: 'drop-shadow(0 1px 3px oklch(0.30 0.05 50 / 35%))',
             }}
           />
         </svg>
@@ -200,8 +207,8 @@ export function StagesTimeline() {
             style={{
               left: `${(tip.x / VIEW_W) * 100}%`,
               top: `${(tip.y / VIEW_H) * 100}%`,
-              background: 'oklch(0.90 0.10 88)',
-              boxShadow: '0 0 14px 4px oklch(0.82 0.11 85 / 70%)',
+              background: INK_STRONG,
+              boxShadow: '0 0 0 3px oklch(0.965 0.030 88 / 85%), 0 0 14px 4px oklch(0.335 0.055 50 / 35%)',
             }}
             aria-hidden="true"
           />
@@ -235,8 +242,8 @@ export function StagesTimeline() {
                 style={{
                   width: 18,
                   height: 18,
-                  background: active ? DOT_COLOR : 'oklch(0.20 0.02 55)',
-                  border: `2.5px solid ${active ? DOT_RING : 'oklch(0.35 0.03 60)'}`,
+                  background: active ? DOT_COLOR : 'oklch(0.76 0.070 78)',
+                  border: `2.5px solid ${active ? DOT_RING : 'oklch(0.60 0.060 60)'}`,
                   boxShadow: active ? `0 0 20px 6px ${DOT_GLOW}` : 'none',
                   transform: active ? 'scale(1)' : 'scale(0.55)',
                   transition: 'all 0.45s cubic-bezier(0.34,1.56,0.64,1)',
@@ -257,18 +264,18 @@ export function StagesTimeline() {
           transition: 'opacity 0.9s ease, transform 1s cubic-bezier(0.34,1.4,0.64,1)',
         }}
       >
-        {/* Warm golden glow behind the book */}
+        {/* Soft cream halo behind the book */}
         <div
           className="absolute inset-[-25%] rounded-full blur-3xl"
           aria-hidden="true"
-          style={{ background: 'oklch(0.60 0.10 75 / 35%)' }}
+          style={{ background: 'oklch(0.96 0.035 88 / 55%)' }}
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/book.png"
           alt="كتاب اللغة العربية — نهاية الرحلة التعليمية"
           className="relative w-56 sm:w-80 h-auto"
-          style={{ filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.6))' }}
+          style={{ filter: 'drop-shadow(0 10px 26px oklch(0.30 0.05 50 / 45%))' }}
         />
       </div>
 
@@ -315,10 +322,10 @@ export function StagesTimeline() {
           }}
           aria-hidden="true"
         >
-          {/* Warm brown halo */}
+          {/* Soft cream halo */}
           <div
             className="absolute -inset-10 rounded-full blur-3xl pointer-events-none"
-            style={{ background: 'oklch(0.50 0.075 60 / 38%)' }}
+            style={{ background: 'oklch(0.96 0.035 88 / 45%)' }}
           />
           <svg
             className="relative calligraphy-svg"
@@ -327,12 +334,12 @@ export function StagesTimeline() {
           >
             <defs>
               <linearGradient id="calliGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%"   stopColor="oklch(0.92 0.10 90)" />
-                <stop offset="45%"  stopColor={GOLD} />
-                <stop offset="100%" stopColor="oklch(0.64 0.10 68)" />
+                <stop offset="0%"   stopColor="oklch(0.335 0.055 50)" />
+                <stop offset="45%"  stopColor="oklch(0.255 0.048 48)" />
+                <stop offset="100%" stopColor="oklch(0.175 0.036 44)" />
               </linearGradient>
               <filter id="calliGlow" x="-20%" y="-60%" width="140%" height="220%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feGaussianBlur stdDeviation="1" result="blur" />
                 <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
               </filter>
             </defs>
@@ -342,8 +349,8 @@ export function StagesTimeline() {
               fontFamily="var(--font-noto-naskh), serif"
               fontSize="64"
               fontWeight="700"
-              fill="oklch(0.10 0.02 55)"
-              dx="2" dy="3"
+              fill="oklch(0.98 0.028 88 / 60%)"
+              dx="1.5" dy="2"
               style={{ userSelect: 'none' }}
             >
               المراحل
@@ -389,10 +396,10 @@ export function StagesTimeline() {
           }}
           aria-hidden="true"
         >
-          {/* Warm brown halo */}
+          {/* Soft cream halo */}
           <div
             className="absolute -inset-10 rounded-full blur-3xl pointer-events-none"
-            style={{ background: 'oklch(0.50 0.075 60 / 38%)' }}
+            style={{ background: 'oklch(0.96 0.035 88 / 45%)' }}
           />
           <svg
             className="relative calligraphy-svg"
@@ -401,9 +408,9 @@ export function StagesTimeline() {
           >
             <defs>
               <linearGradient id="calliGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%"   stopColor="oklch(0.92 0.10 90)" />
-                <stop offset="45%"  stopColor={GOLD} />
-                <stop offset="100%" stopColor="oklch(0.64 0.10 68)" />
+                <stop offset="0%"   stopColor="oklch(0.335 0.055 50)" />
+                <stop offset="45%"  stopColor="oklch(0.255 0.048 48)" />
+                <stop offset="100%" stopColor="oklch(0.175 0.036 44)" />
               </linearGradient>
             </defs>
             <text
@@ -411,8 +418,8 @@ export function StagesTimeline() {
               fontFamily="var(--font-noto-naskh), serif"
               fontSize="64"
               fontWeight="700"
-              fill="oklch(0.10 0.02 55)"
-              dx="2" dy="3"
+              fill="oklch(0.98 0.028 88 / 60%)"
+              dx="1.5" dy="2"
               style={{ userSelect: 'none' }}
             >
               الدراسية
@@ -469,15 +476,15 @@ export function StagesTimeline() {
           <div
             className="absolute -inset-8 rounded-full blur-3xl pointer-events-none"
             aria-hidden="true"
-            style={{ background: 'oklch(0.50 0.075 60 / 40%)' }}
+            style={{ background: 'oklch(0.96 0.035 88 / 50%)' }}
           />
           <div className="relative">
-            <span className="text-sm font-bold tracking-wide" style={{ color: GOLD, fontFamily: 'var(--font-cairo)' }}>
+            <span className="text-sm font-bold tracking-wide" style={{ color: INK, fontFamily: 'var(--font-cairo)' }}>
               رحلتك التعليمية
             </span>
             <h2
               className="text-4xl font-black text-balance leading-tight mt-2"
-              style={{ color: 'oklch(0.96 0.010 85)', fontFamily: 'var(--font-cairo)' }}
+              style={{ color: INK_STRONG, fontFamily: 'var(--font-cairo)' }}
             >
               المراحل الدراسية
             </h2>
@@ -513,27 +520,27 @@ export function StagesTimeline() {
               aria-hidden="true"
               style={{
                 background: fromLeft
-                  ? `linear-gradient(to right, ${GOLD}, transparent)`
-                  : `linear-gradient(to left, ${GOLD}, transparent)`,
-                opacity: active ? 0.6 : 0,
+                  ? `linear-gradient(to right, ${INK}, transparent)`
+                  : `linear-gradient(to left, ${INK}, transparent)`,
+                opacity: active ? 0.7 : 0,
                 transition: 'opacity 0.8s ease 0.3s',
               }}
             />
 
             <div className="relative">
-              {/* Warm brown glow behind the card */}
+              {/* Soft cream glow behind the card */}
               <div
                 className="absolute -inset-6 rounded-3xl blur-3xl pointer-events-none"
                 aria-hidden="true"
-                style={{ background: 'oklch(0.50 0.075 60 / 42%)' }}
+                style={{ background: 'oklch(0.96 0.035 88 / 45%)' }}
               />
 
               <div
                 className="relative rounded-2xl p-6 sm:p-7"
                 style={{
-                  background: 'oklch(0.15 0.024 55 / 88%)',
-                  border: '1px solid oklch(0.78 0.10 80 / 26%)',
-                  boxShadow: '0 12px 44px rgba(0,0,0,0.55), inset 0 1px 0 oklch(0.78 0.10 80 / 12%)',
+                  background: CARD_BG,
+                  border: '1px solid oklch(0.335 0.055 50 / 22%)',
+                  boxShadow: '0 12px 40px oklch(0.30 0.05 50 / 22%), inset 0 1px 0 oklch(1 0 0 / 45%)',
                   backdropFilter: 'blur(10px)',
                 }}
               >
@@ -541,9 +548,9 @@ export function StagesTimeline() {
                   <span
                     className="flex items-center justify-center size-11 rounded-xl shrink-0"
                     style={{
-                      background: 'oklch(0.78 0.10 80 / 14%)',
-                      border: '1px solid oklch(0.78 0.10 80 / 35%)',
-                      color: GOLD,
+                      background: 'oklch(0.855 0.085 84)',
+                      border: '1px solid oklch(0.335 0.055 50 / 28%)',
+                      color: INK_STRONG,
                     }}
                   >
                     <Icon size={22} aria-hidden="true" />
@@ -551,13 +558,13 @@ export function StagesTimeline() {
                   <div className="flex flex-col">
                     <span
                       className="text-xs font-bold"
-                      style={{ color: GOLD, fontFamily: 'var(--font-cairo)' }}
+                      style={{ color: INK, fontFamily: 'var(--font-cairo)' }}
                     >
                       المرحلة {stage.id === 1 ? 'الأولى' : stage.id === 2 ? 'الثانية' : 'الثالثة'}
                     </span>
                     <h3
                       className="text-xl sm:text-2xl font-black leading-tight"
-                      style={{ color: 'oklch(0.96 0.010 85)', fontFamily: 'var(--font-cairo)' }}
+                      style={{ color: INK_STRONG, fontFamily: 'var(--font-cairo)' }}
                     >
                       {stage.name}
                     </h3>
@@ -565,7 +572,7 @@ export function StagesTimeline() {
                 </div>
                 <p
                   className="text-sm leading-relaxed"
-                  style={{ color: 'oklch(0.74 0.03 80)', fontFamily: 'var(--font-cairo)' }}
+                  style={{ color: INK_SOFT, fontFamily: 'var(--font-cairo)' }}
                 >
                   {stage.description}
                 </p>
@@ -577,8 +584,8 @@ export function StagesTimeline() {
                       key={unit}
                       className="unit-chip flex items-center gap-3 rounded-xl px-3 py-2 cursor-default"
                       style={{
-                        background: 'oklch(0.78 0.10 80 / 6%)',
-                        border: '1px solid oklch(0.78 0.10 80 / 16%)',
+                        background: 'oklch(0.855 0.085 84 / 40%)',
+                        border: '1px solid oklch(0.335 0.055 50 / 16%)',
                         opacity: active ? 1 : 0,
                         translate: active ? '0 0' : '0 14px',
                         transition: `opacity 0.55s ease ${0.35 + i * 0.12}s, translate 0.6s cubic-bezier(0.22,1,0.36,1) ${0.35 + i * 0.12}s, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease`,
@@ -587,9 +594,9 @@ export function StagesTimeline() {
                       <span
                         className="unit-num flex items-center justify-center size-7 rounded-lg text-xs font-black shrink-0"
                         style={{
-                          background: 'oklch(0.78 0.10 80 / 14%)',
-                          border: '1px solid oklch(0.78 0.10 80 / 32%)',
-                          color: GOLD,
+                          background: 'oklch(0.855 0.085 84)',
+                          border: '1px solid oklch(0.335 0.055 50 / 30%)',
+                          color: INK_STRONG,
                           fontFamily: 'var(--font-cairo)',
                           transition: 'background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease',
                         }}
@@ -599,7 +606,7 @@ export function StagesTimeline() {
                       <span
                         className="unit-name text-sm font-bold"
                         style={{
-                          color: 'oklch(0.82 0.03 80)',
+                          color: 'oklch(0.315 0.048 50)',
                           fontFamily: 'var(--font-cairo)',
                           transition: 'color 0.3s ease',
                         }}
@@ -622,15 +629,15 @@ export function StagesTimeline() {
           100% { transform: scale(1.5);  opacity: 0; }
         }
 
-        /* ── Kicker «رحلتك التعليمية» — Naskh, large, golden ── */
+        /* ── Kicker «رحلتك التعليمية» — Naskh, large, deep brown ── */
         .kicker-naskh {
           font-family: var(--font-noto-naskh), serif;
           font-size: 1.75rem;
           font-weight: 700;
-          color: oklch(0.82 0.11 85);
+          color: oklch(0.275 0.050 48);
           text-shadow:
-            0 0 24px oklch(0.78 0.10 80 / 70%),
-            0 0 60px oklch(0.78 0.10 80 / 30%);
+            0 1px 0 oklch(0.98 0.028 88 / 60%),
+            0 0 30px oklch(0.98 0.028 88 / 45%);
           letter-spacing: 0.02em;
         }
 
@@ -662,21 +669,21 @@ export function StagesTimeline() {
 
         /* Soft shimmer sweep on the calligraphy SVGs after they appear */
         .calligraphy-svg {
-          filter: drop-shadow(0 0 18px oklch(0.78 0.10 80 / 40%));
+          filter: drop-shadow(0 2px 10px oklch(0.30 0.05 50 / 22%));
         }
 
         .unit-chip:hover {
-          background: oklch(0.78 0.10 80 / 16%) !important;
-          border-color: oklch(0.80 0.10 82 / 55%) !important;
-          box-shadow: 0 0 22px 2px oklch(0.78 0.10 80 / 30%), inset 0 0 12px oklch(0.78 0.10 80 / 10%);
+          background: oklch(0.855 0.085 84 / 85%) !important;
+          border-color: oklch(0.335 0.055 50 / 45%) !important;
+          box-shadow: 0 6px 18px oklch(0.30 0.05 50 / 18%), inset 0 1px 0 oklch(1 0 0 / 40%);
         }
         .unit-chip:hover .unit-num {
-          background: oklch(0.80 0.11 82) !important;
-          color: oklch(0.16 0.02 55) !important;
-          box-shadow: 0 0 14px 3px oklch(0.80 0.11 82 / 55%);
+          background: oklch(0.235 0.045 48) !important;
+          color: oklch(0.94 0.045 88) !important;
+          box-shadow: 0 2px 10px oklch(0.30 0.05 50 / 35%);
         }
         .unit-chip:hover .unit-name {
-          color: oklch(0.95 0.03 85) !important;
+          color: oklch(0.215 0.042 46) !important;
         }
       `}</style>
     </section>

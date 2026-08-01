@@ -225,6 +225,7 @@ export function StagesTimeline() {
   return (
     <section
       ref={sectionRef}
+      id="stages"
       aria-label="المراحل الدراسية"
       className="relative h-[300vh] overflow-hidden"
       style={{ background: P.bg }}

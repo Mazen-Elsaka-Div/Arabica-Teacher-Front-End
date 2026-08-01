@@ -157,9 +157,50 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem; /* مسافة النافبار الثابت عند القفز للأقسام */
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans), 'Cairo', sans-serif;
+  }
+}
+
+/* حروف قسم المنهج — تطفو من أسفل القسم لأعلاه ببطء */
+@keyframes letter-rise {
+  0% {
+    transform: translateY(15%) rotate(var(--rot, 0deg));
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.07;
+  }
+  80% {
+    opacity: 0.07;
+  }
+  100% {
+    transform: translateY(calc(-100vh - 100%)) rotate(calc(var(--rot, 0deg) * -1));
+    opacity: 0;
+  }
+}
+.letter-float {
+  animation-name: letter-rise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .letter-float {
+    animation: none;
+    opacity: 0.05 !important;
+    bottom: auto;
+    top: 30%;
   }
 }
 

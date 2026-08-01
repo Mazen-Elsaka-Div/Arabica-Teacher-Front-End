@@ -14,6 +14,7 @@ import {
 import { ArrowRight, Quote, TrendingUp } from 'lucide-react'
 import { useReveal } from '@/lib/use-reveal'
 import { cn } from '@/lib/utils'
+import { IslamicCorners } from '@/components/islamic-corners'
 
 type JourneyPoint = { month: string; score: number }
 
@@ -354,7 +355,8 @@ export function TestimonialsSection() {
   const root = useReveal<HTMLElement>('.reveal-item')
 
   return (
-    <section ref={root} id="testimonials" className="relative bg-background">
+    <section ref={root} id="testimonials" className="relative overflow-hidden bg-background">
+      <IslamicCorners />
       {/* موبايل: كاروسيل بارتفاع طبيعي */}
       <div className="mx-auto w-full max-w-2xl px-5 py-12 md:hidden">
         <Heading />

@@ -6,8 +6,8 @@ import { Sun, Moon, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navLinks = [
-  { label: 'المنهج', href: '#curriculum' },
-  { label: 'المراحل', href: '#levels' },
+  { label: 'المنهج', href: '#features' },
+  { label: 'المراحل', href: '#stages' },
   { label: 'أرقامنا', href: '#stats' },
   { label: 'آراء الطلاب', href: '#testimonials' },
 ]
@@ -39,7 +39,7 @@ function HamburgerIcon({ open }: { open: boolean }) {
 }
 
 export function Navbar() {
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -183,11 +183,11 @@ export function Navbar() {
               {/* Theme toggle */}
               {mounted && (
                 <button
-                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                  onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
                   className="size-9 flex items-center justify-center rounded-full border border-border/60 hover:bg-muted transition-colors"
                   aria-label="تبديل المظهر"
                 >
-                  {theme === 'dark' ? (
+                  {resolvedTheme === 'dark' ? (
                     <Sun className="size-4 text-muted-foreground" />
                   ) : (
                     <Moon className="size-4 text-muted-foreground" />

@@ -22,7 +22,7 @@ export function TopographicBackground() {
       <div
         className="absolute inset-0"
         style={{
-          backgroundImage: isDark ? 'url(/topo-dark.png)' : 'url(/topo-light.png)',
+          backgroundImage: isDark ? 'url(/topo-dark.webp)' : 'url(/topo-light.webp)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',

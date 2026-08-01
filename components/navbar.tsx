@@ -122,23 +122,64 @@ export function Navbar() {
 
           <nav
             className={cn(
-              'flex items-center justify-between gap-8 px-6 py-3 rounded-full border transition-all duration-300',
+              'flex items-center gap-4 px-5 py-3 rounded-full border transition-all duration-300',
               'bg-card/80 backdrop-blur-md shadow-lg',
               scrolled && 'shadow-xl',
               'w-full'
             )}
             style={{ borderColor: 'rgba(200,185,154,0.4)' }}
           >
-            {/* Left: CTA Buttons (desktop) + Hamburger (mobile) */}
-            <div className="flex items-center gap-2">
-              {/* Desktop CTAs */}
-              <button className="hidden md:block px-5 py-2 rounded-full text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity">
-                ابدأ الآن
-              </button>
-              <button className="hidden lg:block px-4 py-2 rounded-full text-sm font-medium text-foreground hover:bg-muted transition-colors">
-                تسجيل الدخول
-              </button>
+            {/* ── RIGHT: Logo ── */}
+            <div className="flex items-center gap-2 shrink-0">
+              <div className="size-9 rounded-full flex items-center justify-center bg-primary text-primary-foreground text-sm font-bold shrink-0">
+                ش
+              </div>
+              <span className="text-sm font-bold text-foreground whitespace-nowrap hidden sm:block">
+                أكاديمية شفاء العليل
+              </span>
+            </div>
 
+            {/* ── CENTER: nav links + teacher name ── */}
+            <div className="flex-1 flex items-center justify-center gap-8">
+              {/* Desktop nav links — right of center */}
+              <ul className="hidden md:flex items-center gap-5">
+                {navLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Divider — desktop only */}
+              <div
+                className="hidden md:block h-8 w-px shrink-0"
+                style={{ background: 'rgba(200,185,154,0.25)' }}
+              />
+
+              {/* Teacher name — always visible */}
+              <div className="flex flex-col items-center leading-tight shrink-0">
+                <span
+                  className="text-[10px] font-medium"
+                  style={{ color: 'rgba(200,185,154,0.60)', letterSpacing: '0.14em' }}
+                >
+                  مدرس اللغة العربية
+                </span>
+                <span
+                  className="text-[15px] font-bold tracking-wide"
+                  style={{ color: 'rgba(200,185,154,0.92)' }}
+                >
+                  أ/ مازن السقا
+                </span>
+              </div>
+            </div>
+
+            {/* ── LEFT: actions ── */}
+            <div className="flex items-center gap-2 shrink-0">
               {/* Theme toggle */}
               {mounted && (
                 <button
@@ -154,6 +195,14 @@ export function Navbar() {
                 </button>
               )}
 
+              {/* Desktop CTAs */}
+              <button className="hidden lg:block px-4 py-2 rounded-full text-sm font-medium text-foreground hover:bg-muted transition-colors whitespace-nowrap">
+                تسجيل الدخول
+              </button>
+              <button className="hidden md:block px-5 py-2 rounded-full text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity whitespace-nowrap">
+                ابدأ الآن
+              </button>
+
               {/* Hamburger — mobile only */}
               <button
                 onClick={() => setSidebarOpen(true)}
@@ -163,49 +212,6 @@ export function Navbar() {
               >
                 <HamburgerIcon open={false} />
               </button>
-            </div>
-
-            {/* Center: Teacher name (always) + Nav Links (desktop) */}
-            <div className="flex items-center gap-6">
-              {/* Teacher name */}
-              <div className="flex flex-col items-center leading-tight">
-                <span
-                  className="text-xs font-medium tracking-widest uppercase"
-                  style={{ color: 'rgba(200,185,154,0.65)', letterSpacing: '0.18em' }}
-                >
-                  مدرس اللغة العربية
-                </span>
-                <span
-                  className="text-base font-bold tracking-wide"
-                  style={{ color: 'rgba(200,185,154,0.92)' }}
-                >
-                  أ/ مازن السقا
-                </span>
-              </div>
-
-              {/* Desktop nav links */}
-              <ul className="hidden md:flex items-center gap-6">
-                {navLinks.map((link) => (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
-                      className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Right: Logo */}
-            <div className="flex items-center gap-2">
-              <div className="size-9 rounded-full flex items-center justify-center bg-primary text-primary-foreground text-sm font-bold shrink-0">
-                ش
-              </div>
-              <span className="text-sm font-bold text-foreground whitespace-nowrap hidden sm:block">
-                أكاديمية شفاء العليل
-              </span>
             </div>
           </nav>
         </div>

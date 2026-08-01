@@ -130,8 +130,32 @@ export function Concept9ScrollTimeline() {
                   data-stage-id={stage.id}
                   className="relative min-h-72 flex items-center"
                 >
-                  {/* Timeline center line - continuous gray */}
-                  <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gray-400 -translate-x-1/2" />
+                  {/* Timeline center line - wavy SVG */}
+                  <svg
+                    className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 z-0"
+                    width="20"
+                    height="100%"
+                    viewBox="0 0 20 1000"
+                    preserveAspectRatio="none"
+                    style={{ overflow: 'visible' }}
+                  >
+                    <defs>
+                      <linearGradient id="timelineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#c4a550" stopOpacity="1" />
+                        <stop offset="50%" stopColor="#d4b868" stopOpacity="1" />
+                        <stop offset="100%" stopColor="#a08040" stopOpacity="0.8" />
+                      </linearGradient>
+                    </defs>
+                    {/* Wavy line path - continuous S-curves */}
+                    <path
+                      d="M 10 0 Q 14 80, 10 150 Q 6 220, 10 290 Q 14 360, 10 430 Q 6 500, 10 570 Q 14 640, 10 710 Q 6 780, 10 900 L 10 1000"
+                      stroke="url(#timelineGradient)"
+                      strokeWidth="4"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
 
                   {/* Timeline dot with glow effect */}
                   <div

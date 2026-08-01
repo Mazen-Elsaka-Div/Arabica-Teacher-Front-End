@@ -44,29 +44,30 @@ export function Concept9ScrollTimeline() {
               <stop offset="100%" stopColor="#a08040" stopOpacity="0.8" />
             </linearGradient>
             <filter id="timelineGlow">
-              <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+              <feGaussianBlur stdDeviation="3" result="coloredBlur" />
               <feMerge>
+                <feMergeNode in="coloredBlur" />
                 <feMergeNode in="coloredBlur" />
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
           </defs>
 
-          {/* Background wavy line */}
+          {/* Background wavy line - faded */}
           <path
             d="M 10 0 Q 14 80, 10 150 Q 6 220, 10 290 Q 14 360, 10 430 Q 6 500, 10 570 Q 14 640, 10 710 Q 6 780, 10 900 L 10 1000"
-            stroke="rgba(196, 165, 80, 0.2)"
-            strokeWidth="4"
+            stroke="rgba(196, 165, 80, 0.3)"
+            strokeWidth="8"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
 
-          {/* Animated wavy line - follows scroll */}
+          {/* Animated wavy line - follows scroll - bold and bright */}
           <path
             d="M 10 0 Q 14 80, 10 150 Q 6 220, 10 290 Q 14 360, 10 430 Q 6 500, 10 570 Q 14 640, 10 710 Q 6 780, 10 900 L 10 1000"
             stroke="url(#timelineGradient)"
-            strokeWidth="4"
+            strokeWidth="8"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -75,6 +76,7 @@ export function Concept9ScrollTimeline() {
               strokeDasharray: '1000',
               strokeDashoffset: 1000 - (scrollPercent / 100) * 1000,
               transition: 'stroke-dashoffset 0.1s ease-out',
+              opacity: 1,
             }}
           />
         </svg>

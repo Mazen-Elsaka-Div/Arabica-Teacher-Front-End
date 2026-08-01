@@ -10,24 +10,24 @@ import { TopographicBackground } from '@/components/topo-background'
  * Small sizes (text-xs to text-sm) create the "clustering" visual effect
  */
 const tabletLetters = [
-  /* stream out from tablet — small letters creating a line */
-  { letter: 'ا', top: '58%', left: '62%', size: 'text-xs',  opacity: 0.50, delay: '0s',    rotate: '-5deg'  },
-  { letter: 'ب', top: '55%', left: '66%', size: 'text-xs',  opacity: 0.52, delay: '0.15s', rotate: '3deg'   },
-  { letter: 'ت', top: '52%', left: '70%', size: 'text-xs',  opacity: 0.54, delay: '0.3s',  rotate: '-7deg'  },
-  { letter: 'ث', top: '49%', left: '74%', size: 'text-xs',  opacity: 0.56, delay: '0.45s', rotate: '5deg'   },
+  /* stream out from tablet — larger letters creating a line */
+  { letter: 'ا', top: '58%', left: '62%', size: 'text-2xl',  opacity: 0.50, delay: '0s',    rotate: '-5deg'  },
+  { letter: 'ب', top: '55%', left: '66%', size: 'text-2xl',  opacity: 0.52, delay: '0.15s', rotate: '3deg'   },
+  { letter: 'ت', top: '52%', left: '70%', size: 'text-2xl',  opacity: 0.54, delay: '0.3s',  rotate: '-7deg'  },
+  { letter: 'ث', top: '49%', left: '74%', size: 'text-2xl',  opacity: 0.56, delay: '0.45s', rotate: '5deg'   },
   /* cluster forming — gathering around top ~35%, left ~80% */
-  { letter: 'ج', top: '44%', left: '78%', size: 'text-sm',  opacity: 0.62, delay: '0.6s',  rotate: '-6deg'  },
-  { letter: 'ح', top: '40%', left: '82%', size: 'text-sm',  opacity: 0.65, delay: '0.75s', rotate: '8deg'   },
-  { letter: 'خ', top: '36%', left: '80%', size: 'text-xs',  opacity: 0.60, delay: '0.9s',  rotate: '-8deg'  },
-  { letter: 'د', top: '32%', left: '84%', size: 'text-xs',  opacity: 0.58, delay: '1.05s', rotate: '4deg'   },
+  { letter: 'ج', top: '44%', left: '78%', size: 'text-3xl',  opacity: 0.62, delay: '0.6s',  rotate: '-6deg'  },
+  { letter: 'ح', top: '40%', left: '82%', size: 'text-3xl',  opacity: 0.65, delay: '0.75s', rotate: '8deg'   },
+  { letter: 'خ', top: '36%', left: '80%', size: 'text-2xl',  opacity: 0.60, delay: '0.9s',  rotate: '-8deg'  },
+  { letter: 'د', top: '32%', left: '84%', size: 'text-2xl',  opacity: 0.58, delay: '1.05s', rotate: '4deg'   },
   /* circle cluster — denser grouping */
-  { letter: 'ر', top: '38%', left: '76%', size: 'text-xs',  opacity: 0.62, delay: '1.2s',  rotate: '-4deg'  },
-  { letter: 'س', top: '34%', left: '82%', size: 'text-sm',  opacity: 0.66, delay: '1.35s', rotate: '6deg'   },
-  { letter: 'ع', top: '30%', left: '78%', size: 'text-xs',  opacity: 0.60, delay: '1.5s',  rotate: '-5deg'  },
-  { letter: 'ق', top: '36%', left: '88%', size: 'text-xs',  opacity: 0.58, delay: '1.65s', rotate: '7deg'   },
-  { letter: 'ل', top: '40%', left: '78%', size: 'text-xs',  opacity: 0.58, delay: '1.8s',  rotate: '-6deg'  },
-  { letter: 'م', top: '34%', left: '74%', size: 'text-xs',  opacity: 0.60, delay: '1.95s', rotate: '3deg'   },
-  { letter: 'ن', top: '38%', left: '84%', size: 'text-xs',  opacity: 0.62, delay: '2.1s',  rotate: '-3deg'  },
+  { letter: 'ر', top: '38%', left: '76%', size: 'text-2xl',  opacity: 0.62, delay: '1.2s',  rotate: '-4deg'  },
+  { letter: 'س', top: '34%', left: '82%', size: 'text-3xl',  opacity: 0.66, delay: '1.35s', rotate: '6deg'   },
+  { letter: 'ع', top: '30%', left: '78%', size: 'text-2xl',  opacity: 0.60, delay: '1.5s',  rotate: '-5deg'  },
+  { letter: 'ق', top: '36%', left: '88%', size: 'text-2xl',  opacity: 0.58, delay: '1.65s', rotate: '7deg'   },
+  { letter: 'ل', top: '40%', left: '78%', size: 'text-2xl',  opacity: 0.58, delay: '1.8s',  rotate: '-6deg'  },
+  { letter: 'م', top: '34%', left: '74%', size: 'text-2xl',  opacity: 0.60, delay: '1.95s', rotate: '3deg'   },
+  { letter: 'ن', top: '38%', left: '84%', size: 'text-2xl',  opacity: 0.62, delay: '2.1s',  rotate: '-3deg'  },
 ]
 
 /* ── Stats data ── */

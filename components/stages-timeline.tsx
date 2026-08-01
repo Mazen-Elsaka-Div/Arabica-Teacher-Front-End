@@ -288,26 +288,15 @@ export function StagesTimeline() {
         <span
           className="kicker-naskh absolute whitespace-nowrap"
           style={{
-            left: 'calc(50% + 24px)',
-            top: '-4.5rem',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            top: '-5.5rem',
             opacity: titleActive ? 1 : 0,
-            translate: titleActive ? '0 0' : '44px 0',
+            translate: titleActive ? '0 0' : '0 -20px',
             transition: 'opacity 0.9s ease 0.1s, translate 1s cubic-bezier(0.22,1,0.36,1) 0.1s',
           }}
         >
-          رحلتك
-        </span>
-        <span
-          className="kicker-naskh absolute whitespace-nowrap"
-          style={{
-            right: 'calc(50% + 24px)',
-            top: '-4.5rem',
-            opacity: titleActive ? 1 : 0,
-            translate: titleActive ? '0 0' : '-44px 0',
-            transition: 'opacity 0.9s ease 0.1s, translate 1s cubic-bezier(0.22,1,0.36,1) 0.1s',
-          }}
-        >
-          التعليمية
+          رحلتك التعليمية
         </span>
 
         {/* ── Main title «المراحل | الدراسية» — SVG text with draw-in stroke ── */}
@@ -338,9 +327,14 @@ export function StagesTimeline() {
                 <stop offset="45%"  stopColor="oklch(0.255 0.048 48)" />
                 <stop offset="100%" stopColor="oklch(0.175 0.036 44)" />
               </linearGradient>
-              <filter id="calliGlow" x="-20%" y="-60%" width="140%" height="220%">
-                <feGaussianBlur stdDeviation="1" result="blur" />
-                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              <filter id="calliGlow" x="-30%" y="-80%" width="160%" height="260%">
+                <feGaussianBlur stdDeviation="2.5" result="blur" />
+                <feColorMatrix in="blur" type="saturate" values="1.4"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
               </filter>
             </defs>
             {/* Shadow / depth layer */}
@@ -363,7 +357,9 @@ export function StagesTimeline() {
               fontWeight="700"
               fill="none"
               stroke="url(#calliGrad1)"
-              strokeWidth="1"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               filter="url(#calliGlow)"
               className={titleActive ? 'draw-in' : ''}
               style={{ userSelect: 'none' }}
@@ -412,6 +408,15 @@ export function StagesTimeline() {
                 <stop offset="45%"  stopColor="oklch(0.255 0.048 48)" />
                 <stop offset="100%" stopColor="oklch(0.175 0.036 44)" />
               </linearGradient>
+              <filter id="calliGlow2" x="-30%" y="-80%" width="160%" height="260%">
+                <feGaussianBlur stdDeviation="2.5" result="blur" />
+                <feColorMatrix in="blur" type="saturate" values="1.4"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
             </defs>
             <text
               x="8" y="64"
@@ -431,8 +436,10 @@ export function StagesTimeline() {
               fontWeight="700"
               fill="none"
               stroke="url(#calliGrad2)"
-              strokeWidth="1"
-              filter="url(#calliGlow)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              filter="url(#calliGlow2)"
               className={titleActive ? 'draw-in' : ''}
               style={{ userSelect: 'none' }}
             >
@@ -629,15 +636,16 @@ export function StagesTimeline() {
           100% { transform: scale(1.5);  opacity: 0; }
         }
 
-        /* ── Kicker «رحلتك التعليمية» — Naskh, large, deep brown ── */
+        /* ── Kicker «رحلتك التعليمية» — Naskh, large, deep brown with electric glow ── */
         .kicker-naskh {
           font-family: var(--font-noto-naskh), serif;
-          font-size: 1.75rem;
+          font-size: clamp(1.75rem, 5vw, 2.5rem);
           font-weight: 700;
           color: oklch(0.275 0.050 48);
           text-shadow:
-            0 1px 0 oklch(0.98 0.028 88 / 60%),
-            0 0 30px oklch(0.98 0.028 88 / 45%);
+            0 0 8px oklch(0.98 0.028 88 / 80%),
+            0 0 24px oklch(0.98 0.028 88 / 60%),
+            0 0 48px oklch(0.98 0.028 88 / 35%);
           letter-spacing: 0.02em;
         }
 
@@ -667,9 +675,13 @@ export function StagesTimeline() {
           100% { opacity: 1; }
         }
 
-        /* Soft shimmer sweep on the calligraphy SVGs after they appear */
+        /* Electric glow on the calligraphy SVGs — multiple layers for luminous effect */
         .calligraphy-svg {
-          filter: drop-shadow(0 2px 10px oklch(0.30 0.05 50 / 22%));
+          filter: 
+            drop-shadow(0 0 4px oklch(0.98 0.028 88 / 70%))
+            drop-shadow(0 0 12px oklch(0.98 0.028 88 / 50%))
+            drop-shadow(0 0 24px oklch(0.98 0.028 88 / 30%))
+            drop-shadow(0 2px 8px oklch(0.30 0.05 50 / 15%));
         }
 
         .unit-chip:hover {

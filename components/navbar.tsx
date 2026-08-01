@@ -165,19 +165,38 @@ export function Navbar() {
               </button>
             </div>
 
-            {/* Center: Nav Links (desktop) */}
-            <ul className="hidden md:flex items-center gap-6">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            {/* Center: Teacher name (always) + Nav Links (desktop) */}
+            <div className="flex items-center gap-6">
+              {/* Teacher name */}
+              <div className="flex flex-col items-center leading-tight">
+                <span
+                  className="text-xs font-medium tracking-widest uppercase"
+                  style={{ color: 'rgba(200,185,154,0.65)', letterSpacing: '0.18em' }}
+                >
+                  مدرس اللغة العربية
+                </span>
+                <span
+                  className="text-base font-bold tracking-wide"
+                  style={{ color: 'rgba(200,185,154,0.92)' }}
+                >
+                  أ/ مازن السقا
+                </span>
+              </div>
+
+              {/* Desktop nav links */}
+              <ul className="hidden md:flex items-center gap-6">
+                {navLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             {/* Right: Logo */}
             <div className="flex items-center gap-2">

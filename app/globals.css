@@ -41,46 +41,47 @@
   --font-heading: var(--font-noto-naskh);
 }
 
-/* ─── Light Mode — forest green topo theme (default) ─── */
+/* ─── Light Mode — white/gold topo theme (default) ─── */
 :root {
   color-scheme: light;
   /*
-   * Background: light/white         #f5f5f0 ≈ oklch(0.96 0.006 90)
-   * Text/primary: forest green      #1e4d3a ≈ oklch(0.30 0.072 158)
+   * Background: warm white/cream    #faf7f0 ≈ oklch(0.975 0.010 90)
+   * Lines/accents: warm gold        #c9a55c ≈ oklch(0.72 0.10 85)
+   * Text: deep warm brown           #4a3826 ≈ oklch(0.34 0.045 55)
    */
-  --background: oklch(0.96 0.006 90);
-  --foreground: oklch(0.30 0.072 158);
+  --background: oklch(0.975 0.010 90);
+  --foreground: oklch(0.30 0.045 55);
 
-  --card: oklch(0.94 0.008 90);
-  --card-foreground: oklch(0.30 0.072 158);
+  --card: oklch(0.955 0.015 88);
+  --card-foreground: oklch(0.30 0.045 55);
 
-  --popover: oklch(0.94 0.008 90);
-  --popover-foreground: oklch(0.30 0.072 158);
+  --popover: oklch(0.955 0.015 88);
+  --popover-foreground: oklch(0.30 0.045 55);
 
-  /* Forest green primary */
-  --primary: oklch(0.52 0.13 155);
-  --primary-foreground: oklch(0.96 0.006 90);
+  /* Warm gold primary */
+  --primary: oklch(0.68 0.10 82);
+  --primary-foreground: oklch(0.24 0.040 52);
 
-  --secondary: oklch(0.58 0.12 155);
-  --secondary-foreground: oklch(0.96 0.006 90);
+  --secondary: oklch(0.90 0.035 86);
+  --secondary-foreground: oklch(0.32 0.045 55);
 
-  --muted: oklch(0.75 0.06 155);
-  --muted-foreground: oklch(0.45 0.08 155);
+  --muted: oklch(0.92 0.020 88);
+  --muted-foreground: oklch(0.48 0.045 58);
 
-  --accent: oklch(0.52 0.13 155);
-  --accent-foreground: oklch(0.96 0.006 90);
+  --accent: oklch(0.86 0.055 85);
+  --accent-foreground: oklch(0.28 0.042 54);
 
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(0.52 0.10 155 / 16%);
-  --input: oklch(0.52 0.10 155 / 10%);
-  --ring: oklch(0.52 0.13 155);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.68 0.09 82 / 24%);
+  --input: oklch(0.68 0.09 82 / 14%);
+  --ring: oklch(0.68 0.10 82);
 
   --radius: 0.75rem;
 
   /* Brand palette */
   --brand-green: oklch(0.52 0.13 155);
-  --brand-gold:  oklch(0.78 0.11 85);
-  --brand-brown: oklch(0.62 0.07 55);
+  --brand-gold:  oklch(0.72 0.10 85);
+  --brand-brown: oklch(0.38 0.050 55);
 }
 
 /* ─── Dark Mode — brown/gold topo theme ─── */

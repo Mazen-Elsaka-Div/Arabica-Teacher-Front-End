@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { TopographicBackground } from '@/components/topo-background'
+import { useIsDark } from '@/components/use-is-dark'
 
 /* ── Letters streaming out and clustering into a circle ──
  * Tablet origin: top ~56-60%, left ~60-62% (center stream point)
@@ -87,17 +88,18 @@ function StatItem({
   target: number; prefix: string; suffix: string; label: string; icon: React.ReactNode; started: boolean
 }) {
   const count = useCountUp(target, 1600, started)
+  const isDark = useIsDark()
   return (
     <div className="flex items-center gap-3 px-5 py-3">
-      <span className="shrink-0" style={{ color: 'oklch(0.84 0.11 88)' }}>{icon}</span>
+      <span className="shrink-0" style={{ color: isDark ? 'oklch(0.84 0.11 88)' : 'oklch(0.58 0.10 80)' }}>{icon}</span>
       <div className="flex flex-col leading-tight">
         <span
           className="text-2xl sm:text-3xl font-black tabular-nums"
-          style={{ color: 'oklch(0.87 0.10 88)', fontFamily: 'var(--font-cairo)' }}
+          style={{ color: isDark ? 'oklch(0.87 0.10 88)' : 'oklch(0.42 0.075 70)', fontFamily: 'var(--font-cairo)' }}
         >
           {prefix}{toArabic(count)}{suffix}
         </span>
-        <span className="text-xs font-semibold" style={{ color: 'oklch(0.72 0.03 85)' }}>
+        <span className="text-xs font-semibold" style={{ color: isDark ? 'oklch(0.72 0.03 85)' : 'oklch(0.48 0.045 58)' }}>
           {label}
         </span>
       </div>
@@ -107,13 +109,16 @@ function StatItem({
 
 /* ── Stats unified liquid-glass bar ── */
 function StatsBar({ started }: { started: boolean }) {
+  const isDark = useIsDark()
   return (
     <div
       className="inline-flex items-stretch self-start rounded-2xl overflow-hidden"
       style={{
-        background: 'rgba(255,255,255,0.06)',
-        border: '1px solid rgba(255,255,255,0.18)',
-        boxShadow: '0 8px 32px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.18)',
+        background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.65)',
+        border: isDark ? '1px solid rgba(255,255,255,0.18)' : '1px solid oklch(0.68 0.09 82 / 35%)',
+        boxShadow: isDark
+          ? '0 8px 32px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.18)'
+          : '0 8px 28px oklch(0.55 0.06 70 / 18%), inset 0 1px 0 rgba(255,255,255,0.8)',
         backdropFilter: 'blur(20px) saturate(1.6)',
         WebkitBackdropFilter: 'blur(20px) saturate(1.6)',
       }}
@@ -124,7 +129,7 @@ function StatsBar({ started }: { started: boolean }) {
           {i < statsData.length - 1 && (
             <div
               className="self-stretch my-2 w-px shrink-0"
-              style={{ background: 'oklch(0.84 0.11 88 / 20%)' }}
+              style={{ background: isDark ? 'oklch(0.84 0.11 88 / 20%)' : 'oklch(0.58 0.09 80 / 30%)' }}
               aria-hidden="true"
             />
           )}
@@ -141,18 +146,21 @@ function CircleBadge({
   value: string; label?: string; size: number; className?: string; style?: React.CSSProperties
 }) {
   const [hovered, setHovered] = useState(false)
+  const isDark = useIsDark()
   return (
     <div
       className={`absolute z-[20] flex flex-col items-center justify-center rounded-full select-none ${className ?? ''}`}
       style={{
         width: size, height: size,
-        background: hovered ? 'oklch(0.84 0.11 88 / 18%)' : 'oklch(0.12 0.022 58 / 85%)',
+        background: hovered
+          ? 'oklch(0.84 0.11 88 / 18%)'
+          : isDark ? 'oklch(0.12 0.022 58 / 85%)' : 'oklch(0.99 0.008 90 / 85%)',
         border: hovered
           ? '2px solid oklch(0.87 0.12 88 / 90%)'
-          : '1.5px solid oklch(0.78 0.10 85 / 50%)',
+          : isDark ? '1.5px solid oklch(0.78 0.10 85 / 50%)' : '1.5px solid oklch(0.64 0.09 80 / 55%)',
         boxShadow: hovered
           ? '0 0 32px oklch(0.84 0.11 88 / 50%), inset 0 0 20px oklch(0.84 0.11 88 / 14%)'
-          : '0 0 24px rgba(0,0,0,0.5)',
+          : isDark ? '0 0 24px rgba(0,0,0,0.5)' : '0 8px 24px oklch(0.55 0.06 70 / 22%)',
         backdropFilter: 'blur(8px)',
         transform: hovered ? 'scale(1.14)' : 'scale(1)',
         transition: 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease, background 0.3s ease, border 0.3s ease',
@@ -165,12 +173,12 @@ function CircleBadge({
     >
       <span
         className="font-black leading-none"
-        style={{ fontFamily: 'var(--font-cairo)', color: 'oklch(0.87 0.10 88)', fontSize: size * 0.28 }}
+        style={{ fontFamily: 'var(--font-cairo)', color: isDark ? 'oklch(0.87 0.10 88)' : 'oklch(0.44 0.075 72)', fontSize: size * 0.28 }}
       >
         {value}
       </span>
       {label && (
-        <span className="font-semibold mt-0.5" style={{ color: 'oklch(0.72 0.06 85)', fontSize: Math.max(size * 0.10, 10) }}>
+        <span className="font-semibold mt-0.5" style={{ color: isDark ? 'oklch(0.72 0.06 85)' : 'oklch(0.46 0.045 58)', fontSize: Math.max(size * 0.10, 10) }}>
           {label}
         </span>
       )}
@@ -205,6 +213,7 @@ export function HeroSection() {
   const textRef = useRef<HTMLDivElement>(null)
   const [textVisible, setTextVisible] = useState(false)
   const [statsStarted, setStatsStarted] = useState(false)
+  const isDark = useIsDark()
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -228,12 +237,14 @@ export function HeroSection() {
     >
       <TopographicBackground />
 
-      {/* Dark overlay behind text side */}
+      {/* Overlay behind text side — dark: deep shadow, light: soft cream wash for readability */}
       <div
         className="absolute inset-y-0 start-0 w-full lg:w-[62%] z-[1] pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse 90% 75% at 75% 48%, rgba(0,0,0,0.84) 0%, rgba(0,0,0,0.50) 48%, transparent 72%)',
+          background: isDark
+            ? 'radial-gradient(ellipse 90% 75% at 75% 48%, rgba(0,0,0,0.84) 0%, rgba(0,0,0,0.50) 48%, transparent 72%)'
+            : 'radial-gradient(ellipse 90% 75% at 75% 48%, oklch(0.985 0.008 90 / 92%) 0%, oklch(0.985 0.008 90 / 60%) 48%, transparent 72%)',
         }}
       />
 
@@ -252,11 +263,11 @@ export function HeroSection() {
         >
           {/* Academy badge */}
           <div
-            className="inline-flex items-center gap-2 self-start px-4 py-1.5 rounded-full border bg-black/40 backdrop-blur-sm"
-            style={{ borderColor: 'oklch(0.78 0.10 85 / 32%)' }}
+            className={`inline-flex items-center gap-2 self-start px-4 py-1.5 rounded-full border backdrop-blur-sm ${isDark ? 'bg-black/40' : 'bg-white/70'}`}
+            style={{ borderColor: isDark ? 'oklch(0.78 0.10 85 / 32%)' : 'oklch(0.64 0.09 80 / 45%)' }}
           >
-            <span className="size-2 rounded-full shrink-0 animate-pulse" style={{ background: 'oklch(0.85 0.10 88)' }} />
-            <span className="text-xs font-semibold" style={{ color: 'oklch(0.85 0.06 85)', fontFamily: 'var(--font-cairo)' }}>
+            <span className="size-2 rounded-full shrink-0 animate-pulse" style={{ background: isDark ? 'oklch(0.85 0.10 88)' : 'oklch(0.62 0.10 80)' }} />
+            <span className="text-xs font-semibold" style={{ color: isDark ? 'oklch(0.85 0.06 85)' : 'oklch(0.42 0.055 60)', fontFamily: 'var(--font-cairo)' }}>
               أكاديمية اللغة العربية الأولى
             </span>
           </div>
@@ -267,13 +278,13 @@ export function HeroSection() {
               className="text-5xl sm:text-6xl xl:text-[5rem] font-black text-balance leading-tight"
               style={{ fontFamily: 'var(--font-cairo)' }}
             >
-              <span style={{ color: 'oklch(0.98 0.008 85)' }}>كلامك عربي</span>
+              <span style={{ color: isDark ? 'oklch(0.98 0.008 85)' : 'oklch(0.28 0.045 55)' }}>كلامك عربي</span>
               <br />
-              <span style={{ color: 'oklch(0.86 0.12 88)' }}>{'وجذوره أعمق'}</span>
+              <span style={{ color: isDark ? 'oklch(0.86 0.12 88)' : 'oklch(0.58 0.11 78)' }}>{'وجذوره أعمق'}</span>
               <br />
-              <span style={{ color: 'oklch(0.98 0.008 85)' }}>مما تتصوّر</span>
+              <span style={{ color: isDark ? 'oklch(0.98 0.008 85)' : 'oklch(0.28 0.045 55)' }}>مما تتصوّر</span>
             </h1>
-            <p className="text-base sm:text-lg font-bold pt-1" style={{ color: 'oklch(0.82 0.10 150)' }}>
+            <p className="text-base sm:text-lg font-bold pt-1" style={{ color: isDark ? 'oklch(0.82 0.10 150)' : 'oklch(0.48 0.10 155)' }}>
               تعلّمها صح — من البداية للاحتراف
             </p>
           </div>
@@ -284,7 +295,7 @@ export function HeroSection() {
           {/* Description */}
           <p
             className="text-base sm:text-lg leading-relaxed"
-            style={{ color: 'oklch(0.84 0.02 85)', fontFamily: 'var(--font-cairo)', maxWidth: '40rem' }}
+            style={{ color: isDark ? 'oklch(0.84 0.02 85)' : 'oklch(0.42 0.040 56)', fontFamily: 'var(--font-cairo)', maxWidth: '40rem' }}
           >
             في أكاديمية شفاء العليل، مش هنحفّظك قواعد — هنخليك تحسّ بها. من النحو والصرف للبلاغة والإملاء، كل درس مبني على الفهم الحقيقي.
           </p>
@@ -339,11 +350,11 @@ export function HeroSection() {
               style={{
                 top: item.top, left: item.left,
                 fontFamily: 'var(--font-cairo)',
-                color: 'oklch(0.85 0.10 88)',
+                color: isDark ? 'oklch(0.85 0.10 88)' : 'oklch(0.56 0.10 78)',
                 opacity: item.opacity,
                 animationDelay: item.delay,
                 transform: `rotate(${item.rotate})`,
-                textShadow: '0 0 14px oklch(0.85 0.10 88 / 45%)',
+                textShadow: isDark ? '0 0 14px oklch(0.85 0.10 88 / 45%)' : '0 0 14px oklch(0.70 0.10 82 / 40%)',
               }}
               aria-hidden="true"
             >

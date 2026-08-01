@@ -4,32 +4,30 @@ import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { TopographicBackground } from '@/components/topo-background'
 
-/* ── Letters flying out of the tablet — arc UP-RIGHT like the reference image ──
- * Teacher height is 88%. Tablet sits at ~56-73% top, ~50-65% left of the teacher column.
- * Letters burst upward AND to the RIGHT (increasing left%), fanning toward the text side.
- * Origin cluster: top ~55-60%, left ~58-68%
- * They spread to: top ~15-25%, left ~72-90% (upper-right corner)
+/* ── Letters streaming out and clustering into a circle ──
+ * Tablet origin: top ~56-60%, left ~60-62% (center stream point)
+ * Letters stream upward-right in an arc, then cluster into a circle around top ~35%, left ~80%
+ * Small sizes (text-xs to text-sm) create the "clustering" visual effect
  */
 const tabletLetters = [
-  /* origin — just above tablet surface */
-  { letter: 'ا', top: '58%', left: '60%', size: 'text-xl',  opacity: 0.55, delay: '0s',   rotate: '-8deg'  },
-  { letter: 'ب', top: '56%', left: '66%', size: 'text-2xl', opacity: 0.60, delay: '0.4s', rotate: '8deg'   },
-  { letter: 'ت', top: '54%', left: '58%', size: 'text-xl',  opacity: 0.52, delay: '0.8s', rotate: '-12deg' },
-  /* rising, drifting right */
-  { letter: 'ث', top: '50%', left: '70%', size: 'text-2xl', opacity: 0.65, delay: '1.2s', rotate: '10deg'  },
-  { letter: 'ج', top: '46%', left: '64%', size: 'text-3xl', opacity: 0.68, delay: '0.2s', rotate: '-6deg'  },
-  { letter: 'ح', top: '43%', left: '76%', size: 'text-2xl', opacity: 0.65, delay: '0.6s', rotate: '14deg'  },
-  /* mid arc — continuing up-right */
-  { letter: 'خ', top: '39%', left: '68%', size: 'text-3xl', opacity: 0.72, delay: '1s',   rotate: '-10deg' },
-  { letter: 'د', top: '36%', left: '80%', size: 'text-2xl', opacity: 0.68, delay: '1.4s', rotate: '8deg'   },
-  { letter: 'ر', top: '32%', left: '72%', size: 'text-4xl', opacity: 0.76, delay: '0.3s', rotate: '-14deg' },
-  { letter: 'س', top: '28%', left: '84%', size: 'text-3xl', opacity: 0.72, delay: '0.7s', rotate: '12deg'  },
-  /* high arc — upper right */
-  { letter: 'ع', top: '24%', left: '76%', size: 'text-3xl', opacity: 0.68, delay: '1.1s', rotate: '-8deg'  },
-  { letter: 'ق', top: '20%', left: '88%', size: 'text-2xl', opacity: 0.62, delay: '1.5s', rotate: '16deg'  },
-  { letter: 'ل', top: '17%', left: '80%', size: 'text-3xl', opacity: 0.74, delay: '0.5s', rotate: '-16deg' },
-  { letter: 'م', top: '15%', left: '70%', size: 'text-2xl', opacity: 0.62, delay: '0.9s', rotate: '6deg'   },
-  { letter: 'ن', top: '22%', left: '92%', size: 'text-2xl', opacity: 0.58, delay: '1.3s', rotate: '-4deg'  },
+  /* stream out from tablet — small letters creating a line */
+  { letter: 'ا', top: '58%', left: '62%', size: 'text-xs',  opacity: 0.50, delay: '0s',    rotate: '-5deg'  },
+  { letter: 'ب', top: '55%', left: '66%', size: 'text-xs',  opacity: 0.52, delay: '0.15s', rotate: '3deg'   },
+  { letter: 'ت', top: '52%', left: '70%', size: 'text-xs',  opacity: 0.54, delay: '0.3s',  rotate: '-7deg'  },
+  { letter: 'ث', top: '49%', left: '74%', size: 'text-xs',  opacity: 0.56, delay: '0.45s', rotate: '5deg'   },
+  /* cluster forming — gathering around top ~35%, left ~80% */
+  { letter: 'ج', top: '44%', left: '78%', size: 'text-sm',  opacity: 0.62, delay: '0.6s',  rotate: '-6deg'  },
+  { letter: 'ح', top: '40%', left: '82%', size: 'text-sm',  opacity: 0.65, delay: '0.75s', rotate: '8deg'   },
+  { letter: 'خ', top: '36%', left: '80%', size: 'text-xs',  opacity: 0.60, delay: '0.9s',  rotate: '-8deg'  },
+  { letter: 'د', top: '32%', left: '84%', size: 'text-xs',  opacity: 0.58, delay: '1.05s', rotate: '4deg'   },
+  /* circle cluster — denser grouping */
+  { letter: 'ر', top: '38%', left: '76%', size: 'text-xs',  opacity: 0.62, delay: '1.2s',  rotate: '-4deg'  },
+  { letter: 'س', top: '34%', left: '82%', size: 'text-sm',  opacity: 0.66, delay: '1.35s', rotate: '6deg'   },
+  { letter: 'ع', top: '30%', left: '78%', size: 'text-xs',  opacity: 0.60, delay: '1.5s',  rotate: '-5deg'  },
+  { letter: 'ق', top: '36%', left: '88%', size: 'text-xs',  opacity: 0.58, delay: '1.65s', rotate: '7deg'   },
+  { letter: 'ل', top: '40%', left: '78%', size: 'text-xs',  opacity: 0.58, delay: '1.8s',  rotate: '-6deg'  },
+  { letter: 'م', top: '34%', left: '74%', size: 'text-xs',  opacity: 0.60, delay: '1.95s', rotate: '3deg'   },
+  { letter: 'ن', top: '38%', left: '84%', size: 'text-xs',  opacity: 0.62, delay: '2.1s',  rotate: '-3deg'  },
 ]
 
 /* ── Stats data ── */

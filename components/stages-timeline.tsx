@@ -227,7 +227,7 @@ export function StagesTimeline() {
       ref={sectionRef}
       id="stages"
       aria-label="المراحل الدراسية"
-      className="relative h-[300vh] overflow-hidden"
+      className="relative h-[280vh] sm:h-[285vh] overflow-hidden"
       style={{ background: P.bg }}
     >
       {/* Faint topo texture */}

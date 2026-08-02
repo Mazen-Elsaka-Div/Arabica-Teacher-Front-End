@@ -340,7 +340,142 @@ export function HeroSection() {
         </div>
 
         {/* ── TEACHER SIDE ── */}
-        <div className="relative order-1 md:order-2 w-full md:w-[60%] h-screen md:h-auto md:min-h-screen overflow-hidden">
+        <div className="relative order-1 md:order-2 w-full md:w-[60%] md:min-h-screen overflow-hidden">
+
+          {/* ═══ MOBILE: circular framed portrait ═══ */}
+          <div className="md:hidden relative w-full flex justify-center px-6 pt-6 pb-4">
+            <div className="relative w-[80vw] max-w-[340px] aspect-square">
+
+              {/* Outer decorative ring */}
+              <div
+                className="absolute -inset-4 rounded-full pointer-events-none"
+                aria-hidden="true"
+                style={{
+                  border: isDark
+                    ? '1.5px solid oklch(0.78 0.10 85 / 55%)'
+                    : '1.5px solid oklch(0.52 0.08 175 / 60%)',
+                }}
+              />
+              <div
+                className="absolute -inset-4 rounded-full pointer-events-none"
+                aria-hidden="true"
+                style={{
+                  border: isDark
+                    ? '1px solid oklch(0.78 0.10 85 / 25%)'
+                    : '1px solid oklch(0.52 0.08 175 / 30%)',
+                  transform: 'scale(1.045)',
+                }}
+              />
+
+              {/* Gold triangle accents around the ring */}
+              <svg
+                className="absolute -inset-8 w-[calc(100%+4rem)] h-[calc(100%+4rem)] pointer-events-none"
+                viewBox="0 0 100 100"
+                fill="none"
+                aria-hidden="true"
+              >
+                <polygon points="50,1 55,8 45,8" fill="none" stroke="oklch(0.68 0.11 82)" strokeWidth="0.8" opacity="0.85" />
+                <polygon points="7,32 13,36 6,39" fill="none" stroke="oklch(0.68 0.11 82)" strokeWidth="0.7" opacity="0.6" />
+                <polygon points="94,58 88,62 94,66" fill="none" stroke="oklch(0.68 0.11 82)" strokeWidth="0.7" opacity="0.6" />
+                <polygon points="24,90 30,93 23,96" fill="none" stroke="oklch(0.68 0.11 82)" strokeWidth="0.7" opacity="0.5" />
+              </svg>
+
+              {/* Photo circle */}
+              <div
+                className="absolute inset-0 rounded-full overflow-hidden"
+                style={{
+                  background: isDark
+                    ? 'radial-gradient(circle at 50% 35%, oklch(0.22 0.03 60), oklch(0.13 0.022 58))'
+                    : 'radial-gradient(circle at 50% 35%, oklch(1 0 0), oklch(0.96 0.015 90))',
+                  boxShadow: isDark
+                    ? '0 18px 48px rgba(0,0,0,0.55)'
+                    : '0 18px 48px oklch(0.55 0.06 70 / 25%)',
+                }}
+              >
+                <Image
+                  src="/teacher.webp"
+                  alt="المدرس - أكاديمية شفاء العليل في اللغة العربية"
+                  fill
+                  sizes="80vw"
+                  className="object-cover"
+                  style={{ objectPosition: '50% 18%', transform: 'scale(1.12)' }}
+                  priority
+                />
+              </div>
+
+              {/* Letters streaming out of the tablet, up and out of the circle */}
+              {[
+                { letter: 'ن', top: '58%', left: '80%', size: 'text-lg',  opacity: 0.55, delay: '0s'    },
+                { letter: 'ب', top: '44%', left: '90%', size: 'text-xl',  opacity: 0.6,  delay: '0.3s'  },
+                { letter: 'ع', top: '28%', left: '95%', size: 'text-lg',  opacity: 0.55, delay: '0.6s'  },
+                { letter: 'ق', top: '14%', left: '88%', size: 'text-xl',  opacity: 0.6,  delay: '0.9s'  },
+                { letter: 'س', top: '4%',  left: '76%', size: 'text-lg',  opacity: 0.5,  delay: '1.2s'  },
+                { letter: 'م', top: '-4%', left: '62%', size: 'text-base', opacity: 0.45, delay: '1.5s' },
+              ].map((item, i) => (
+                <span
+                  key={i}
+                  className={`absolute z-[16] font-black select-none pointer-events-none letter-rise ${item.size}`}
+                  style={{
+                    top: item.top, left: item.left,
+                    fontFamily: 'var(--font-cairo)',
+                    color: isDark ? 'oklch(0.85 0.10 88)' : 'oklch(0.56 0.10 78)',
+                    opacity: item.opacity,
+                    animationDelay: item.delay,
+                    textShadow: isDark ? '0 0 12px oklch(0.85 0.10 88 / 45%)' : '0 0 12px oklch(0.70 0.10 82 / 40%)',
+                  }}
+                  aria-hidden="true"
+                >
+                  {item.letter}
+                </span>
+              ))}
+
+              {/* Inkwell & quill beside the circle */}
+              <div
+                className="absolute z-[16] pointer-events-none"
+                style={{ bottom: '4%', left: '-7%', width: 64, animation: 'inkFloat 6s ease-in-out infinite' }}
+                aria-hidden="true"
+              >
+                <Image src="/inkwell.webp" alt="" width={160} height={283} className="w-full h-auto drop-shadow-[0_6px_16px_rgba(0,0,0,0.45)]" />
+              </div>
+
+              {/* Badge pill — top right */}
+              <div
+                className="absolute z-[17] -top-1 -right-2 flex items-center gap-1.5 px-3.5 py-2 rounded-xl"
+                style={{
+                  background: isDark ? 'oklch(0.16 0.025 58 / 92%)' : 'oklch(0.99 0.008 90 / 95%)',
+                  border: isDark ? '1px solid oklch(0.78 0.10 85 / 35%)' : '1px solid oklch(0.68 0.09 82 / 30%)',
+                  boxShadow: isDark ? '0 8px 24px rgba(0,0,0,0.5)' : '0 8px 24px oklch(0.55 0.06 70 / 20%)',
+                }}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill={isDark ? 'oklch(0.85 0.10 88)' : 'oklch(0.52 0.08 175)'} aria-hidden="true">
+                  <path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/>
+                </svg>
+                <span className="text-sm font-black" style={{ fontFamily: 'var(--font-cairo)', color: isDark ? 'oklch(0.88 0.06 85)' : 'oklch(0.40 0.07 175)' }}>
+                  أ/ مازن السقا
+                </span>
+              </div>
+
+              {/* Badge pill — bottom left */}
+              <div
+                className="absolute z-[17] bottom-[6%] -left-3 flex items-center gap-1.5 px-3.5 py-2 rounded-xl"
+                style={{
+                  background: isDark ? 'oklch(0.16 0.025 58 / 92%)' : 'oklch(0.99 0.008 90 / 95%)',
+                  border: isDark ? '1px solid oklch(0.78 0.10 85 / 35%)' : '1px solid oklch(0.68 0.09 82 / 30%)',
+                  boxShadow: isDark ? '0 8px 24px rgba(0,0,0,0.5)' : '0 8px 24px oklch(0.55 0.06 70 / 20%)',
+                }}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={isDark ? 'oklch(0.85 0.10 88)' : 'oklch(0.62 0.10 80)'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                </svg>
+                <span className="text-sm font-black" style={{ fontFamily: 'var(--font-cairo)', color: isDark ? 'oklch(0.88 0.06 85)' : 'oklch(0.48 0.075 70)' }}>
+                  منهج مبسّط للثانوية
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* ═══ DESKTOP: full-scene layout ═══ */}
+          <div className="hidden md:block absolute inset-0">
 
           {/* Floating letters from tablet */}
           {tabletLetters.map((item, i) => (
@@ -416,7 +551,7 @@ export function HeroSection() {
             />
           </div>
 
-
+          </div>
 
           <style>{`
             @keyframes gentleFloat {

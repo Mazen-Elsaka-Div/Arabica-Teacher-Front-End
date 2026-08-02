@@ -339,8 +339,9 @@ function DesktopScrollShowcase({ items }: { items: Testimonial[] }) {
 
   return (
     <div id="testimonials-desktop" className="relative h-[300vh]">
-      <div className="sticky top-20 flex min-h-[calc(100vh-5rem)] w-full flex-col justify-center pb-12 pt-4">
-        <div className="mx-auto w-full max-w-7xl px-8">
+      <div className="sticky top-20 flex h-[calc(100vh-5rem)] w-full flex-col justify-center overflow-hidden pb-10 pt-2">
+        <IslamicCorners />
+        <div className="relative mx-auto w-full max-w-7xl px-8">
           <Heading />
           <div className="reveal-item">
             <TestimonialCard student={items[active]} active />
@@ -355,10 +356,10 @@ export function TestimonialsSection() {
   const root = useReveal<HTMLElement>('.reveal-item')
 
   return (
-    <section ref={root} id="testimonials" className="relative overflow-hidden bg-background">
-      <IslamicCorners />
+    <section ref={root} id="testimonials" className="relative bg-background">
       {/* موبايل: كاروسيل بارتفاع طبيعي */}
-      <div className="mx-auto w-full max-w-2xl px-5 py-12 md:hidden">
+      <div className="relative mx-auto w-full max-w-2xl px-5 py-12 md:hidden">
+        <IslamicCorners size={110} />
         <Heading />
         <MobileCarousel items={TESTIMONIALS} />
       </div>

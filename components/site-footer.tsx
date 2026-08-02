@@ -41,10 +41,15 @@ export function SiteFooter() {
 
   return (
     <footer className="relative overflow-hidden bg-brown text-background/70 dark:bg-card dark:text-muted-foreground">
-      {/* خلفية الخط العربي — نقوش حروف باهتة على تدرج بني دافئ */}
+      {/* خلفية الخط العربي — تظهر من الأسفل وتتلاشى تدريجيًا نحو أعلى الفوتر */}
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-60 dark:opacity-70"
-        style={{ backgroundImage: "url('/images/footer-calligraphy.png')" }}
+        style={{
+          backgroundImage: "url('/images/footer-calligraphy.png')",
+          maskImage: 'linear-gradient(to top, black 0%, black 35%, rgba(0,0,0,0.4) 70%, transparent 100%)',
+          WebkitMaskImage:
+            'linear-gradient(to top, black 0%, black 35%, rgba(0,0,0,0.4) 70%, transparent 100%)',
+        }}
         aria-hidden="true"
       />
       {/* تدرج خفيف فوق الصورة لضمان وضوح النصوص */}

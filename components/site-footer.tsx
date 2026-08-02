@@ -40,8 +40,25 @@ export function SiteFooter() {
   const year = new Date().getFullYear().toLocaleString('ar-EG', { useGrouping: false })
 
   return (
-    <footer className="bg-brown text-background/70 dark:bg-card dark:text-muted-foreground">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-4 md:px-8">
+    <footer className="relative overflow-hidden bg-brown text-background/70 dark:bg-card dark:text-muted-foreground">
+      {/* خلفية الخط العربي — تظهر من الأسفل وتتلاشى تدريجيًا نحو أعلى الفوتر */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-60 dark:opacity-70"
+        style={{
+          backgroundImage: "url('/images/footer-calligraphy.png')",
+          maskImage: 'linear-gradient(to top, black 0%, black 35%, rgba(0,0,0,0.4) 70%, transparent 100%)',
+          WebkitMaskImage:
+            'linear-gradient(to top, black 0%, black 35%, rgba(0,0,0,0.4) 70%, transparent 100%)',
+        }}
+        aria-hidden="true"
+      />
+      {/* تدرج خفيف فوق الصورة لضمان وضوح النصوص */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brown/55 via-brown/25 to-brown/60 dark:from-card/60 dark:via-card/25 dark:to-card/70"
+        aria-hidden="true"
+      />
+
+      <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-4 md:px-8">
         <div className="md:col-span-2">
           <div className="flex items-center gap-3">
             <span className="flex size-11 items-center justify-center rounded-2xl bg-gold text-primary-foreground">
@@ -97,8 +114,14 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="border-t border-background/10 py-5 text-center text-sm dark:border-foreground/10">
-        {`جميع الحقوق محفوظة © ${year} أكاديمية شفاء العليل`}
+      <div className="relative border-t border-background/10 py-5 text-center text-sm dark:border-foreground/10">
+        <p>{`جميع الحقوق محفوظة © ${year} أكاديمية شفاء العليل`}</p>
+        <p className="mt-2 text-xs text-background/50 dark:text-muted-foreground/70">
+          {'صُنعت هذه المنصة بحبٍ للعربية وشغفٍ بالإتقان — بأيدي '}
+          <span className="font-semibold text-gold">مازن السقا</span>
+          {' و '}
+          <span className="font-semibold text-gold">سيد الشاذلي</span>
+        </p>
       </div>
     </footer>
   )
